@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.DataNotFoundException;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 
@@ -92,6 +93,20 @@ public class UniqueTagList implements Iterable<Tag> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    /**
+     * Remove a Tag from the list
+     */
+    public void remove(Tag toRemove) throws TagNotFoundException{
+        requireNonNull(toRemove);
+        if (!contains(toRemove)) {
+            throw new TagNotFoundException();
+        }
+        internalList.remove(toRemove);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+        assert contains(toRemove) == false;
+    }
+
     @Override
     public Iterator<Tag> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -137,6 +152,13 @@ public class UniqueTagList implements Iterable<Tag> {
         protected DuplicateTagException() {
             super("Operation would result in duplicate tags");
         }
+    }
+
+    /**
+     * Signals that an operation is unable to find the tag in the UniqueTagList. I.e the tag does not exist
+     */
+    public static class TagNotFoundException extends DataNotFoundException{
+        protected TagNotFoundException() { super("Operation could not find tag");}
     }
 
 }

@@ -153,6 +153,34 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    public void removeTagFromTagList (Tag tag) throws UniqueTagList.TagNotFoundException {
+        tags.remove(tag);
+    }
+
+    public void removeTagFromAllPerson(Tag tag) throws PersonNotFoundException{
+        for (Person person : persons) {
+            removeTagFromPerson(tag, person);
+        }
+    }
+
+    public void removeTagFromPerson(Tag tag, Person person) throws PersonNotFoundException {
+        Set<Tag> newTags = new HashSet<>(person.getTags());
+        if (!newTags.remove(tag)){
+            return;
+        }
+
+        Person newPerson =
+                new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), newTags);
+
+        try {
+            updatePerson(person, newPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Should not get duplicate error if only modifying person's tags"
+                    + "See Person#equals(Object).");
+        }
+    }
+
+
     //// util methods
 
     @Override
