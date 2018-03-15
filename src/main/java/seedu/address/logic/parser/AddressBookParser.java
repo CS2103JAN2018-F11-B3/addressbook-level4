@@ -79,6 +79,9 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
+        case GlossaryCommand.COMMAND_WORD:
+            return new GlossaryCommand();
+
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
 
