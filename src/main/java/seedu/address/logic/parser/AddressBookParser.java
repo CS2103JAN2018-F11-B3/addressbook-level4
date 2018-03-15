@@ -73,6 +73,9 @@ public class AddressBookParser {
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
+        case GlossaryCommand.COMMAND_WORD:
+            return new GlossaryCommand();
+            
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
@@ -84,9 +87,6 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
-
-        case GlossaryCommand.COMMAND_WORD:
-            return new GlossaryCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
