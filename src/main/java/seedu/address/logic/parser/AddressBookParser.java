@@ -75,7 +75,6 @@ public class AddressBookParser {
 
         case GlossaryCommand.COMMAND_WORD:
             return new GlossaryCommand();
-            
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
