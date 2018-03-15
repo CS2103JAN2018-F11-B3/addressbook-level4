@@ -73,8 +73,6 @@ public class AddressBookParser {
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
-        case GlossaryCommand.COMMAND_WORD:
-            return new GlossaryCommand();
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
