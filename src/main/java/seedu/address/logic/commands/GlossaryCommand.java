@@ -10,8 +10,8 @@ public class GlossaryCommand extends Command {
 
     public static final String COMMAND_WORD = "glossary";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD +
-            ": Shows user a list of potential jobs, industries, skills and other related information to consider.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Shows user a list of potential jobs, industries, skills and other related information to consider.\n"
             + "Example: " + COMMAND_WORD;
 
     public static final String SHOWING_GLOSSARY_MESSAGE = "Opened glossary window.";
