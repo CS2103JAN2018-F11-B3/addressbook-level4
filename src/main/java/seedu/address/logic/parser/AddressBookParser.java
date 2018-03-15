@@ -78,7 +78,6 @@ public class AddressBookParser {
 
         case GlossaryCommand.COMMAND_WORD:
             return new GlossaryCommand();
-            
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
