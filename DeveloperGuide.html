@@ -98,7 +98,7 @@
 <li><a href="#instructions-for-manual-testing">Appendix H: Instructions for Manual Testing</a>
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">H.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-a-person">H.2. Deleting a person</a></li>
+<li><a href="#deleting-a-internship">H.2. Deleting a internship</a></li>
 <li><a href="#saving-data">H.3. Saving data</a></li>
 </ul>
 </li>
@@ -498,7 +498,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.</p>
 </li>
 <li>
-<p>The command execution can affect the <code>Model</code> (e.g. adding a person) and/or raise events.</p>
+<p>The command execution can affect the <code>Model</code> (e.g. adding a internship) and/or raise events.</p>
 </li>
 <li>
 <p>The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code>.</p>
@@ -538,7 +538,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>stores the Address Book data.</p>
 </li>
 <li>
-<p>exposes an unmodifiable <code>ObservableList&lt;Person&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
+<p>exposes an unmodifiable <code>ObservableList&lt;Internship&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
 </li>
 <li>
 <p>does not depend on any of the other three components.</p>
@@ -744,7 +744,7 @@ Sort the final list according to this score.</p>
 <p>Suppose that the user has just launched the application. The <code>UndoRedoStack</code> will be empty at the beginning.</p>
 </div>
 <div class="paragraph">
-<p>The user executes a new <code>UndoableCommand</code>, <code>delete 5</code>, to delete the 5th person in the address book. The current state of the address book is saved before the <code>delete 5</code> command executes. The <code>delete 5</code> command will then be pushed onto the <code>undoStack</code> (the current state is saved together with the command).</p>
+<p>The user executes a new <code>UndoableCommand</code>, <code>delete 5</code>, to delete the 5th internship in the address book. The current state of the address book is saved before the <code>delete 5</code> command executes. The <code>delete 5</code> command will then be pushed onto the <code>undoStack</code> (the current state is saved together with the command).</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -752,7 +752,7 @@ Sort the final list according to this score.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>As the user continues to use the program, more commands are added into the <code>undoStack</code>. For example, the user may execute <code>add n/David &#8230;&#8203;</code> to add a new person.</p>
+<p>As the user continues to use the program, more commands are added into the <code>undoStack</code>. For example, the user may execute <code>add n/David &#8230;&#8203;</code> to add a new internship.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -772,7 +772,7 @@ If a command fails its execution, it will not be pushed to the <code>UndoRedoSta
 </table>
 </div>
 <div class="paragraph">
-<p>The user now decides that adding the person was a mistake, and decides to undo that action using <code>undo</code>.</p>
+<p>The user now decides that adding the internship was a mistake, and decides to undo that action using <code>undo</code>.</p>
 </div>
 <div class="paragraph">
 <p>We will pop the most recent command out of the <code>undoStack</code> and push it back to the <code>redoStack</code>. We will restore the address book to the state before the <code>add</code> command executed.</p>
@@ -899,7 +899,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Will use less memory (e.g. for <code>delete</code>, just save the person being deleted).</p>
+<p>Pros: Will use less memory (e.g. for <code>delete</code>, just save the internship being deleted).</p>
 </li>
 <li>
 <p>Cons: We must ensure that the implementation of each individual command are correct.</p>
@@ -1532,7 +1532,7 @@ Do take a look at <a href="#Design-Logic">Section 2.3, &#8220;Logic component&#8
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a shorthand equivalent alias for each of the individual commands. For example, besides typing <code>clear</code>, the user can also type <code>c</code> to remove all persons in the list.</p>
+<p>Add a shorthand equivalent alias for each of the individual commands. For example, besides typing <code>clear</code>, the user can also type <code>c</code> to remove all internships in the list.</p>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
@@ -1611,7 +1611,7 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 <p>Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?</p>
 </li>
 <li>
-<p>Find out which of the existing API methods in  <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> and <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> classes can be used to implement the tag removal logic. <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> allows you to update a person, and <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> allows you to update the tags.</p>
+<p>Find out which of the existing API methods in  <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> and <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/internship/Internship.java"><code>Internship</code></a> classes can be used to implement the tag removal logic. <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> allows you to update a internship, and <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/internship/Internship.java"><code>Internship</code></a> allows you to update the tags.</p>
 </li>
 </ul>
 </div>
@@ -1621,7 +1621,7 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>Implement a <code>removeTag(Tag)</code> method in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a>. Loop through each person, and remove the <code>tag</code> from each person.</p>
+<p>Implement a <code>removeTag(Tag)</code> method in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a>. Loop through each internship, and remove the <code>tag</code> from each internship.</p>
 </li>
 <li>
 <p>Add a new API method <code>deleteTag(Tag)</code> in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a>. Your <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a> should call <code>AddressBook#removeTag(Tag)</code>.</p>
@@ -1654,7 +1654,7 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 </div>
 <h4 id="code-ui-code-component" class="discrete"><code>Ui</code> component</h4>
 <div class="paragraph">
-<p><strong>Scenario:</strong> You are in charge of <code>ui</code>. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn&#8217;t prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.</p>
+<p><strong>Scenario:</strong> You are in charge of <code>ui</code>. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn&#8217;t prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last internship in the list. Your job is to implement improvements to the UI to solve all these problems.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1671,7 +1671,7 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Use different colors for different tags inside person cards. For example, <code>friends</code> tags can be all in brown, and <code>colleagues</code> tags can be all in yellow.</p>
+<p>Use different colors for different tags inside internship cards. For example, <code>friends</code> tags can be all in brown, and <code>colleagues</code> tags can be all in yellow.</p>
 <div class="paragraph">
 <p><strong>Before</strong></p>
 </div>
@@ -1697,7 +1697,7 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="ulist">
 <ul>
 <li>
-<p>The tag labels are created inside <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/PersonCard.java">the <code>PersonCard</code> constructor</a> (<code>new Label(tag.tagName)</code>). <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html">JavaFX&#8217;s <code>Label</code> class</a> allows you to modify the style of each Label, such as changing its color.</p>
+<p>The tag labels are created inside <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/InternshipCard.java">the <code>InternshipCard</code> constructor</a> (<code>new Label(tag.tagName)</code>). <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html">JavaFX&#8217;s <code>Label</code> class</a> allows you to modify the style of each Label, such as changing its color.</p>
 </li>
 <li>
 <p>Use the .css attribute <code>-fx-background-color</code> to add a color.</p>
@@ -1713,7 +1713,7 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="ulist">
 <ul>
 <li>
-<p>You can modify the existing test methods for <code>PersonCard</code> 's to include testing the tag&#8217;s color as well.</p>
+<p>You can modify the existing test methods for <code>InternshipCard</code> 's to include testing the tag&#8217;s color as well.</p>
 </li>
 <li>
 <p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/798">PR</a> for the full solution.</p>
@@ -1849,16 +1849,16 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="ulist">
 <ul>
 <li>
-<p>Modify the constructor of <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> to take in the number of persons when the application just started.</p>
+<p>Modify the constructor of <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> to take in the number of internships when the application just started.</p>
 </li>
 <li>
-<p>Use <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)</code></a> to update the number of persons whenever there are new changes to the addressbook.</p>
+<p>Use <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)</code></a> to update the number of internships whenever there are new changes to the addressbook.</p>
 </li>
 <li>
 <p>For tests, modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/guitests/guihandles/StatusBarFooterHandle.java"><code>StatusBarFooterHandle</code></a> by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.</p>
 </li>
 <li>
-<p>For system tests, modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/systemtests/AddressBookSystemTest.java"><code>AddressBookSystemTest</code></a> to also verify the new total number of persons status bar.</p>
+<p>For system tests, modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/systemtests/AddressBookSystemTest.java"><code>AddressBookSystemTest</code></a> to also verify the new total number of internships status bar.</p>
 </li>
 <li>
 <p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/803">PR</a> for the full solution.</p>
@@ -1939,7 +1939,7 @@ Do take a look at <a href="#Design-Storage">Section 2.5, &#8220;Storage componen
 <div class="sect3">
 <h4 id="description"><a class="link" href="#description">A.2.1. Description</a></h4>
 <div class="paragraph">
-<p>Edits the remark for a person specified in the <code>INDEX</code>.<br>
+<p>Edits the remark for a internship specified in the <code>INDEX</code>.<br>
 Format: <code>remark INDEX r/[REMARK]</code></p>
 </div>
 <div class="paragraph">
@@ -1949,11 +1949,11 @@ Format: <code>remark INDEX r/[REMARK]</code></p>
 <ul>
 <li>
 <p><code>remark 1 r/Likes to drink coffee.</code><br>
-Edits the remark for the first person to <code>Likes to drink coffee.</code></p>
+Edits the remark for the first internship to <code>Likes to drink coffee.</code></p>
 </li>
 <li>
 <p><code>remark 1 r/</code><br>
-Removes the remark for the first person.</p>
+Removes the remark for the first internship.</p>
 </li>
 </ul>
 </div>
@@ -2032,9 +2032,9 @@ for <code>RemarkCommandParser</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="step-3-ui-add-a-placeholder-for-remark-in-code-personcard-code"><a class="link" href="#step-3-ui-add-a-placeholder-for-remark-in-code-personcard-code">[Step 3] Ui: Add a placeholder for remark in <code>PersonCard</code></a></h5>
+<h5 id="step-3-ui-add-a-placeholder-for-remark-in-code-internshipcard-code"><a class="link" href="#step-3-ui-add-a-placeholder-for-remark-in-code-internshipcard-code">[Step 3] Ui: Add a placeholder for remark in <code>InternshipCard</code></a></h5>
 <div class="paragraph">
-<p>Let&#8217;s add a placeholder on all our <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> s to display a remark for each person later.</p>
+<p>Let&#8217;s add a placeholder on all our <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/InternshipCard.java"><code>InternshipCard</code></a> s to display a remark for each internship later.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2042,10 +2042,10 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a <code>Label</code> with any random text inside <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/resources/view/PersonListCard.fxml"><code>PersonListCard.fxml</code></a>.</p>
+<p>Add a <code>Label</code> with any random text inside <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/resources/view/InternshipListCard.fxml"><code>InternshipListCard.fxml</code></a>.</p>
 </li>
 <li>
-<p>Add FXML annotation in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> to tie the variable to the actual label.</p>
+<p>Add FXML annotation in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/InternshipCard.java"><code>InternshipCard</code></a> to tie the variable to the actual label.</p>
 </li>
 </ol>
 </div>
@@ -2055,7 +2055,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/guitests/guihandles/PersonCardHandle.java"><code>PersonCardHandle</code></a> so that future tests can read the contents of the remark label.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/guitests/guihandles/InternshipCardHandle.java"><code>InternshipCardHandle</code></a> so that future tests can read the contents of the remark label.</p>
 </li>
 </ol>
 </div>
@@ -2063,7 +2063,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-4-model-add-code-remark-code-class"><a class="link" href="#step-4-model-add-code-remark-code-class">[Step 4] Model: Add <code>Remark</code> class</a></h5>
 <div class="paragraph">
-<p>We have to properly encapsulate the remark in our <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> class. Instead of just using a <code>String</code>, let&#8217;s follow the conventional class structure that the codebase already uses by adding a <code>Remark</code> class.</p>
+<p>We have to properly encapsulate the remark in our <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/internship/Internship.java"><code>Internship</code></a> class. Instead of just using a <code>String</code>, let&#8217;s follow the conventional class structure that the codebase already uses by adding a <code>Remark</code> class.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2071,7 +2071,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add <code>Remark</code> to model component (you can copy from <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/person/Address.java"><code>Address</code></a>, remove the regex and change the names accordingly).</p>
+<p>Add <code>Remark</code> to model component (you can copy from <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/internship/Address.java"><code>Address</code></a>, remove the regex and change the names accordingly).</p>
 </li>
 <li>
 <p>Modify <code>RemarkCommand</code> to now take in a <code>Remark</code> instead of a <code>String</code>.</p>
@@ -2090,9 +2090,9 @@ for <code>RemarkCommandParser</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="step-5-model-modify-code-person-code-to-support-a-code-remark-code-field"><a class="link" href="#step-5-model-modify-code-person-code-to-support-a-code-remark-code-field">[Step 5] Model: Modify <code>Person</code> to support a <code>Remark</code> field</a></h5>
+<h5 id="step-5-model-modify-code-internship-code-to-support-a-code-remark-code-field"><a class="link" href="#step-5-model-modify-code-internship-code-to-support-a-code-remark-code-field">[Step 5] Model: Modify <code>Internship</code> to support a <code>Remark</code> field</a></h5>
 <div class="paragraph">
-<p>Now we have the <code>Remark</code> class, we need to actually use it inside <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Now we have the <code>Remark</code> class, we need to actually use it inside <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/internship/Internship.java"><code>Internship</code></a>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2100,10 +2100,10 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add <code>getRemark()</code> in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Add <code>getRemark()</code> in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/internship/Internship.java"><code>Internship</code></a>.</p>
 </li>
 <li>
-<p>You may assume that the user will not be able to use the <code>add</code> and <code>edit</code> commands to modify the remarks field (i.e. the person will be created without a remark).</p>
+<p>You may assume that the user will not be able to use the <code>add</code> and <code>edit</code> commands to modify the remarks field (i.e. the internship will be created without a remark).</p>
 </li>
 <li>
 <p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/util/SampleDataUtil.java/"><code>SampleDataUtil</code></a> to add remarks for the sample data (delete your <code>addressBook.xml</code> so that the application will load the sample data when you launch it.)</p>
@@ -2112,9 +2112,9 @@ for <code>RemarkCommandParser</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="step-6-storage-add-code-remark-code-field-to-code-xmladaptedperson-code-class"><a class="link" href="#step-6-storage-add-code-remark-code-field-to-code-xmladaptedperson-code-class">[Step 6] Storage: Add <code>Remark</code> field to <code>XmlAdaptedPerson</code> class</a></h5>
+<h5 id="step-6-storage-add-code-remark-code-field-to-code-xmladaptedinternship-code-class"><a class="link" href="#step-6-storage-add-code-remark-code-field-to-code-xmladaptedinternship-code-class">[Step 6] Storage: Add <code>Remark</code> field to <code>XmlAdaptedInternship</code> class</a></h5>
 <div class="paragraph">
-<p>We now have <code>Remark</code> s for <code>Person</code> s, but they will be gone when we exit the application. Let&#8217;s modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/storage/XmlAdaptedPerson.java"><code>XmlAdaptedPerson</code></a> to include a <code>Remark</code> field so that it will be saved.</p>
+<p>We now have <code>Remark</code> s for <code>Internship</code> s, but they will be gone when we exit the application. Let&#8217;s modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/storage/XmlAdaptedInternship.java"><code>XmlAdaptedInternship</code></a> to include a <code>Remark</code> field so that it will be saved.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2132,15 +2132,15 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Fix <code>invalidAndValidPersonAddressBook.xml</code>, <code>typicalPersonsAddressBook.xml</code>, <code>validAddressBook.xml</code> etc., such that the XML tests will not fail due to a missing <code>&lt;remark&gt;</code> element.</p>
+<p>Fix <code>invalidAndValidInternshipAddressBook.xml</code>, <code>typicalInternshipsAddressBook.xml</code>, <code>validAddressBook.xml</code> etc., such that the XML tests will not fail due to a missing <code>&lt;remark&gt;</code> element.</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect4">
-<h5 id="step-6b-test-add-withremark-for-code-personbuilder-code"><a class="link" href="#step-6b-test-add-withremark-for-code-personbuilder-code">[Step 6b] Test: Add withRemark() for <code>PersonBuilder</code></a></h5>
+<h5 id="step-6b-test-add-withremark-for-code-internshipbuilder-code"><a class="link" href="#step-6b-test-add-withremark-for-code-internshipbuilder-code">[Step 6b] Test: Add withRemark() for <code>InternshipBuilder</code></a></h5>
 <div class="paragraph">
-<p>Since <code>Person</code> can now have a <code>Remark</code>, we should add a helper method to <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>, so that users are able to create remarks when building a <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Since <code>Internship</code> can now have a <code>Remark</code>, we should add a helper method to <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/testutil/InternshipBuilder.java"><code>InternshipBuilder</code></a>, so that users are able to create remarks when building a <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/internship/Internship.java"><code>Internship</code></a>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Tests:</strong></p>
@@ -2148,18 +2148,18 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a new method <code>withRemark()</code> for <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>. This method will create a new <code>Remark</code> for the person that it is currently building.</p>
+<p>Add a new method <code>withRemark()</code> for <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/testutil/InternshipBuilder.java"><code>InternshipBuilder</code></a>. This method will create a new <code>Remark</code> for the internship that it is currently building.</p>
 </li>
 <li>
-<p>Try and use the method on any sample <code>Person</code> in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/testutil/TypicalPersons.java"><code>TypicalPersons</code></a>.</p>
+<p>Try and use the method on any sample <code>Internship</code> in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/testutil/TypicalInternships.java"><code>TypicalInternships</code></a>.</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect4">
-<h5 id="step-7-ui-connect-code-remark-code-field-to-code-personcard-code"><a class="link" href="#step-7-ui-connect-code-remark-code-field-to-code-personcard-code">[Step 7] Ui: Connect <code>Remark</code> field to <code>PersonCard</code></a></h5>
+<h5 id="step-7-ui-connect-code-remark-code-field-to-code-internshipcard-code"><a class="link" href="#step-7-ui-connect-code-remark-code-field-to-code-internshipcard-code">[Step 7] Ui: Connect <code>Remark</code> field to <code>InternshipCard</code></a></h5>
 <div class="paragraph">
-<p>Our remark label in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> is still a placeholder. Let&#8217;s bring it to life by binding it with the actual <code>remark</code> field.</p>
+<p>Our remark label in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/InternshipCard.java"><code>InternshipCard</code></a> is still a placeholder. Let&#8217;s bring it to life by binding it with the actual <code>remark</code> field.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -2167,7 +2167,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a>'s constructor to bind the <code>Remark</code> field to the <code>Person</code> 's remark.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/InternshipCard.java"><code>InternshipCard</code></a>'s constructor to bind the <code>Remark</code> field to the <code>Internship</code> 's remark.</p>
 </li>
 </ol>
 </div>
@@ -2177,7 +2177,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java"><code>GuiTestAssert#assertCardDisplaysPerson(&#8230;&#8203;)</code></a> so that it will compare the now-functioning remark label.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java"><code>GuiTestAssert#assertCardDisplaysInternship(&#8230;&#8203;)</code></a> so that it will compare the now-functioning remark label.</p>
 </li>
 </ol>
 </div>
@@ -2193,7 +2193,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Replace the logic in <code>RemarkCommand#execute()</code> (that currently just throws an <code>Exception</code>), with the actual logic to modify the remarks of a person.</p>
+<p>Replace the logic in <code>RemarkCommand#execute()</code> (that currently just throws an <code>Exception</code>), with the actual logic to modify the remarks of a internship.</p>
 </li>
 </ol>
 </div>
@@ -2431,23 +2431,23 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="paragraph">
 <p>(For all use cases below, the <strong>System</strong> is the <code>InternshipList</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
 </div>
-<h3 id="use-case-delete-person" class="discrete">Use case: Delete person</h3>
+<h3 id="use-case-delete-internship" class="discrete">Use case: Delete internship</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User requests to list persons</p>
+<p>User requests to list internships</p>
 </li>
 <li>
-<p>InternshipList shows a list of persons</p>
+<p>InternshipList shows a list of internships</p>
 </li>
 <li>
-<p>User requests to delete a specific person in the list</p>
+<p>User requests to delete a specific internship in the list</p>
 </li>
 <li>
-<p>InternshipList deletes the person</p>
+<p>InternshipList deletes the internship</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2684,7 +2684,7 @@ for <code>RemarkCommandParser</code>.</p>
 <p>Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>1.8.0_60</code> or higher installed.</p>
 </li>
 <li>
-<p>Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.</p>
+<p>Should be able to hold up to 1000 internships without a noticeable sluggishness in performance for typical usage.</p>
 </li>
 <li>
 <p>A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.</p>
@@ -2724,7 +2724,7 @@ for <code>RemarkCommandParser</code>.</p>
 <dl>
 <dt class="hdlist1"><a id="chatbot"></a> Chat Bot</dt>
 <dd>
-<p>A computer program that stimulates a human conversation by communicating with a real person.
+<p>A computer program that stimulates a human conversation by communicating with a real internship.
 In this project, our chat bot will guide the user to find his ideal internships.</p>
 </dd>
 <dt class="hdlist1"><a id="mainstream-os"></a> Mainstream OS</dt>
@@ -2844,15 +2844,15 @@ Expected: The most recent window size and location is retained.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-person"><a class="link" href="#deleting-a-person">H.2. Deleting a person</a></h3>
+<h3 id="deleting-a-internship"><a class="link" href="#deleting-a-internship">H.2. Deleting a internship</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Deleting a person while all persons are listed</p>
+<p>Deleting a internship while all internships are listed</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Prerequisites: List all persons using the <code>list</code> command. Multiple persons in the list.</p>
+<p>Prerequisites: List all internships using the <code>list</code> command. Multiple internships in the list.</p>
 </li>
 <li>
 <p>Test case: <code>delete 1</code><br>
@@ -2860,7 +2860,7 @@ Expected: First contact is deleted from the list. Details of the deleted contact
 </li>
 <li>
 <p>Test case: <code>delete 0</code><br>
-Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.</p>
+Expected: No internship is deleted. Error details shown in the status message. Status bar remains the same.</p>
 </li>
 <li>
 <p>Other incorrect delete commands to try: <code>delete</code>, <code>delete x</code> (where x is larger than the list size) <em>{give more}</em><br>
@@ -2900,7 +2900,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-23 05:55:15 UTC
+Last updated 2018-03-23 10:56:55 UTC
 </div>
 </div>
 </body>
