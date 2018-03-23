@@ -44,10 +44,11 @@
 </li>
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#undo-redo-feature">3.1. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">3.2. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.3. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.4. Configuration</a></li>
+<li><a href="#rank-command-feature">3.1. Rank Command Feature</a></li>
+<li><a href="#undo-redo-feature">3.2. Undo/Redo feature</a></li>
+<li><a href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.4. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.5. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -583,9 +584,111 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.1. Undo/Redo feature</a></h3>
+<h3 id="rank-command-feature"><a class="link" href="#rank-command-feature">3.1. Rank Command Feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation"><a class="link" href="#current-implementation">3.1.1. Current Implementation</a></h4>
+<h4 id="proposed-implementation"><a class="link" href="#proposed-implementation">3.1.1. Proposed Implementation</a></h4>
+<div class="paragraph">
+<p>The rank command features will complement with the existing find and filter command function.</p>
+</div>
+<div class="paragraph">
+<p>The rank command features takes in one or more arguments in order to give internship listing a score so as to sort them.</p>
+</div>
+<div class="paragraph">
+<p>Our proposed implementation is to give a corresponding weight to each argument and sum up the internship listing score.</p>
+</div>
+<div class="paragraph">
+<p>See Comprehensive Example below</p>
+</div>
+<div class="paragraph">
+<p>Suppose the user keys in three commands 1. <code>find a b c</code> , 2. <code>filter d</code>, 3. <code>rank c b d a</code>
+The results is as shown below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/RankCommandExample.png" alt="RankCommandExample" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Explanation:
+argument c is given the weight 4, b is given the weight 3, and so on
+If the internship contains the argument, then add the argument weight to a ranking score.
+Sort the final list according to this score.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-implementation-of-code-rank-command-code"><a class="link" href="#aspect-implementation-of-code-rank-command-code">Aspect: Implementation of <code>Rank Command</code></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> Alternative 1 (current choice):</strong> Give weightage to the argument and calculate a ranking score for the internship listing</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Give users more functionality / options</p>
+</li>
+<li>
+<p>Cons: Harder to implement, requires modification to ModelComponent to keep track of ranking score and internship list</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Give equal weightage to all arguments, always auto-rank whenever search command is given, with the most match given at the top</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: More user friendly</p>
+</li>
+<li>
+<p>Cons: Still requires modification to ModelComponent to keep count of matches in the internship list</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-implementation-of-internship-listing-view-for-find-filter-rank-sort"><a class="link" href="#aspect-implementation-of-internship-listing-view-for-find-filter-rank-sort">Aspect: Implementation of Internship Listing View for Find/Filter/Rank/Sort</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Each time command is executed, we keep the internship list that is generated and execute further commands on that</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Once implemented, it is easier to understand and follow and to use for future features</p>
+</li>
+<li>
+<p>Cons: Harder to implement as it requires a few changes to the ModelComponent</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Generate brand new internship list from full list of internships by saving the arguments and keywords into another data structure and only using existing commands to generate the list</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Relies on existing component, allows for easier adding and removing of keyword arguments</p>
+</li>
+<li>
+<p>Cons: Harder to follow, find / filter commands must be improved much further to allow exact searching of particular lists</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.2. Undo/Redo feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation"><a class="link" href="#current-implementation">3.2.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -738,7 +841,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -875,20 +978,20 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.2. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.3. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.4. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.4, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.5, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -919,7 +1022,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.4. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.5. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2576,7 +2679,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-23 03:05:55 UTC
+Last updated 2018-03-23 03:06:09 UTC
 </div>
 </div>
 </body>
