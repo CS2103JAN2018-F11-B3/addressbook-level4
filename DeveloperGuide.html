@@ -49,6 +49,7 @@
 <li><a href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></li>
 <li><a href="#logging">3.4. Logging</a></li>
 <li><a href="#Implementation-Configuration">3.5. Configuration</a></li>
+<li><a href="#model">3.6. Model</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -1025,6 +1026,101 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.5. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="model"><a class="link" href="#model">3.6. Model</a></h3>
+<div class="sect3">
+<h4 id="rationale"><a class="link" href="#rationale">3.6.1. Rationale</a></h4>
+<div class="paragraph">
+<p>There are many details in an internship that the applicants are required to know. Below are the details:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Company Name</p>
+</li>
+<li>
+<p>Industry</p>
+</li>
+<li>
+<p>Type of opportunity</p>
+</li>
+<li>
+<p>Position</p>
+</li>
+<li>
+<p>Salary</p>
+</li>
+<li>
+<p>Date posted</p>
+</li>
+<li>
+<p>Application deadline</p>
+</li>
+<li>
+<p>Spots available</p>
+</li>
+<li>
+<p>Company description</p>
+</li>
+<li>
+<p>Skills required for this internship and the reasons behind it</p>
+</li>
+<li>
+<p>Skills that are good to have and the reasons behind it</p>
+</li>
+<li>
+<p>Job scope</p>
+</li>
+<li>
+<p>Key takeaways from this internship</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All these are attributes that an internship should have and thus must be implemented in <code>Internship</code> class which resides
+in <code>model</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.6.2. Design Considerations</a></h4>
+<div class="paragraph">
+<p>Alternative 1: Adding all the attributes under Internship class</p>
+</div>
+<div class="paragraph">
+<p>Pros: Easy to implement.</p>
+</div>
+<div class="paragraph">
+<p>Cons: Duplicate methods for similar attributes such as Date posted and Application deadline.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/Modeldesign1.png" alt="Modeldesign1" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Alternative 2: As some of these attributes are similar in nature, we can use encapsulation and group some of them up
+ and implementing inheritance. For instance, when checking for null attributes, RequiredInformation attributes will
+ return and error if it is true.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Pros: Reduce the need to change similar methods in every attribute as they are inherited from a superclass
+(RequiredInformation, OptionalInformation). There can also be a method to return the entire attributes under
+RequiredInformation class to further abstract it.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Cons: More difficulty when implementing</pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/Modeldesign2.png" alt="Modeldesign2" width="800">
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2679,7 +2775,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-23 03:06:09 UTC
+Last updated 2018-03-23 05:30:42 UTC
 </div>
 </div>
 </body>
