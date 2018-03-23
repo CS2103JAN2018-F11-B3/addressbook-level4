@@ -32,8 +32,22 @@
 <li><a href="#adding-a-person-code-add-code">3.2. Adding a person: <code>add</code></a></li>
 <li><a href="#listing-all-internships-code-list-code">3.3. Listing all internships : <code>list</code></a></li>
 <li><a href="#editing-a-person-code-edit-code">3.4. Editing a person : <code>edit</code></a></li>
+<li><a href="#locating-internships-by-keywords-code-find-code">3.5. Locating internships by keywords: <code>find</code></a></li>
+<li><a href="#filtering-internship-by-keyword-code-filter-code">3.6. Filtering Internship by keyword: <code>filter</code></a></li>
+<li><a href="#deleting-a-person-code-delete-code">3.7. Deleting a person : <code>delete</code></a></li>
+<li><a href="#selecting-an-internship-code-select-code">3.8. Selecting an internship : <code>select</code></a></li>
+<li><a href="#saving-an-internship-to-a-saved-collection-code-save-code">3.9. Saving an internship to a Saved Collection : <code>save</code></a></li>
+<li><a href="#listing-entered-commands-code-history-code">3.10. Listing entered commands : <code>history</code></a></li>
+<li><a href="#undoing-previous-command-code-undo-code">3.11. Undoing previous command : <code>undo</code></a></li>
+<li><a href="#redoing-the-previously-undone-command-code-redo-code">3.12. Redoing the previously undone command : <code>redo</code></a></li>
+<li><a href="#clearing-all-entries-code-clear-code">3.13. Clearing all entries : <code>clear</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">3.14. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">3.15. Saving the data</a></li>
+<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.16. Encrypting data files <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
+<li><a href="#faq">4. FAQ</a></li>
+<li><a href="#command-summary">5. Command Summary</a></li>
 </ul>
 </div>
 </div>
@@ -130,7 +144,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>[t/TAG]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>t/friend</code>, <code>t/friend t/family</code> etc.</p>
 </li>
 <li>
-<p>Parameters can be in any order e.g. if the command specifies <code>n/NAME p/PHONE_NUMBER</code>, <code>p/PHONE_NUMBER n/NAME</code> is also acceptable.</p>
+<p>Parameters can be in any order e.g. if the command specifies <code>n/NAME p/SALARY</code>, <code>p/SALARY n/NAME</code> is also acceptable.</p>
 </li>
 </ul>
 </div>
@@ -146,7 +160,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <h3 id="adding-a-person-code-add-code"><a class="link" href="#adding-a-person-code-add-code">3.2. Adding a person: <code>add</code></a></h3>
 <div class="paragraph">
 <p>Adds a person to the address book<br>
-Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]&#8230;&#8203;</code></p>
+Format: <code>add n/NAME p/SALARY e/EMAIL a/ADDRESS [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -185,7 +199,7 @@ Format: <code>list</code></p>
 <h3 id="editing-a-person-code-edit-code"><a class="link" href="#editing-a-person-code-edit-code">3.4. Editing a person : <code>edit</code></a></h3>
 <div class="paragraph">
 <p>Edits an existing person in the address book.<br>
-Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code></p>
+Format: <code>edit INDEX [n/NAME] [p/SALARY] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -217,7 +231,7 @@ Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;
 <ul>
 <li>
 <p><code>edit 1 p/91234567 e/johndoe@example.com</code><br>
-Edits the phone number and email address of the 1st person to be <code>91234567</code> and <code>johndoe@example.com</code> respectively.</p>
+Edits the salary number and email address of the 1st person to be <code>91234567</code> and <code>johndoe@example.com</code> respectively.</p>
 </li>
 <li>
 <p><code>edit 2 n/Betsy Crower t/</code><br>
@@ -225,18 +239,11 @@ Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all 
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-=== Locating persons by keyword: <code>find</code></p>
 </div>
-<div class="exampleblock">
-<div class="content">
+<div class="sect2">
+<h3 id="locating-internships-by-keywords-code-find-code"><a class="link" href="#locating-internships-by-keywords-code-find-code">3.5. Locating internships by keywords: <code>find</code></a></h3>
 <div class="paragraph">
-<p>=== Locating internship by name: <code>find</code>
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; b8d88808334326a1394d042a3ee9e81735858c0a</p>
-</div>
-<div class="paragraph">
-<p>Finds internships whose names, phone, email or address contain any of the given keywords.<br>
+<p>Finds persons whose names, salary, email or address contain any of the given keywords.<br>
 Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
 </div>
 <div class="sidebarblock">
@@ -274,7 +281,7 @@ Returns any person having names <code>Betsy</code>, <code>Tim</code>, or <code>J
 </li>
 <li>
 <p><code>find 12345678</code><br>
-Returns any person having phone number <code>12345678</code></p>
+Returns any person having salary number <code>12345678</code></p>
 </li>
 <li>
 <p><code>find <a href="mailto:Betsy@gmail.com">Betsy@gmail.com</a></code><br>
@@ -286,9 +293,9 @@ Returns any person having address with <code>Serangoon</code> in it</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Filtering Internship by keyword: <code>filter</code></p>
 </div>
+<div class="sect2">
+<h3 id="filtering-internship-by-keyword-code-filter-code"><a class="link" href="#filtering-internship-by-keyword-code-filter-code">3.6. Filtering Internship by keyword: <code>filter</code></a></h3>
 <div class="paragraph">
 <p>Filter the internship list according to the given keywords.<br>
 Format: <code>filter KEYWORD [MORE_KEEYWORDS]</code></p>
@@ -329,9 +336,9 @@ Returns only entries containing data and analytics e.g 'data analytics internshi
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Deleting a person : <code>delete</code></p>
 </div>
+<div class="sect2">
+<h3 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">3.7. Deleting a person : <code>delete</code></a></h3>
 <div class="paragraph">
 <p>Deletes the specified person from the address book.<br>
 Format: <code>delete INDEX</code></p>
@@ -370,9 +377,9 @@ Deletes the 1st person in the results of the <code>find</code> command.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Selecting an internship : <code>select</code></p>
 </div>
+<div class="sect2">
+<h3 id="selecting-an-internship-code-select-code"><a class="link" href="#selecting-an-internship-code-select-code">3.8. Selecting an internship : <code>select</code></a></h3>
 <div class="paragraph">
 <p>Selects the internship identified by the index number used in the last internships listing.<br>
 Format: <code>select INDEX</code></p>
@@ -411,9 +418,11 @@ Selects the 1st person in the results of the <code>find</code> command.</p>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect2">
+<h3 id="saving-an-internship-to-a-saved-collection-code-save-code"><a class="link" href="#saving-an-internship-to-a-saved-collection-code-save-code">3.9. Saving an internship to a Saved Collection : <code>save</code></a></h3>
 <div class="paragraph">
-<p>=== Saving an internship to a Saved Collection : <code>save</code>
-Saves the specified internship from the internship book.<br>
+<p>Saves the specified internship from the internship book.<br>
 Format: <code>save INDEX</code></p>
 </div>
 <div class="sidebarblock">
@@ -450,9 +459,9 @@ Deletes the 1st person in the results of the <code>find</code> command.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Listing entered commands : <code>history</code></p>
 </div>
+<div class="sect2">
+<h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">3.10. Listing entered commands : <code>history</code></a></h3>
 <div class="paragraph">
 <p>Lists all the commands that you have entered in reverse chronological order.<br>
 Format: <code>history</code></p>
@@ -471,9 +480,9 @@ Format: <code>history</code></p>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>=== Undoing previous command : <code>undo</code></p>
 </div>
+<div class="sect2">
+<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">3.11. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
 <p>Restores the internship database to the state before the previous <em>undoable</em> command was executed.<br>
 Format: <code>undo</code></p>
@@ -516,9 +525,9 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Redoing the previously undone command : <code>redo</code></p>
 </div>
+<div class="sect2">
+<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">3.12. Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
 <p>Reverses the most recent <code>undo</code> command.<br>
 Format: <code>redo</code></p>
@@ -548,47 +557,52 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Clearing all entries : <code>clear</code></p>
 </div>
+<div class="sect2">
+<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.13. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
 <p>Clears all entries from the address book.<br>
 Format: <code>clear</code></p>
 </div>
-<div class="paragraph">
-<p>=== Exiting the program : <code>exit</code></p>
 </div>
+<div class="sect2">
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.14. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Exits the program.<br>
 Format: <code>exit</code></p>
 </div>
-<div class="paragraph">
-<p>=== Saving the data</p>
 </div>
+<div class="sect2">
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.15. Saving the data</a></h3>
 <div class="paragraph">
 <p>Internships data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
-<div class="paragraph">
-<p>=== Encrypting data files <code>[coming in v2.0]</code></p>
 </div>
+<div class="sect2">
+<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.16. Encrypting data files <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p><em>{explain how the user can enable/disable data encryption}</em></p>
 </div>
-<div class="paragraph">
-<p>== FAQ</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="faq"><a class="link" href="#faq">4. FAQ</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p><strong>Q</strong>: How do I transfer my data to another Computer?<br>
 <strong>A</strong>: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.</p>
 </div>
-<div class="paragraph">
-<p>== Command Summary</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="command-summary"><a class="link" href="#command-summary">5. Command Summary</a></h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add</strong> <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]&#8230;&#8203;</code><br>
+<p><strong>Add</strong> <code>add n/NAME p/SALARY e/EMAIL a/ADDRESS [t/TAG]&#8230;&#8203;</code><br>
 e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague</code></p>
 </li>
 <li>
@@ -599,7 +613,7 @@ e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1
 e.g. <code>delete 3</code></p>
 </li>
 <li>
-<p><strong>Edit</strong> : <code>edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code><br>
+<p><strong>Edit</strong> : <code>edit INDEX [n/NAME] [p/SALARY] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code><br>
 e.g. <code>edit 2 n/James Lee e/jameslee@example.com</code></p>
 </li>
 <li>
@@ -638,12 +652,9 @@ e.g.<code>select 3</code></p>
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-23 05:30:42 UTC
+Last updated 2018-03-23 05:33:34 UTC
 </div>
 </div>
 </body>
