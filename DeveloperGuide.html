@@ -46,10 +46,11 @@
 <ul class="sectlevel2">
 <li><a href="#rank-command-feature">3.1. Rank Command Feature</a></li>
 <li><a href="#undo-redo-feature">3.2. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.4. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.5. Configuration</a></li>
-<li><a href="#model">3.6. Model</a></li>
+<li><a href="#save-unsave-feature">3.3. Save/Unsave feature</a></li>
+<li><a href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.5. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
+<li><a href="#model">3.7. Model</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -979,20 +980,138 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.3. [Proposed] Data Encryption</a></h3>
+<h3 id="save-unsave-feature"><a class="link" href="#save-unsave-feature">3.3. Save/Unsave feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.3.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The save/unsave mechanism is facilitated by the addition of a <code>saved</code> tag or removal of the <code>saved</code> tag
+respectively. It is inspired by the Instagram Save Collection feature, so our users are able to personally curate specific
+internships that they would like to save for a quick reference in the future as opposed to re-searching for
+a particular internship again.</p>
+</div>
+<div class="paragraph">
+<p>However, the special part of this feature is that users do not add or remove the <code>saved</code> tag themselves.
+Instead, they simply type in the command <code>save</code> or <code>unsave</code> with an index number and the command internally
+adds a new "saved" tag to the internship or removes the tag. This mechanism inherits from <code>UndoableCommand</code> and is
+executed by the <code>LogicManager</code></p>
+</div>
+<div class="paragraph">
+<p>To achieve the internal addition of a saved tag, we added a <code>addSavedTagToInternship</code> method
+within the SaveCommand object. This method is self-invocated by the object&#8217;s other methods, such as <code>preprocessUndoableCommand</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>private Person addSavedTagToInternship(Person person) throws CommandException {
+        //Creates a UniqueTagList of the specific internship's tags only
+        final UniqueTagList personTags = new UniqueTagList(internshipToSave.getTags());
+
+
+        //Adds a new tag savedTagName, which is a type String "saved" to the UniqueTagList
+        try {
+            personTags.add(new Tag(savedTagName));
+        } catch (UniqueTagList.DuplicateTagException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_TAG);
+        }
+
+
+        // ... rebuilds the updated list of tags ...
+
+
+        // returns an internship with all the same information except for an additional "saved" tag
+        return new Person(
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+    }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The execution of this method in the <code>SaveCommand</code> object affects
+the <code>Model</code> by adding a visible <code>saved</code> tag to a specific internship. The result of the <code>SaveCommand</code>
+execution is encapsulated as a <code>CommandResult</code> object which is passed back to UI.</p>
+</div>
+<div class="paragraph">
+<p>Below is a Sequence Diagram that demonstrates the interaction within the <code>Logic</code> component for the
+<code>execute("saved 1")</code> API call which is similar to <code>Delete</code> above.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SaveSequenceDiagramv1.png" alt="SaveSequenceDiagramv1" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Similarly, to achieve the internal removal of a saved tag, we added a <code>removeSavedTagToInternship</code> method
+within the UnsaveCommand object. The implementation of this method and its concept is exactly the opposite of
+the SaveCommand.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    private Person removeSavedTagToInternship(Person person) {
+        //Creates a UniqueTagList of the specific internship's tags only
+        final UniqueTagList personTags = new UniqueTagList(internshipToUnsave.getTags());
+
+
+        //Checks for an existing "saved" tag and removes it from the UniqueTagList
+        personTags.delete(new Tag(savedTagName));
+
+
+        // ... rebuilds the new list of tags and returns same person object without "saved" tag  ...
+    }</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
+<div class="paragraph">
+<p>With the <code>saved</code> tag, users are able to identify the internships they have saved in their personal collection in the <code>InternshipCardPanel</code>.
+When users want to remove the internship from their collection, they can type the <code>unsave</code> command to remove the tag.
+To view the entire collection, they can type in a command (yet to implement) that basically searches for all the
+internships with "saved" tags and displays the filtered list.</p>
+</div>
+<div class="paragraph">
+<p>We chose to use the additional and removal of tags for two main reasons:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It is visible to the user which internship has been saved or unsaved</p>
+</li>
+<li>
+<p>It is more straightforward in terms of implementation to do a search by a specific tag to display the Saved Collection</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="alternative"><a class="link" href="#alternative">Alternative</a></h5>
+<div class="paragraph">
+<p>Another idea was to create separate AddressBook Model and its own storage for the Saved Collections</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Able to save in hard disk storage</p>
+</li>
+<li>
+<p>Cons: May have performance issues in terms of memory usage and may have to significantly change the architecture</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.4. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.5, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1023,15 +1142,15 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.5. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="model"><a class="link" href="#model">3.6. Model</a></h3>
+<h3 id="model"><a class="link" href="#model">3.7. Model</a></h3>
 <div class="sect3">
-<h4 id="rationale"><a class="link" href="#rationale">3.6.1. Rationale</a></h4>
+<h4 id="rationale"><a class="link" href="#rationale">3.7.1. Rationale</a></h4>
 <div class="paragraph">
 <p>There are many details in an internship that the applicants are required to know. Below are the details:</p>
 </div>
@@ -1084,7 +1203,7 @@ in <code>model</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.6.2. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.7.2. Design Considerations</a></h4>
 <div class="paragraph">
 <p>Alternative 1: Adding all the attributes under Internship class</p>
 </div>
@@ -2136,7 +2255,7 @@ for <code>RemarkCommandParser</code>.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Colin</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Save Command</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Minor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Save selected internship / lists</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable users to view their Saved Collection</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ci Kang</p></td>
@@ -2154,7 +2273,13 @@ for <code>RemarkCommandParser</code>.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Wyin</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">GUI Revamp</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Major</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Revamp UI to resemble a Chatbot format</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Revamp UI to incorporate a Chatbot in the CLI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wyin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Save and Unsave Command</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Major/Minor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable user to save and unsave specific internships into a Saved Collection</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Wyin</p></td>
@@ -2775,7 +2900,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-23 05:33:34 UTC
+Last updated 2018-03-23 05:55:15 UTC
 </div>
 </div>
 </body>
