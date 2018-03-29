@@ -519,7 +519,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <h3 id="Design-Model"><a class="link" href="#Design-Model">2.4. Model component</a></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/ModelClassDiagram.png" alt="ModelClassDiagram" width="800">
+<img src="images/ModelDesign1.png" alt="ModelDesign1" width="800">
 </div>
 <div class="title">Figure 9. Structure of the Model Component</div>
 </div>
@@ -535,7 +535,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>stores a <code>UserPref</code> object that represents the user&#8217;s preferences.</p>
 </li>
 <li>
-<p>stores the Address Book data.</p>
+<p>stores the Internship Book data.</p>
 </li>
 <li>
 <p>exposes an unmodifiable <code>ObservableList&lt;Internship&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
@@ -566,7 +566,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>can save <code>UserPref</code> objects in json format and read it back.</p>
 </li>
 <li>
-<p>can save the Address Book data in xml format and read it back.</p>
+<p>can save the Internship Book data in xml format and read it back.</p>
 </li>
 </ul>
 </div>
@@ -1199,7 +1199,8 @@ internships with "saved" tags and displays the filtered list.</p>
 </div>
 <div class="paragraph">
 <p>All these are attributes that an internship should have and thus must be implemented in <code>Internship</code> class which resides
-in <code>model</code>.</p>
+in <code>model</code>. However, as not all companies are comfortable with giving all of the above mentioned details, some of the
+attributes will be deemed required and cannot be left empty.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1208,7 +1209,8 @@ in <code>model</code>.</p>
 <p>Alternative 1: Adding all the attributes under Internship class</p>
 </div>
 <div class="paragraph">
-<p>Pros: Easy to implement.</p>
+<p>Pros: Easy to implement. Have a boolean variable named isRequired under each class to ascertain if that attribute can
+be left blank. This method allows for easy manipulation between required and optional attributes.</p>
 </div>
 <div class="paragraph">
 <p>Cons: Duplicate methods for similar attributes such as Date posted and Application deadline.</p>
@@ -1232,7 +1234,8 @@ RequiredInformation class to further abstract it.</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Cons: More difficulty when implementing</pre>
+<pre>Cons: More difficulty when implementing. When one attribute is no longer required (became optional), significant changes
+needs to be made on the model segment.</pre>
 </div>
 </div>
 <div class="imageblock">
@@ -2894,7 +2897,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-29 17:37:54 UTC
+Last updated 2018-03-29 17:52:05 UTC
 </div>
 </div>
 </body>
