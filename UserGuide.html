@@ -29,24 +29,26 @@
 <li><a href="#Features">3. Features</a>
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
-<li><a href="#listing-all-internships-code-list-code">3.2. Listing all internships : <code>list</code></a></li>
-<li><a href="#find-internships-code-find-code">3.3. Find internships : <code>find</code></a></li>
-<li><a href="#filtering-internship-by-keyword-code-filter-code">3.4. Filtering Internship by keyword: <code>filter</code></a></li>
-<li><a href="#selecting-an-internship-code-select-code">3.5. Selecting an internship : <code>select</code></a></li>
+<li><a href="#start-communication-with-program-code-start-code">3.2. Start communication with program : <code>start</code></a></li>
+<li><a href="#restart-communication-with-program-code-new-code">3.3. Restart communication with program : <code>new</code></a></li>
+<li><a href="#find-internships-code-find-code">3.4. Find internships : <code>find</code></a></li>
+<li><a href="#filtering-internship-by-keyword-code-filter-code">3.5. Filtering Internship by keyword: <code>filter</code></a></li>
 <li><a href="#saving-an-internship-to-a-saved-collection-code-save-code">3.6. Saving an internship to a Saved Collection : <code>save</code></a></li>
-<li><a href="#listing-entered-commands-code-history-code">3.7. Listing entered commands : <code>history</code></a></li>
-<li><a href="#undoing-previous-command-code-undo-code">3.8. Undoing previous command : <code>undo</code></a></li>
-<li><a href="#redoing-the-previously-undone-command-code-redo-code">3.9. Redoing the previously undone command : <code>redo</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code">3.10. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#start-communication-with-program-code-start-code">3.11. Start communication with program : <code>start</code></a></li>
-<li><a href="#restart-communication-with-program-code-new-code">3.12. Restart communication with program : <code>new</code></a></li>
+<li><a href="#remove-a-saved-internship-from-a-saved-collection-code-unsave-code">3.7. Remove a Saved internship from a Saved Collection : <code>unsave</code></a></li>
+<li><a href="#shows-the-full-saved-internship-collection-code-find-saved-code-or-code-filter-saved-code">3.8. Shows the full Saved Internship Collection : <code>find saved</code> or <code>filter saved</code></a></li>
+<li><a href="#selecting-an-internship-code-select-code">3.9. Selecting an internship : <code>select</code></a></li>
+<li><a href="#listing-all-internships-code-list-code">3.10. Listing all internships : <code>list</code></a></li>
+<li><a href="#undoing-previous-command-code-undo-code">3.11. Undoing previous command : <code>undo</code></a></li>
+<li><a href="#redoing-the-previously-undone-command-code-redo-code">3.12. Redoing the previously undone command : <code>redo</code></a></li>
 <li><a href="#exiting-the-program-code-exit-code">3.13. Exiting the program : <code>exit</code></a></li>
 <li><a href="#saving-the-data">3.14. Saving the data</a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.15. Encrypting data files <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
-<li><a href="#faq">4. FAQ</a></li>
-<li><a href="#command-summary">5. Command Summary</a></li>
+<li><a href="#command-summary">4. Command Summary</a></li>
+<li><a href="#list-of-industries">5. List of Industries</a></li>
+<li><a href="#list-of-internship-roles">6. List of Internship Roles</a></li>
+<li><a href="#list-of-skills">7. List of Skills</a></li>
+<li><a href="#faq">8. FAQ</a></li>
 </ul>
 </div>
 </div>
@@ -54,7 +56,7 @@
 <h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>JobbiBot is a desktop chatbot application for those who <strong>prefer to use an interactive app to source for internship
+<p>JobbiBot is a desktop Chatbot application for those who <strong>prefer to use an interactive app to source for internship
 opportunities</strong>. Hence, JobbiBot is <strong>optimized for those who prefer to work with a Command Line Interface</strong> (CLI) while
 still having the benefits of a Graphical User Interface (GUI). If you can type fast, JobbiBot can find the most suitable
 internship matches faster than traditional GUI apps. Interested? Jump to the <a href="#quick-start">Section 2, &#8220;Quick Start&#8221;</a> to get started. Enjoy!</p>
@@ -83,13 +85,13 @@ This app will not work with earlier versions of Java 8.
 </div>
 </li>
 <li>
-<p>Download the latest <code>addressbook.jar</code> <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/releases">here</a>.</p>
+<p>Download the latest <code>jobbibot4.jar</code> <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/releases">here</a>.</p>
 </li>
 <li>
-<p>Copy the file to the folder you want to use as the home folder for your Address Book.</p>
+<p>Copy the file to the folder you want to use as the home folder for your JobbiBot.</p>
 </li>
 <li>
-<p>Double-click the file to start the app. The GUI should appear in a few seconds.</p>
+<p>Double-click the file to start the app. The GUI like the one below should appear in a few seconds.</p>
 <div class="imageblock">
 <div class="content">
 <img src="images/new_ui.png" alt="new ui" width="790">
@@ -97,21 +99,23 @@ This app will not work with earlier versions of Java 8.
 </div>
 </li>
 <li>
-<p>Type the command in the command box and press <kbd>Enter</kbd> to execute it.<br>
-e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> will open the help window.</p>
+<p>Type the command <code>start</code> in the command box and press <kbd>Enter</kbd> if you would like to begin a conversation with JobbiBot.</p>
+</li>
+<li>
+<p>Alternatively, if you would like to search for an internship directly. Type your command in the command box and press <kbd>Enter</kbd> to execute it.<br></p>
 </li>
 <li>
 <p>Some example commands you can try:</p>
 <div class="ulist">
 <ul>
 <li>
+<p><strong><code>help</code></strong> : open the help window</p>
+</li>
+<li>
 <p><strong><code>list</code></strong> : lists all contacts</p>
 </li>
 <li>
-<p><strong><code>add</code></strong><code>n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01</code> : adds a contact named <code>John Doe</code> to the Address Book.</p>
-</li>
-<li>
-<p><strong><code>delete</code></strong><code>3</code> : deletes the 3rd contact shown in the current list</p>
+<p><strong><code>save</code></strong><code>3</code> : save the 3rd contact shown in the current list to a personal Saved Collection</p>
 </li>
 <li>
 <p><strong><code>exit</code></strong> : exits the app</p>
@@ -120,7 +124,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 </div>
 </li>
 <li>
-<p>Refer to <a href="#Features">Section 3, &#8220;Features&#8221;</a> for details of each command.</p>
+<p>Refer to <a href="#Features">Section 3, &#8220;Features&#8221;</a> for more details of each command.</p>
 </li>
 </ol>
 </div>
@@ -155,18 +159,28 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="sect2">
 <h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></h3>
 <div class="paragraph">
+<p>Shows more details of each command and a glossary of industries, roles and skills that the user may refer to in his or her search</p>
+</div>
+<div class="paragraph">
 <p>Format: <code>help</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-all-internships-code-list-code"><a class="link" href="#listing-all-internships-code-list-code">3.2. Listing all internships : <code>list</code></a></h3>
+<h3 id="start-communication-with-program-code-start-code"><a class="link" href="#start-communication-with-program-code-start-code">3.2. Start communication with program : <code>start</code></a></h3>
 <div class="paragraph">
-<p>Shows a list of all internships in the internship database.<br>
-Format: <code>list</code></p>
+<p>Initiates the message thread of JobbiBot.<br>
+Format: <code>start</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="find-internships-code-find-code"><a class="link" href="#find-internships-code-find-code">3.3. Find internships : <code>find</code></a></h3>
+<h3 id="restart-communication-with-program-code-new-code"><a class="link" href="#restart-communication-with-program-code-new-code">3.3. Restart communication with program : <code>new</code></a></h3>
+<div class="paragraph">
+<p>Restarts a new message thread of JobbiBot and the previous thread is deleted<br>
+Format: <code>new</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="find-internships-code-find-code"><a class="link" href="#find-internships-code-find-code">3.4. Find internships : <code>find</code></a></h3>
 <div class="paragraph">
 <p>Finds internships which contains any of the keywords.<br>
 Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
@@ -176,13 +190,13 @@ Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
+<p>The search is case insensitive. e.g <code>analyst</code> will match <code>Analyst</code></p>
 </li>
 <li>
-<p>The order of the keywords does not matter. e.g. <code>Hans Bo</code> will match <code>Bo Hans</code></p>
+<p>The order of the keywords does not matter. e.g. <code>Sales Marketing</code> will match <code>Marketing Sales</code></p>
 </li>
 <li>
-<p>Internships matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Hans Bo</code> will return <code>Hans Gruber</code>, <code>Bo Yang</code></p>
+<p>Internships matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Micro Dyson</code> will return <code>Dyson Technology</code>, <code>Dyson Engineering</code> <code>Microsoft</code></p>
 </li>
 </ul>
 </div>
@@ -207,7 +221,7 @@ Returns any internship having <code>Engineering</code> in its description.</p>
 </li>
 <li>
 <p><code>find <a href="mailto:Betsy@gmail.com">Betsy@gmail.com</a></code><br>
-Returns any internship having email <code>Betsy@gmail.com</code></p>
+Returns any internship having contact email <code>Betsy@gmail.com</code></p>
 </li>
 <li>
 <p><code>find Serangoon</code><br>
@@ -217,7 +231,7 @@ Returns any internship having address or description matching <code>Serangoon</c
 </div>
 </div>
 <div class="sect2">
-<h3 id="filtering-internship-by-keyword-code-filter-code"><a class="link" href="#filtering-internship-by-keyword-code-filter-code">3.4. Filtering Internship by keyword: <code>filter</code></a></h3>
+<h3 id="filtering-internship-by-keyword-code-filter-code"><a class="link" href="#filtering-internship-by-keyword-code-filter-code">3.5. Filtering Internship by keyword: <code>filter</code></a></h3>
 <div class="paragraph">
 <p>Filter the internship list according to the given keywords.<br>
 Format: <code>filter KEYWORD [MORE_KEYWORDS]</code></p>
@@ -260,47 +274,6 @@ Returns only entries containing data and analytics e.g 'data analytics internshi
 </div>
 </div>
 <div class="sect2">
-<h3 id="selecting-an-internship-code-select-code"><a class="link" href="#selecting-an-internship-code-select-code">3.5. Selecting an internship : <code>select</code></a></h3>
-<div class="paragraph">
-<p>Selects the internship identified by the index number used in the last internship listing.<br>
-Format: <code>select INDEX</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Selects the internship and loads the Google search page the internship at the specified <code>INDEX</code>.</p>
-</li>
-<li>
-<p>The index refers to the index number shown in the most recent listing.</p>
-</li>
-<li>
-<p>The index <strong>must be a positive integer</strong> <code>1, 2, 3, &#8230;&#8203;</code></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>list</code><br>
-<code>select 2</code><br>
-Selects the 2nd internship in the address book.</p>
-</li>
-<li>
-<p><code>find Betsy</code><br>
-<code>select 1</code><br>
-Selects the 1st internship in the results of the <code>find</code> command.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
 <h3 id="saving-an-internship-to-a-saved-collection-code-save-code"><a class="link" href="#saving-an-internship-to-a-saved-collection-code-save-code">3.6. Saving an internship to a Saved Collection : <code>save</code></a></h3>
 <div class="paragraph">
 <p>Saves the specified internship from the internship book.<br>
@@ -334,7 +307,7 @@ Format: <code>save INDEX</code></p>
 Save the 2nd internship in the internship book.</p>
 </li>
 <li>
-<p><code>find Betsy</code><br>
+<p><code>find Google</code><br>
 <code>save 1</code><br>
 Saves the 1st person in the results of the <code>find</code> command.</p>
 </li>
@@ -342,28 +315,104 @@ Saves the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">3.7. Listing entered commands : <code>history</code></a></h3>
+<h3 id="remove-a-saved-internship-from-a-saved-collection-code-unsave-code"><a class="link" href="#remove-a-saved-internship-from-a-saved-collection-code-unsave-code">3.7. Remove a Saved internship from a Saved Collection : <code>unsave</code></a></h3>
 <div class="paragraph">
-<p>Lists all the commands that you have entered in reverse chronological order.<br>
-Format: <code>history</code></p>
+<p>Removes the specified internship from the saved internship collection.<br>
+Format: <code>unsave INDEX</code></p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Removes the internship at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="paragraph">
-<p>Pressing the <kbd>&uarr;</kbd> and <kbd>&darr;</kbd> arrows will display the previous and next input respectively in the command box.</p>
+<p>Examples:</p>
 </div>
-</td>
-</tr>
-</table>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find saved</code><br>
+<code>unsave 2</code><br>
+Removes the 2nd internship in the saved internship collection.</p>
+</li>
+<li>
+<p><code>find Google</code><br>
+<code>save 1</code><br>
+<code>unsave 1</code><br>
+Removes the 1st person in the results of the <code>find</code> command the saved collection.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">3.8. Undoing previous command : <code>undo</code></a></h3>
+<h3 id="shows-the-full-saved-internship-collection-code-find-saved-code-or-code-filter-saved-code"><a class="link" href="#shows-the-full-saved-internship-collection-code-find-saved-code-or-code-filter-saved-code">3.8. Shows the full Saved Internship Collection : <code>find saved</code> or <code>filter saved</code></a></h3>
+<div class="paragraph">
+<p>Shows all the internships with a <code>saved</code> tag.<br>
+Format: <code>find saved</code> or <code>filter saved</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="selecting-an-internship-code-select-code"><a class="link" href="#selecting-an-internship-code-select-code">3.9. Selecting an internship : <code>select</code></a></h3>
+<div class="paragraph">
+<p>Selects the internship identified by the index number used in the last internship listing.<br>
+Format: <code>select INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Selects the internship and loads the Google search page the internship at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> <code>1, 2, 3, &#8230;&#8203;</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code><br>
+<code>select 2</code><br>
+Selects the 2nd internship in the address book.</p>
+</li>
+<li>
+<p><code>find Singapore Tourism Board</code><br>
+<code>select 1</code><br>
+Selects the 1st internship in the results of the <code>find</code> command.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listing-all-internships-code-list-code"><a class="link" href="#listing-all-internships-code-list-code">3.10. Listing all internships : <code>list</code></a></h3>
+<div class="paragraph">
+<p>Shows a list of all internships in the internship database.<br>
+Format: <code>list</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">3.11. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
 <p>Restores the internship database to the state before the previous <em>undoable</em> command was executed.<br>
 Format: <code>undo</code></p>
@@ -388,9 +437,9 @@ Format: <code>undo</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>delete 1</code><br>
+<p><code>save 1</code><br>
 <code>list</code><br>
-<code>undo</code> (reverses the <code>delete 1</code> command)<br></p>
+<code>undo</code> (reverses the <code>save 1</code> command)<br></p>
 </li>
 <li>
 <p><code>select 1</code><br>
@@ -399,16 +448,16 @@ Format: <code>undo</code></p>
 The <code>undo</code> command fails as there are no undoable commands executed previously.</p>
 </li>
 <li>
-<p><code>delete 1</code><br>
-<code>clear</code><br>
-<code>undo</code> (reverses the <code>clear</code> command)<br>
-<code>undo</code> (reverses the <code>delete 1</code> command)<br></p>
+<p><code>save 1</code><br>
+<code>unsave 1</code><br>
+<code>undo</code> (reverses the <code>unsave 1</code> command)<br>
+<code>undo</code> (reverses the <code>save 1</code> command)<br></p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">3.9. Redoing the previously undone command : <code>redo</code></a></h3>
+<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">3.12. Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
 <p>Reverses the most recent <code>undo</code> command.<br>
 Format: <code>redo</code></p>
@@ -419,45 +468,24 @@ Format: <code>redo</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>delete 1</code><br>
-<code>undo</code> (reverses the <code>delete 1</code> command)<br>
-<code>redo</code> (reapplies the <code>delete 1</code> command)<br></p>
+<p><code>save 1</code><br>
+<code>undo</code> (reverses the <code>save 1</code> command)<br>
+<code>redo</code> (reapplies the <code>save 1</code> command)<br></p>
 </li>
 <li>
-<p><code>delete 1</code><br>
+<p><code>select 1</code><br>
 <code>redo</code><br>
 The <code>redo</code> command fails as there are no <code>undo</code> commands executed previously.</p>
 </li>
 <li>
-<p><code>delete 1</code><br>
-<code>clear</code><br>
-<code>undo</code> (reverses the <code>clear</code> command)<br>
-<code>undo</code> (reverses the <code>delete 1</code> command)<br>
-<code>redo</code> (reapplies the <code>delete 1</code> command)<br>
-<code>redo</code> (reapplies the <code>clear</code> command)<br></p>
+<p><code>save 1</code><br>
+<code>unsave 1</code><br>
+<code>undo</code> (reverses the <code>unsave 1</code> command)<br>
+<code>undo</code> (reverses the <code>save 1</code> command)<br>
+<code>redo</code> (reapplies the <code>save 1</code> command)<br>
+<code>redo</code> (reapplies the <code>unsave 1</code> command)<br></p>
 </li>
 </ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.10. Clearing all entries : <code>clear</code></a></h3>
-<div class="paragraph">
-<p>Clears all entries from the internship book.<br>
-Format: <code>clear</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="start-communication-with-program-code-start-code"><a class="link" href="#start-communication-with-program-code-start-code">3.11. Start communication with program : <code>start</code></a></h3>
-<div class="paragraph">
-<p>Initiates the message thread of JobbiBot.<br>
-Format: <code>start</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="restart-communication-with-program-code-new-code"><a class="link" href="#restart-communication-with-program-code-new-code">3.12. Restart communication with program : <code>new</code></a></h3>
-<div class="paragraph">
-<p>Restarts a new message thread of JobbiBot and the previous thread is deleted<br>
-Format: <code>new</code></p>
 </div>
 </div>
 <div class="sect2">
@@ -474,30 +502,21 @@ Format: <code>exit</code></p>
 There is no need to save manually</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.15. Encrypting data files <code>[coming in v2.0]</code></a></h3>
-<div class="paragraph">
-<p><em>{explain how the user can enable/disable data encryption}</em></p>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="faq"><a class="link" href="#faq">4. FAQ</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>Q</strong>: How do I update the internship list to the most updated version?<br>
-<strong>A</strong>: Download the database from the www.dummywebsite.com and replace the addressbook.xml file in main\data.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="command-summary"><a class="link" href="#command-summary">5. Command Summary</a></h2>
+<h2 id="command-summary"><a class="link" href="#command-summary">4. Command Summary</a></h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Clear</strong> : <code>clear</code></p>
+<p><strong>Help</strong> : <code>help</code></p>
+</li>
+<li>
+<p><strong>Start JobbiBot</strong> : <code>start</code></p>
+</li>
+<li>
+<p><strong>Refresh JobbiBot Conversation</strong>: <code>new</code></p>
 </li>
 <li>
 <p><strong>Find</strong> : <code>find KEYWORD [MORE_KEYWORDS]</code><br>
@@ -508,21 +527,23 @@ e.g. <code>find Analytics Engineering</code></p>
 e.g. <code>filter Marketing Singapore</code></p>
 </li>
 <li>
-<p><strong>List</strong> : <code>list</code></p>
+<p><strong>Save</strong> : <code>save INDEX</code><br>
+e.g. <code>save 2</code></p>
 </li>
 <li>
-<p><strong>Help</strong> : <code>help</code></p>
+<p><strong>Unsave</strong> : <code>unsave INDEX</code><br>
+e.g. <code>unsave 2</code></p>
+</li>
+<li>
+<p><strong>Show Saved Collection</strong> : <code>find saved</code> or <code>filter saved</code><br>
+e.g. <code>find saved</code> or <code>filter saved</code></p>
 </li>
 <li>
 <p><strong>Select</strong> : <code>select INDEX</code><br>
-e.g.<code>select 2</code></p>
-</li>
-<li>
-<p><strong>Save</strong> : <code>save INDEX</code><br>
 e.g.<code>select 3</code></p>
 </li>
 <li>
-<p><strong>History</strong> : <code>history</code></p>
+<p><strong>List</strong> : <code>list</code></p>
 </li>
 <li>
 <p><strong>Undo</strong> : <code>undo</code></p>
@@ -530,14 +551,421 @@ e.g.<code>select 3</code></p>
 <li>
 <p><strong>Redo</strong> : <code>redo</code></p>
 </li>
+<li>
+<p><strong>Exit</strong> : <code>exit</code></p>
+</li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="list-of-industries"><a class="link" href="#list-of-industries">5. List of Industries</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This serves as a non-exhaustive lists of skills that users can search for</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Arts and Design</p>
+</li>
+<li>
+<p>Automotive</p>
+</li>
+<li>
+<p>Banking and Finance</p>
+</li>
+<li>
+<p>Biomedical Sciences</p>
+</li>
+<li>
+<p>Community and Social Services</p>
+</li>
+<li>
+<p>Education</p>
+</li>
+<li>
+<p>Entrepreneurship and Businesses (General)</p>
+</li>
+<li>
+<p>Fashion and Retail</p>
+</li>
+<li>
+<p>Food and Beverages</p>
+</li>
+<li>
+<p>Healthcare Services</p>
+</li>
+<li>
+<p>Hospitality</p>
+</li>
+<li>
+<p>Legal</p>
+</li>
+<li>
+<p>Media and Communications</p>
+</li>
+<li>
+<p>Military and Protective Services</p>
+</li>
+<li>
+<p>Public Relations</p>
+</li>
+<li>
+<p>Research</p>
+</li>
+<li>
+<p>Social Enterprise</p>
+</li>
+<li>
+<p>Technology</p>
+</li>
+<li>
+<p>Veterinary Services</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="list-of-internship-roles"><a class="link" href="#list-of-internship-roles">6. List of Internship Roles</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This table is a non exhaustive list of potential internship roles that users can search for. Internship roles are organised by industry but not all industries are listed in this table.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 35%;">
+<col style="width: 65%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Industry</th>
+<th class="tableblock halign-left valign-top">Internship Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Arts and Design</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Animator</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Film Editor</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Graphic Designer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Photographer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Videographer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="9"><p class="tableblock">Banking and Finance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Accountant</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Asset Management Analyst</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Audit Assistant</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Corporate Security Analyst</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Financial Planner/Advisory</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FinTech Analyst</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Private Equity Analyst</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Risk Management</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wealth Management Analyst</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Community and Social Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Community Relations Management</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Human Services</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="7"><p class="tableblock">Consultancy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Education Consultant</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Human Resource Consultant</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Management Consultant</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operations Consultant</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Public Relations Consultant</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Strategy Consultant</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Technology Consultant</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Education</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Assessment and Curriculum Program Coordinator</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Creative Writing Teaching</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="4"><p class="tableblock">Engineering</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aerospace Engineer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Electrical Engineer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manufacturing Engineer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mechanical Engineer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="6"><p class="tableblock">General, Business and Entrepreneurship</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Business Analytics</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Business Development</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Market Researcher</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operations</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sales</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Product Manager</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Healthcare</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Patient Support</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Patient Advocate</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="4"><p class="tableblock">Hospitality and Tourism</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Customer Experience</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Events Planning and Management</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Guest Services and Relations</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sustainability</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Legal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Legal Counsel</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="7"><p class="tableblock">Media and Communication</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Advertising / Content Creator</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Digital Marketer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Editor</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Photojournalist</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Public Relation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Social Media</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Writer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="3"><p class="tableblock">Retail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Buyer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Merchandiser</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shop Assistant</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="18"><p class="tableblock">Technology</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Android Developer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Computer Hardware Engineer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data Visualisation Engineer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data Scientist</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Full Stack Developer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Information Security Analyst</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iOS Developer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IT Support</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine Learning Researcher</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mobile Developer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.NET Developer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Networks Engineer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software Engineer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software Quality Assurance Engineer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unity3D (AR/VR)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User Experience</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User Interface</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Web Development</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="list-of-skills"><a class="link" href="#list-of-skills">7. List of Skills</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This serves as a non-exhaustive lists of skills that users can list in their conversation with Jobbi.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Accountancy</p>
+</li>
+<li>
+<p>Business Development</p>
+</li>
+<li>
+<p>Consultancy</p>
+</li>
+<li>
+<p>Data Analytics</p>
+</li>
+<li>
+<p>Design</p>
+</li>
+<li>
+<p>Electrical Engineering</p>
+</li>
+<li>
+<p>Event Planning and Management</p>
+</li>
+<li>
+<p>Finance</p>
+</li>
+<li>
+<p>Full Stack Software Engineering</p>
+</li>
+<li>
+<p>Human Resource</p>
+</li>
+<li>
+<p>Logistics and Procurement</p>
+</li>
+<li>
+<p>Machine Learning</p>
+</li>
+<li>
+<p>Marketing</p>
+</li>
+<li>
+<p>Mechanical Engineering</p>
+</li>
+<li>
+<p>Mobile Development</p>
+</li>
+<li>
+<p>Operations</p>
+</li>
+<li>
+<p>Product Management</p>
+</li>
+<li>
+<p>Public Relations</p>
+</li>
+<li>
+<p>Purchasing</p>
+</li>
+<li>
+<p>Sales</p>
+</li>
+<li>
+<p>Software Engineering</p>
+</li>
+<li>
+<p>User Experience Design</p>
+</li>
+<li>
+<p>User Interface Design</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="faq"><a class="link" href="#faq">8. FAQ</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Q</strong>: How do I update the internship list to the most updated version?<br>
+<strong>A</strong>: Download the database from the www.dummywebsite.com and replace the addressbook.xml file in main\data.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-03 09:40:43 UTC
+Last updated 2018-04-03 10:28:29 UTC
 </div>
 </div>
 </body>
