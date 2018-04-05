@@ -20,10 +20,12 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.NewChatCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SaveCommand;
+import seedu.address.logic.commands.SaveallCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.StartCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnsaveCommand;
+import seedu.address.logic.commands.UnsaveallCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -92,8 +94,10 @@ public class AddressBookParser {
         case FilterCommand.COMMAND_WORD:
             return new FilterCommandParser().parse(arguments);
 
+        //@@author {wyinkok}
         case SaveCommand.COMMAND_WORD:
-            return new SaveCommandParser().parse(arguments);
+           return new SaveCommandParser().parse(arguments);
+
         case UnsaveCommand.COMMAND_WORD:
             return new UnsaveCommandParser().parse(arguments);
 
@@ -103,6 +107,13 @@ public class AddressBookParser {
         case NewChatCommand.COMMAND_WORD:
             return new NewChatCommand();
 
+        case SaveallCommand.COMMAND_WORD:
+            return new SaveallCommand();
+
+        case UnsaveallCommand.COMMAND_WORD:
+            return new UnsaveallCommand();
+
+        //@@author
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
