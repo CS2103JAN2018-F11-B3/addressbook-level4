@@ -191,13 +191,22 @@ Format: <code>search KEYWORD [MORE_KEYWORDS]</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>The search is case insensitive. e.g <code>analyst</code> will match <code>Analyst</code></p>
+<p>The find/search is case insensitive. e.g <code>analyst</code> will match <code>Analyst</code></p>
+</li>
+<li>
+<p>Tags other than 'saved' tag attached when using find/search function will be removed when using 'list'</p>
 </li>
 <li>
 <p>The order of the keywords does not matter. e.g. <code>Sales Marketing</code> will match <code>Marketing Sales</code></p>
 </li>
 <li>
 <p>Internships matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Micro Dyson</code> will return <code>Dyson Technology</code>, <code>Dyson Engineering</code> <code>Microsoft</code></p>
+</li>
+<li>
+<p>Keyword/s matching the internship is added to the internship as a tag/s</p>
+</li>
+<li>
+<p>Keywords tags are reset if user uses find again</p>
 </li>
 </ul>
 </div>
@@ -1006,7 +1015,7 @@ e.g.<code>select 3</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-06 01:38:12 UTC
+Last updated 2018-04-06 02:11:54 UTC
 </div>
 </div>
 </body>
