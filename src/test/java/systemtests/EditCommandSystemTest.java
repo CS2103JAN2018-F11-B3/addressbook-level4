@@ -119,6 +119,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
         /* Case: filtered internship list, edit index within bounds of address book and internship list -> edited */
+
         /*
         showInternshipsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_INTERNSHIP;

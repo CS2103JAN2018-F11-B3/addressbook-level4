@@ -180,6 +180,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
 
         /* Case: filters the internship list before adding -> added */
+
         /*
         showInternshipsWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(IDA);
