@@ -44,7 +44,7 @@
 </li>
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#rank-command-feature">3.1. Rank Command Feature</a></li>
+<li><a href="#filter-feature">3.1. Filter Feature</a></li>
 <li><a href="#undo-redo-feature">3.2. Undo/Redo feature</a></li>
 <li><a href="#save-unsave-feature">3.3. Save/Unsave feature</a></li>
 <li><a href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></li>
@@ -586,103 +586,169 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="rank-command-feature"><a class="link" href="#rank-command-feature">3.1. Rank Command Feature</a></h3>
+<h3 id="filter-feature"><a class="link" href="#filter-feature">3.1. Filter Feature</a></h3>
 <div class="sect3">
-<h4 id="proposed-implementation"><a class="link" href="#proposed-implementation">3.1.1. Proposed Implementation</a></h4>
+<h4 id="implementation-2"><a class="link" href="#implementation-2">3.1.1. Implementation</a></h4>
 <div class="paragraph">
-<p>The rank command features will complement with the existing find and filter command function.</p>
-</div>
-<div class="paragraph">
-<p>The rank command features takes in one or more arguments in order to give internship listing a score so as to sort them.</p>
+<p>The search and filter command are two complementary features of the JobbiBot.</p>
 </div>
 <div class="paragraph">
-<p>Our proposed implementation is to give a corresponding weight to each argument and sum up the internship listing score.</p>
+<p>The search command takes in one or more keywords and returns all internships that contains <strong>ANY</strong> of the keyword(s).</p>
 </div>
 <div class="paragraph">
-<p>See Comprehensive Example below</p>
+<p>The filter command takes in one or more keywords and returns all internships that contains <strong>ALL</strong> of the keyword(s) from the last searched internship list or the full internship list if the users has not used the search command feature.</p>
 </div>
 <div class="paragraph">
-<p>Suppose the user keys in three commands 1. <code>find a b c</code> , 2. <code>filter d</code>, 3. <code>rank c b d a</code>
-The results is as shown below:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/RankCommandExample.png" alt="RankCommandExample" width="800">
-</div>
-</div>
-<div class="paragraph">
-<p>Explanation:
-argument c is given the weight 4, b is given the weight 3, and so on
-If the internship contains the argument, then add the argument weight to a ranking score.
-Sort the final list according to this score.</p>
+<p>See diagram below: &lt;Insert Diagram Here&gt;</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-implementation-of-code-rank-command-code"><a class="link" href="#aspect-implementation-of-code-rank-command-code">Aspect: Implementation of <code>Rank Command</code></a></h5>
+<h5 id="aspect-old-implementation-of-code-filter-command-code"><a class="link" href="#aspect-old-implementation-of-code-filter-command-code">Aspect: Old Implementation of <code>Filter Command</code></a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong> Alternative 1 (current choice):</strong> Give weightage to the argument and calculate a ranking score for the internship listing</p>
+<p>Saved the list searched keyword argument(s) into a List&lt;String&gt; and add these arguments into the filter command arguments.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Give users more functionality / options</p>
+<p>Example: <code>search marketing</code>, then <code>filter singapore</code> is essentially <code>filter marketing singapore</code> since filter only returns arguments that contains all the given keywords</p>
 </li>
 <li>
-<p>Cons: Harder to implement, requires modification to ModelComponent to keep track of ranking score and internship list</p>
+<p>Rationale 1: Provides two unique function, one to union find all the keyword arguments, whereas the other is a inner join / intersect find of all the keyword arguments.</p>
+</li>
+<li>
+<p>Rationale 2: More intuitive for the user to only key in <code>filter singapore</code> to get <code>filter singapore marketing</code> results after he/she have <code>search marketing</code></p>
+</li>
+<li>
+<p>Pros: Easy to implement, only need to create a List&lt;String&gt; to store the last searched arguments and add them to the filter command arguments when filter commmand is executed</p>
+</li>
+<li>
+<p>Cons: Fatal design error in the following example: <code>search marketing analytics</code>, then <code>filter singapore</code> will only return results that contain marketing analytics and singapore.
+Whereas the desired output should be internships that either contain marketing singapore or analytics singapore. It was not feasible/easy to change the filter command to produce this desired outcome</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p><strong>Alternative 2:</strong> Give equal weightage to all arguments, always auto-rank whenever search command is given, with the most match given at the top</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: More user friendly</p>
-</li>
-<li>
-<p>Cons: Still requires modification to ModelComponent to keep count of matches in the internship list</p>
-</li>
 </ul>
 </div>
-</li>
-</ul>
+<div class="paragraph">
+<p>See diagram below: &lt;Insert Diagram 2 Here&gt;</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-implementation-of-internship-listing-view-for-find-filter-rank-sort"><a class="link" href="#aspect-implementation-of-internship-listing-view-for-find-filter-rank-sort">Aspect: Implementation of Internship Listing View for Find/Filter/Rank/Sort</a></h5>
+<h5 id="aspect-alternative-implementation-filter-command"><a class="link" href="#aspect-alternative-implementation-filter-command">Aspect: Alternative Implementation 'Filter Command'</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Each time command is executed, we keep the internship list that is generated and execute further commands on that</p>
+<p>Alternative implementation to solve the above problem was to add a tag called CurrentList whatever is being currently searched.
+Regardless of how many search arguments were given in the initial search command, the list will all have the CurrentList tag which allows for easy filtering
+as we can simply add CurrentList tag to the filter keywords.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Once implemented, it is easier to understand and follow and to use for future features</p>
+<p>Example: <code>Search marketing analytics data engineering</code> followed by a <code>filter singapore</code> will result in <code>filter singapore CurrentList</code>
+which returns all internships that contains (marketing or analytics or data or engineering) and singapore.</p>
 </li>
 <li>
-<p>Cons: Harder to implement as it requires a few changes to the ModelComponent</p>
+<p>Pros: Make use of existing Tag Feature. Supposedly easier to implement than changing the model component to save the last searched internship list somewhere and apply filter on it.</p>
+</li>
+<li>
+<p>Cons: Will be distracting as the CurrentList tag is applied to the entire list</p>
+</li>
+<li>
+<p>Cons: Was harder to implement than expected because the tag had to be cleared</p>
+</li>
+<li>
+<p>Note: This add tag feature (done by Ci Kang) is now used to distinguish between search keywords.
+E.g <code>search marketing analytics</code> will display marketing tag for internship that contain marketing and display analytics tag for internship that contains analytics.</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p><strong>Alternative 2:</strong> Generate brand new internship list from full list of internships by saving the arguments and keywords into another data structure and only using existing commands to generate the list</p>
+</ul>
+</div>
+<div class="paragraph">
+<p>See diagram below: &lt;Insert Diagram 3 Here&gt;</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-current-implementation-filter-command"><a class="link" href="#aspect-current-implementation-filter-command">Aspect: Current Implementation 'Filter Command'</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Relies on existing component, allows for easier adding and removing of keyword arguments</p>
-</li>
-<li>
-<p>Cons: Harder to follow, find / filter commands must be improved much further to allow exact searching of particular lists</p>
+<p>Current implementation makes use of the Java FXCollections filteredList.
+We created a separate FilteredList&lt;Internship&gt; called SearchedInternshipList and used it together with the existing FilteredList&lt;Internship&gt; FilteredIntership.
+Thus we have an addressbook , a filteredList (called searchedInternships) which wraps around the addressbook, and a filteredList (called filteredInternships) which wraps around the searchedInternship. See code snippet below</p>
 </li>
 </ul>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre>public class ModelManager extends ComponentManager implements Model {
+	...
+    private final AddressBook addressBook;
+    private final FilteredList&lt;Internship&gt; searchedInternships;
+    private final FilteredList&lt;Internship&gt; filteredInternships;
+    ...
+
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    	....
+    	....
+        this.addressBook = new AddressBook(addressBook);
+        searchedInternships = new FilteredList&lt;&gt;()
+        filteredInternships = new FilteredList&lt;&gt;(searchedInternships);
+        ...
+    }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Due to the java wrapper functionality (in the FilteredList&lt;T&gt;), any changes in addressbook is propagated down to searchedInternship and then to filteredInternship. This allows us to maintain two different list of internships according to whatever keyword arguments (predicate) have been applied to it.</p>
+</div>
+<div class="paragraph">
+<p>Additional helper methods were then created to differentiate between updating of the searchedInternship and filteredInternship. See code snippet 2 below</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>// For Filter function
+   @Override
+   public void updateFilteredInternshipList(Predicate&lt;Internship&gt; predicate) {
+       requireNonNull(predicate);
+       filteredInternships.setPredicate(predicate);
+   }</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    // For Search Function
+    @Override
+    public void updateSearchedInternshipList(Predicate&lt;Internship&gt; predicate) {
+        requireNonNull(predicate);
+        searchedInternships.setPredicate(predicate);
+        filteredInternships.setPredicate(predicate);
+    }
+---</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With this, the search and filter function can now work as intended. <code>search marketing analytics</code> and <code>filter singapore</code> will return results containing (marketing or analytics) and singapore</p>
+</div>
+<div class="paragraph">
+<p>See Diagram below: &lt;Insert Diagram to show how the propagation works here&gt;</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Design feature solved in relatively "easy" way without having to change the existing code significantly</p>
+</li>
+<li>
+<p>Cons: Was harder to implement as it required knowledge of how the model interacts and worked as well as how the filteredList Java FXCollection worked.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>See diagram below &lt;Insert Model Manager Diagram&gt;</p>
 </div>
 </div>
 </div>
@@ -2897,7 +2963,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-05 18:24:37 UTC
+Last updated 2018-04-06 01:09:39 UTC
 </div>
 </div>
 </body>
