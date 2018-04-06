@@ -27,9 +27,6 @@ public class Sorter {
         } else if (keywords.size() >= 3) {
             attribute2 = keywords.get(1);
             attribute3 = keywords.get(2);
-        } else {
-            attribute2 = keywords.get(0);
-            attribute3 = keywords.get(0);
         }
     }
 
