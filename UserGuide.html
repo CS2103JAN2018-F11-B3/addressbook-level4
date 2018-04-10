@@ -33,7 +33,7 @@
 <li><a href="#restart-conversation-with-program-code-new-code">3.3. Restart conversation with program : <code>new</code></a></li>
 <li><a href="#find-internships-by-keyword-s-code-find-code-code-search-code">3.4. Find internships by keyword(s): <code>find</code> <code>search</code></a></li>
 <li><a href="#filtering-internship-by-keyword-s-code-filter-code">3.5. Filtering Internship by keyword(s): <code>filter</code></a></li>
-<li><a href="#sorting-internship-by-keywords-s-code-sort-code-code-sortby-code">3.6. Sorting Internship by keywords(s): <code>sort</code> <code>sortby</code></a></li>
+<li><a href="#sorting-internship-by-keyword-s-code-sort-code-code-sortby-code">3.6. Sorting Internship by keyword(s): <code>sort</code> <code>sortby</code></a></li>
 <li><a href="#saving-an-internship-to-a-saved-collection-code-save-code">3.7. Saving an internship to a Saved Collection : <code>save</code></a></li>
 <li><a href="#remove-a-saved-internship-from-a-saved-collection-code-unsave-code">3.8. Remove a Saved internship from a Saved Collection : <code>unsave</code></a></li>
 <li><a href="#shows-the-full-saved-internship-collection-code-find-saved-code-or-code-filter-saved-code">3.9. Shows the full Saved Internship Collection : <code>find saved</code> or <code>filter saved</code></a></li>
@@ -86,7 +86,7 @@ This app will not work with earlier versions of Java 8.
 </div>
 </li>
 <li>
-<p>Download the latest <code>jobbibot.jar</code> <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/releases">here</a>.</p>
+<p>Download the latest <code>jobbibot.jar</code> <a href="{https://github.com/CS2103JAN2018-F11-B3/main/releases}/releases">here</a>.</p>
 </li>
 <li>
 <p>Copy the file to the folder you want to use as the home folder for your JobbiBot.</p>
@@ -137,7 +137,7 @@ This app will not work with earlier versions of Java 8.
 <div class="sect2">
 <h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></h3>
 <div class="paragraph">
-<p>Shows more details of each command and a glossary of industries, roles and skills that the user may refer to in his or her search</p>
+<p>Shows more details of each command and a glossary of industries, roles and skills that the user may refer to in his or her search.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>help</code></p>
@@ -153,7 +153,7 @@ Format: <code>start</code></p>
 <div class="sect2">
 <h3 id="restart-conversation-with-program-code-new-code"><a class="link" href="#restart-conversation-with-program-code-new-code">3.3. Restart conversation with program : <code>new</code></a></h3>
 <div class="paragraph">
-<p>Restarts a new message thread of JobbiBot and the previous thread is deleted<br>
+<p>Restarts a new message thread of JobbiBot and the previous thread is deleted.<br>
 Format: <code>new</code></p>
 </div>
 </div>
@@ -171,7 +171,7 @@ Format: <code>search KEYWORD [MORE_KEYWORDS]</code></p>
 <p>The find/search is case insensitive. e.g <code>analyst</code> will match <code>Analyst</code></p>
 </li>
 <li>
-<p>Tags other than 'saved' tag attached when using find/search function will be removed when using 'list'</p>
+<p>Tags other than 'saved' tag attached when using find/search function will be removed when using 'list'.</p>
 </li>
 <li>
 <p>The order of the keywords does not matter. e.g. <code>Sales Marketing</code> will match <code>Marketing Sales</code></p>
@@ -180,10 +180,10 @@ Format: <code>search KEYWORD [MORE_KEYWORDS]</code></p>
 <p>Internships matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Micro Dyson</code> will return <code>Dyson Technology</code>, <code>Dyson Engineering</code> <code>Microsoft</code></p>
 </li>
 <li>
-<p>Keyword/s matching the internship is added to the internship as a tag/s</p>
+<p>Keyword/s matching the internship is added to the internship as a tag/s.</p>
 </li>
 <li>
-<p>Keywords tags are reset if user uses find again</p>
+<p>Keywords tags are reset if user uses find again.</p>
 </li>
 </ul>
 </div>
@@ -200,7 +200,7 @@ Returns any internship with <code>Data</code> or <code>Analyst</code> in its des
 </li>
 <li>
 <p><code>find Dow Micron Dyson</code><br>
-Returns any internship having names or description matching <code>Dow</code>, <code>Micron</code>, or <code>Dyson</code></p>
+Returns any internship having names or description matching <code>Dow</code>, <code>Micron</code>, or <code>Dyson</code>.</p>
 </li>
 <li>
 <p><code>find Engineering</code><br>
@@ -208,11 +208,11 @@ Returns any internship having <code>Engineering</code> in its description.</p>
 </li>
 <li>
 <p><code>find <a href="mailto:Betsy@gmail.com">Betsy@gmail.com</a></code><br>
-Returns any internship having contact email <code>Betsy@gmail.com</code></p>
+Returns any internship having contact email <code>Betsy@gmail.com</code>.</p>
 </li>
 <li>
 <p><code>find Serangoon</code><br>
-Returns any internship having address or description matching <code>Serangoon</code> in it</p>
+Returns any internship having address or description matching <code>Serangoon</code> in it.</p>
 </li>
 </ul>
 </div>
@@ -237,7 +237,7 @@ Format: <code>filter KEYWORD [MORE_KEYWORDS]</code></p>
 <p>Only full words will be matched e.g. <code>Market</code> will not match <code>Marketing</code></p>
 </li>
 <li>
-<p>Only Internships which contain all the keyword will be returned e.g <code>filter Marketing Analytics</code> will return only<br>
+<p>Only Internships which contain all the keyword will be returned. e.g <code>filter Marketing Analytics</code> will return only<br>
 containing Marketing AND Analytics but not Marketing Research or Data Analyics</p>
 </li>
 </ul>
@@ -251,21 +251,21 @@ containing Marketing AND Analytics but not Marketing Research or Data Analyics</
 <ul>
 <li>
 <p><code>filter data</code><br>
-Returns any entries containing data e.g Data Analytics, Data Science</p>
+Returns any entries containing data. e.g Data Analytics, Data Science</p>
 </li>
 <li>
 <p><code>filter data analytics</code><br>
-Returns only entries containing data and analytics e.g 'data analytics internship', 'data analytics singapore'</p>
+Returns only entries containing data and analytics. e.g 'data analytics internship', 'data analytics singapore'</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sorting-internship-by-keywords-s-code-sort-code-code-sortby-code"><a class="link" href="#sorting-internship-by-keywords-s-code-sort-code-code-sortby-code">3.6. Sorting Internship by keywords(s): <code>sort</code> <code>sortby</code></a></h3>
+<h3 id="sorting-internship-by-keyword-s-code-sort-code-code-sortby-code"><a class="link" href="#sorting-internship-by-keyword-s-code-sort-code-code-sortby-code">3.6. Sorting Internship by keyword(s): <code>sort</code> <code>sortby</code></a></h3>
 <div class="paragraph">
-<p>Sort the internship list according to the given keywords.<br>
+<p>Sorts the internship list according to the given keyword(s).<br>
 Format: <code>sort KEYWORD [MORE_KEYWORDS]</code><br>
-Keywords limited to internship attribute types: Name Salary Email Address Industry Location Role</p>
+Keywords are only limited to the following internship attribute types: <code>Address</code> <code>Email</code> <code>Industry</code> <code>Location</code> <code>Name</code> <code>Role</code> <code>Salary</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -291,11 +291,11 @@ Keywords limited to internship attribute types: Name Salary Email Address Indust
 <ul>
 <li>
 <p><code>sort name</code><br>
-Sort the internship list according to name attribute</p>
+Sorts the internship list according to name attribute.</p>
 </li>
 <li>
 <p><code>sort salary location</code><br>
-Sort the internship list according to salary first then location</p>
+Sorts the internship list according to salary first then location.</p>
 </li>
 </ul>
 </div>
@@ -314,7 +314,7 @@ Format: <code>save INDEX</code></p>
 <p>Saves the internship at the specified <code>INDEX</code>.</p>
 </li>
 <li>
-<p>The index refers to the index number shown in the most recent listing.</p>
+<p>The index refers to the index number that is shown in the most recent listing.</p>
 </li>
 <li>
 <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
@@ -331,12 +331,12 @@ Format: <code>save INDEX</code></p>
 <li>
 <p><code>list</code><br>
 <code>save 2</code><br>
-Save the 2nd internship in the internship book.</p>
+Saves the 2nd internship in the internship book.</p>
 </li>
 <li>
 <p><code>find Google</code><br>
 <code>save 1</code><br>
-Saves the 1st person in the results of the <code>find</code> command.</p>
+Saves the 1st internship in the results of the <code>find</code> command.</p>
 </li>
 </ul>
 </div>
@@ -378,7 +378,7 @@ Removes the 2nd internship in the saved internship collection.</p>
 <p><code>find Google</code><br>
 <code>save 1</code><br>
 <code>unsave 1</code><br>
-Removes the 1st person in the results of the <code>find</code> command the saved collection.</p>
+Removes the 1st internship in the results of the <code>find</code> command the saved collection.</p>
 </li>
 </ul>
 </div>
@@ -992,7 +992,7 @@ e.g.<code>select 3</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-06 07:55:10 UTC
+Last updated 2018-04-10 05:34:18 UTC
 </div>
 </div>
 </body>
