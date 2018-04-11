@@ -688,15 +688,15 @@ Thus we have an addressbook , a filteredList (called searchedInternships) which 
 <div class="content">
 <pre>public class ModelManager extends ComponentManager implements Model {
 	...
-    private final AddressBook addressBook;
+    private final AddressBook jobbiBot;
     private final FilteredList&lt;Internship&gt; searchedInternships;
     private final FilteredList&lt;Internship&gt; filteredInternships;
     ...
 
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook jobbiBot, UserPrefs userPrefs) {
     	....
     	....
-        this.addressBook = new AddressBook(addressBook);
+        this.jobbiBot = new AddressBook(jobbiBot);
         searchedInternships = new FilteredList&lt;&gt;()
         filteredInternships = new FilteredList&lt;&gt;(searchedInternships);
         ...
@@ -2175,7 +2175,7 @@ for <code>RemarkCommandParser</code>.</p>
 <p>You may assume that the user will not be able to use the <code>add</code> and <code>edit</code> commands to modify the remarks field (i.e. the internship will be created without a remark).</p>
 </li>
 <li>
-<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/util/SampleDataUtil.java/"><code>SampleDataUtil</code></a> to add remarks for the sample data (delete your <code>addressBook.xml</code> so that the application will load the sample data when you launch it.)</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/util/SampleDataUtil.java/"><code>SampleDataUtil</code></a> to add remarks for the sample data (delete your <code>jobbiBot.xml</code> so that the application will load the sample data when you launch it.)</p>
 </li>
 </ol>
 </div>
@@ -2201,7 +2201,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Fix <code>invalidAndValidInternshipAddressBook.xml</code>, <code>typicalInternshipsAddressBook.xml</code>, <code>validAddressBook.xml</code> etc., such that the XML tests will not fail due to a missing <code>&lt;remark&gt;</code> element.</p>
+<p>Fix <code>invalidAndValidInternshipAddressBook.xml</code>, <code>typicalInternshipsJobbiBot.xml</code>, <code>validAddressBook.xml</code> etc., such that the XML tests will not fail due to a missing <code>&lt;remark&gt;</code> element.</p>
 </li>
 </ol>
 </div>
@@ -2963,7 +2963,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-11 09:58:31 UTC
+Last updated 2018-04-11 10:16:21 UTC
 </div>
 </div>
 </body>
