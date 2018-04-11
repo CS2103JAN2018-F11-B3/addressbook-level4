@@ -239,7 +239,7 @@ This will generate all resources required by the application and tests.</p>
 <div class="sect3">
 <h4 id="updating-documentation-to-match-your-fork"><a class="link" href="#updating-documentation-to-match-your-fork">1.4.2. Updating documentation to match your fork</a></h4>
 <div class="paragraph">
-<p>After forking the repo, links in the documentation will still point to the <code>se-edu/addressbook-level4</code> repo. If you plan to develop this as a separate product (i.e. instead of contributing to the <code>se-edu/addressbook-level4</code>) , you should replace the URL in the variable <code>repoURL</code> in <code>DeveloperGuide.adoc</code> and <code>UserGuide.adoc</code> with the URL of your fork.</p>
+<p>After forking the repo, links in the documentation will still point to the <code>se-edu/InternshipBook-level4</code> repo. If you plan to develop this as a separate product (i.e. instead of contributing to the <code>se-edu/InternshipBook-level4</code>) , you should replace the URL in the variable <code>repoURL</code> in <code>DeveloperGuide.adoc</code> and <code>UserGuide.adoc</code> with the URL of your fork.</p>
 </div>
 </div>
 <div class="sect3">
@@ -407,7 +407,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Note how the <code>Model</code> simply raises a <code>AddressBookChangedEvent</code> when the Address Book data are changed, instead of asking the <code>Storage</code> to save the updates to the hard disk.
+Note how the <code>Model</code> simply raises a <code>InternshipBookChangedEvent</code> when the Address Book data are changed, instead of asking the <code>Storage</code> to save the updates to the hard disk.
 </td>
 </tr>
 </table>
@@ -492,7 +492,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>Logic</code> uses the <code>AddressBookParser</code> class to parse the user command.</p>
+<p><code>Logic</code> uses the <code>InternshipBookParser</code> class to parse the user command.</p>
 </li>
 <li>
 <p>This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.</p>
@@ -574,7 +574,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="sect2">
 <h3 id="Design-Commons"><a class="link" href="#Design-Commons">2.6. Common classes</a></h3>
 <div class="paragraph">
-<p>Classes used by multiple components are in the <code>seedu.addressbook.commons</code> package.</p>
+<p>Classes used by multiple components are in the <code>seedu.InternshipBook.commons</code> package.</p>
 </div>
 </div>
 </div>
@@ -680,7 +680,7 @@ E.g <code>search marketing analytics</code> will display marketing tag for inter
 <li>
 <p>Current implementation makes use of the Java FXCollections filteredList.
 We created a separate FilteredList&lt;Internship&gt; called SearchedInternshipList and used it together with the existing FilteredList&lt;Internship&gt; FilteredIntership.
-Thus we have an addressbook , a filteredList (called searchedInternships) which wraps around the addressbook, and a filteredList (called filteredInternships) which wraps around the searchedInternship. See code snippet below</p>
+Thus we have an InternshipBook , a filteredList (called searchedInternships) which wraps around the InternshipBook, and a filteredList (called filteredInternships) which wraps around the searchedInternship. See code snippet below</p>
 </li>
 </ul>
 </div>
@@ -688,15 +688,15 @@ Thus we have an addressbook , a filteredList (called searchedInternships) which 
 <div class="content">
 <pre>public class ModelManager extends ComponentManager implements Model {
 	...
-    private final AddressBook jobbiBot;
+    private final InternshipBook jobbiBot;
     private final FilteredList&lt;Internship&gt; searchedInternships;
     private final FilteredList&lt;Internship&gt; filteredInternships;
     ...
 
-    public ModelManager(ReadOnlyAddressBook jobbiBot, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyInternshipBook jobbiBot, UserPrefs userPrefs) {
     	....
     	....
-        this.jobbiBot = new AddressBook(jobbiBot);
+        this.jobbiBot = new InternshipBook(jobbiBot);
         searchedInternships = new FilteredList&lt;&gt;()
         filteredInternships = new FilteredList&lt;&gt;(searchedInternships);
         ...
@@ -704,7 +704,7 @@ Thus we have an addressbook , a filteredList (called searchedInternships) which 
 </div>
 </div>
 <div class="paragraph">
-<p>Due to the java wrapper functionality (in the FilteredList&lt;T&gt;), any changes in addressbook is propagated down to searchedInternship and then to filteredInternship. This allows us to maintain two different list of internships according to whatever keyword arguments (predicate) have been applied to it.</p>
+<p>Due to the java wrapper functionality (in the FilteredList&lt;T&gt;), any changes in InternshipBook is propagated down to searchedInternship and then to filteredInternship. This allows us to maintain two different list of internships according to whatever keyword arguments (predicate) have been applied to it.</p>
 </div>
 <div class="paragraph">
 <p>Additional helper methods were then created to differentiate between updating of the searchedInternship and filteredInternship. See code snippet 2 below</p>
@@ -1002,7 +1002,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </li>
 <li>
 <p>Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
-<strong>Additional Info:</strong> See our discussion  <a href="https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672">here</a>.</p>
+<strong>Additional Info:</strong> See our discussion  <a href="https://github.com/se-edu/InternshipBook-level4/issues/390#issuecomment-298936672">here</a>.</p>
 </li>
 </ul>
 </div>
@@ -1148,7 +1148,7 @@ internships with "saved" tags and displays the filtered list.</p>
 <div class="sect4">
 <h5 id="alternative"><a class="link" href="#alternative">Alternative</a></h5>
 <div class="paragraph">
-<p>Another idea was to create separate AddressBook Model and its own storage for the Saved Collections</p>
+<p>Another idea was to create separate InternshipBook Model and its own storage for the Saved Collections</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1614,7 +1614,7 @@ Do take a look at <a href="#Design-Logic">Section 2.3, &#8220;Logic component&#8
 <p>Just like we store each individual command word constant <code>COMMAND_WORD</code> inside <code>*Command.java</code> (e.g.  <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/logic/commands/FindCommand.java"><code>FindCommand#COMMAND_WORD</code></a>, <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/logic/commands/DeleteCommand.java"><code>DeleteCommand#COMMAND_WORD</code></a>), you need a new constant for aliases as well (e.g. <code>FindCommand#COMMAND_ALIAS</code>).</p>
 </li>
 <li>
-<p><a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> is responsible for analyzing command words.</p>
+<p><a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/logic/parser/InternshipBookParser.java"><code>InternshipBookParser</code></a> is responsible for analyzing command words.</p>
 </li>
 </ul>
 </div>
@@ -1624,7 +1624,7 @@ Do take a look at <a href="#Design-Logic">Section 2.3, &#8220;Logic component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>Modify the switch statement in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser#parseCommand(String)</code></a> such that both the proper command word and alias can be used to execute the same intended command.</p>
+<p>Modify the switch statement in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/logic/parser/InternshipBookParser.java"><code>InternshipBookParser#parseCommand(String)</code></a> such that both the proper command word and alias can be used to execute the same intended command.</p>
 </li>
 <li>
 <p>Add new tests for each of the aliases that you have added.</p>
@@ -1633,7 +1633,7 @@ Do take a look at <a href="#Design-Logic">Section 2.3, &#8220;Logic component&#8
 <p>Update the user guide to document the new aliases.</p>
 </li>
 <li>
-<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/785">PR</a> for the full solution.</p>
+<p>See this <a href="https://github.com/se-edu/InternshipBook-level4/pull/785">PR</a> for the full solution.</p>
 </li>
 </ul>
 </div>
@@ -1674,13 +1674,13 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>The <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model</code></a> and the <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> API need to be updated.</p>
+<p>The <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model</code></a> and the <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/InternshipBook.java"><code>InternshipBook</code></a> API need to be updated.</p>
 </li>
 <li>
 <p>Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?</p>
 </li>
 <li>
-<p>Find out which of the existing API methods in  <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> and <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/internship/Internship.java"><code>Internship</code></a> classes can be used to implement the tag removal logic. <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> allows you to update a internship, and <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/internship/Internship.java"><code>Internship</code></a> allows you to update the tags.</p>
+<p>Find out which of the existing API methods in  <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/InternshipBook.java"><code>InternshipBook</code></a> and <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/internship/Internship.java"><code>Internship</code></a> classes can be used to implement the tag removal logic. <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/InternshipBook.java"><code>InternshipBook</code></a> allows you to update a internship, and <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/internship/Internship.java"><code>Internship</code></a> allows you to update the tags.</p>
 </li>
 </ul>
 </div>
@@ -1690,20 +1690,20 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>Implement a <code>removeTag(Tag)</code> method in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a>. Loop through each internship, and remove the <code>tag</code> from each internship.</p>
+<p>Implement a <code>removeTag(Tag)</code> method in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/InternshipBook.java"><code>InternshipBook</code></a>. Loop through each internship, and remove the <code>tag</code> from each internship.</p>
 </li>
 <li>
-<p>Add a new API method <code>deleteTag(Tag)</code> in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a>. Your <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a> should call <code>AddressBook#removeTag(Tag)</code>.</p>
+<p>Add a new API method <code>deleteTag(Tag)</code> in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a>. Your <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a> should call <code>InternshipBook#removeTag(Tag)</code>.</p>
 </li>
 <li>
 <p>Add new tests for each of the new public methods that you have added.</p>
 </li>
 <li>
-<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/790">PR</a> for the full solution.</p>
+<p>See this <a href="https://github.com/se-edu/InternshipBook-level4/pull/790">PR</a> for the full solution.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a>. This may cause some tests to fail. See issue  <a href="https://github.com/se-edu/addressbook-level4/issues/753"><code>#753</code></a> for more information about this flaw.</p>
+<p>The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/InternshipBook.java"><code>InternshipBook</code></a>. This may cause some tests to fail. See issue  <a href="https://github.com/se-edu/InternshipBook-level4/issues/753"><code>#753</code></a> for more information about this flaw.</p>
 </li>
 <li>
 <p>The solution PR has a temporary fix for the flaw mentioned above in its first commit.</p>
@@ -1785,7 +1785,7 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <p>You can modify the existing test methods for <code>InternshipCard</code> 's to include testing the tag&#8217;s color as well.</p>
 </li>
 <li>
-<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/798">PR</a> for the full solution.</p>
+<p>See this <a href="https://github.com/se-edu/InternshipBook-level4/pull/798">PR</a> for the full solution.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1855,13 +1855,13 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <p>The unit tests for <code>ResultDisplay</code> can be modified to include verification of the color.</p>
 </li>
 <li>
-<p>The system tests <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/systemtests/AddressBookSystemTest.java"><code>AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()</code></a> to include verification for <code>ResultDisplay</code> as well.</p>
+<p>The system tests <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/systemtests/InternshipBookSystemTest.java"><code>InternshipBookSystemTest#assertCommandBoxShowsDefaultStyle() and InternshipBookSystemTest#assertCommandBoxShowsErrorStyle()</code></a> to include verification for <code>ResultDisplay</code> as well.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/799">PR</a> for the full solution.</p>
+<p>See this <a href="https://github.com/se-edu/InternshipBook-level4/pull/799">PR</a> for the full solution.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1921,16 +1921,16 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <p>Modify the constructor of <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> to take in the number of internships when the application just started.</p>
 </li>
 <li>
-<p>Use <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)</code></a> to update the number of internships whenever there are new changes to the addressbook.</p>
+<p>Use <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter#handleInternshipBookChangedEvent(InternshipBookChangedEvent)</code></a> to update the number of internships whenever there are new changes to the InternshipBook.</p>
 </li>
 <li>
 <p>For tests, modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/guitests/guihandles/StatusBarFooterHandle.java"><code>StatusBarFooterHandle</code></a> by adding a state-saving functionality for the total number of people status, just like what we did for save region and sync status.</p>
 </li>
 <li>
-<p>For system tests, modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/systemtests/AddressBookSystemTest.java"><code>AddressBookSystemTest</code></a> to also verify the new total number of internships status bar.</p>
+<p>For system tests, modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/systemtests/InternshipBookSystemTest.java"><code>InternshipBookSystemTest</code></a> to also verify the new total number of internships status bar.</p>
 </li>
 <li>
-<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/803">PR</a> for the full solution.</p>
+<p>See this <a href="https://github.com/se-edu/InternshipBook-level4/pull/803">PR</a> for the full solution.</p>
 </li>
 </ul>
 </div>
@@ -1961,7 +1961,7 @@ Do take a look at <a href="#Design-Storage">Section 2.5, &#8220;Storage componen
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a new method <code>backupAddressBook(ReadOnlyAddressBook)</code>, so that the address book can be saved in a fixed temporary region.</p>
+<p>Add a new method <code>backupInternshipBook(ReadOnlyInternshipBook)</code>, so that the address book can be saved in a fixed temporary region.</p>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
@@ -1971,10 +1971,10 @@ Do take a look at <a href="#Design-Storage">Section 2.5, &#8220;Storage componen
 <div class="ulist">
 <ul>
 <li>
-<p>Add the API method in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/storage/AddressBookStorage.java"><code>AddressBookStorage</code></a> interface.</p>
+<p>Add the API method in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/storage/InternshipBookStorage.java"><code>InternshipBookStorage</code></a> interface.</p>
 </li>
 <li>
-<p>Implement the logic in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/storage/StorageManager.java"><code>StorageManager</code></a> and <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/storage/XmlAddressBookStorage.java"><code>XmlAddressBookStorage</code></a> class.</p>
+<p>Implement the logic in <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/storage/StorageManager.java"><code>StorageManager</code></a> and <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/storage/XmlInternshipBookStorage.java"><code>XmlInternshipBookStorage</code></a> class.</p>
 </li>
 </ul>
 </div>
@@ -1984,7 +1984,7 @@ Do take a look at <a href="#Design-Storage">Section 2.5, &#8220;Storage componen
 <div class="ulist">
 <ul>
 <li>
-<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/594">PR</a> for the full solution.</p>
+<p>See this <a href="https://github.com/se-edu/InternshipBook-level4/pull/594">PR</a> for the full solution.</p>
 </li>
 </ul>
 </div>
@@ -2003,7 +2003,7 @@ Do take a look at <a href="#Design-Storage">Section 2.5, &#8220;Storage componen
 <p>By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.</p>
 </div>
 <div class="paragraph">
-<p><strong>Scenario:</strong> You are a software maintainer for <code>addressbook</code>, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible <code>remark</code> field for each contact, rather than relying on tags alone. After designing the specification for the <code>remark</code> command, you are convinced that this feature is worth implementing. Your job is to implement the <code>remark</code> command.</p>
+<p><strong>Scenario:</strong> You are a software maintainer for <code>InternshipBook</code>, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible <code>remark</code> field for each contact, rather than relying on tags alone. After designing the specification for the <code>remark</code> command, you are convinced that this feature is worth implementing. Your job is to implement the <code>remark</code> command.</p>
 </div>
 <div class="sect3">
 <h4 id="description"><a class="link" href="#description">A.2.1. Description</a></h4>
@@ -2043,7 +2043,7 @@ Removes the remark for the first internship.</p>
 <p>Add a <code>RemarkCommand</code> that extends <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/logic/commands/UndoableCommand.java"><code>UndoableCommand</code></a>. Upon execution, it should just throw an <code>Exception</code>.</p>
 </li>
 <li>
-<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> to accept a <code>RemarkCommand</code>.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/logic/parser/InternshipBookParser.java"><code>InternshipBookParser</code></a> to accept a <code>RemarkCommand</code>.</p>
 </li>
 </ol>
 </div>
@@ -2056,7 +2056,7 @@ Removes the remark for the first internship.</p>
 <p>Add <code>RemarkCommandTest</code> that tests that <code>executeUndoableCommand()</code> throws an Exception.</p>
 </li>
 <li>
-<p>Add new test method to <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java"><code>AddressBookParserTest</code></a>, which tests that typing "remark" returns an instance of <code>RemarkCommand</code>.</p>
+<p>Add new test method to <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/logic/parser/InternshipBookParserTest.java"><code>InternshipBookParserTest</code></a>, which tests that typing "remark" returns an instance of <code>RemarkCommand</code>.</p>
 </li>
 </ol>
 </div>
@@ -2078,7 +2078,7 @@ Removes the remark for the first internship.</p>
 <p>Add <code>RemarkCommandParser</code> that knows how to parse two arguments, one index and one with prefix 'r/'.</p>
 </li>
 <li>
-<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> to use the newly implemented <code>RemarkCommandParser</code>.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/logic/parser/InternshipBookParser.java"><code>InternshipBookParser</code></a> to use the newly implemented <code>RemarkCommandParser</code>.</p>
 </li>
 </ol>
 </div>
@@ -2095,7 +2095,7 @@ Removes the remark for the first internship.</p>
 for <code>RemarkCommandParser</code>.</p>
 </li>
 <li>
-<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java"><code>AddressBookParserTest</code></a> to test that the correct command is generated according to the user input.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/test/java/seedu/address/logic/parser/InternshipBookParserTest.java"><code>InternshipBookParserTest</code></a> to test that the correct command is generated according to the user input.</p>
 </li>
 </ol>
 </div>
@@ -2201,7 +2201,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Fix <code>invalidAndValidInternshipAddressBook.xml</code>, <code>typicalInternshipsJobbiBot.xml</code>, <code>validAddressBook.xml</code> etc., such that the XML tests will not fail due to a missing <code>&lt;remark&gt;</code> element.</p>
+<p>Fix <code>invalidAndValidInternshipInternshipBook.xml</code>, <code>typicalInternshipsJobbiBot.xml</code>, <code>validInternshipBook.xml</code> etc., such that the XML tests will not fail due to a missing <code>&lt;remark&gt;</code> element.</p>
 </li>
 </ol>
 </div>
@@ -2281,7 +2281,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect3">
 <h4 id="full-solution"><a class="link" href="#full-solution">A.2.3. Full Solution</a></h4>
 <div class="paragraph">
-<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/599">PR</a> for the step-by-step solution.</p>
+<p>See this <a href="https://github.com/se-edu/InternshipBook-level4/pull/599">PR</a> for the step-by-step solution.</p>
 </div>
 </div>
 </div>
@@ -2336,7 +2336,7 @@ for <code>RemarkCommandParser</code>.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ci Kang</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Morph Model Component</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Minor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Morph to store internship / job instead of addressbook</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Morph to store internship / job instead of InternshipBook</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Wyin</p></td>
@@ -2963,7 +2963,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-11 10:38:11 UTC
+Last updated 2018-04-11 11:14:16 UTC
 </div>
 </div>
 </body>
