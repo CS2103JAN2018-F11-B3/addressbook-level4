@@ -31,18 +31,19 @@
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
 <li><a href="#start-conversation-with-program-code-start-code">3.2. Start conversation with program : <code>start</code></a></li>
 <li><a href="#restart-conversation-with-program-code-new-code">3.3. Restart conversation with program : <code>new</code></a></li>
-<li><a href="#find-internships-by-keyword-s-code-find-code-code-search-code">3.4. Find internships by keyword(s): <code>find</code> <code>search</code></a></li>
+<li><a href="#find-internships-by-keyword-s-code-find-code">3.4. Find internships by keyword(s): <code>find</code></a></li>
 <li><a href="#filtering-internship-by-keyword-s-code-filter-code">3.5. Filtering Internship by keyword(s): <code>filter</code></a></li>
-<li><a href="#sorting-internship-by-keyword-s-code-sort-code-code-sortby-code">3.6. Sorting Internship by keyword(s): <code>sort</code> <code>sortby</code></a></li>
+<li><a href="#sorting-internship-by-keyword-s-code-sort-code">3.6. Sorting Internship by keyword(s): <code>sort</code></a></li>
 <li><a href="#saving-an-internship-to-a-saved-collection-code-save-code">3.7. Saving an internship to a Saved Collection : <code>save</code></a></li>
 <li><a href="#remove-a-saved-internship-from-a-saved-collection-code-unsave-code">3.8. Remove a Saved internship from a Saved Collection : <code>unsave</code></a></li>
 <li><a href="#shows-the-full-saved-internship-collection-code-find-saved-code-or-code-filter-saved-code">3.9. Shows the full Saved Internship Collection : <code>find saved</code> or <code>filter saved</code></a></li>
 <li><a href="#selecting-an-internship-code-select-code">3.10. Selecting an internship : <code>select</code></a></li>
 <li><a href="#listing-all-internships-code-list-code">3.11. Listing all internships : <code>list</code></a></li>
-<li><a href="#undoing-previous-command-code-undo-code">3.12. Undoing previous command : <code>undo</code></a></li>
-<li><a href="#redoing-the-previously-undone-command-code-redo-code">3.13. Redoing the previously undone command : <code>redo</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">3.14. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">3.15. Saving the data</a></li>
+<li><a href="#listing-entered-user-commands-code-history-code">3.12. Listing entered user commands : <code>history</code></a></li>
+<li><a href="#undoing-previous-command-code-undo-code">3.13. Undoing previous command : <code>undo</code></a></li>
+<li><a href="#redoing-the-previously-undone-command-code-redo-code">3.14. Redoing the previously undone command : <code>redo</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">3.15. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">3.16. Saving the data</a></li>
 </ul>
 </li>
 <li><a href="#command-summary">4. Command Summary</a></li>
@@ -158,17 +159,17 @@ Format: <code>new</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="find-internships-by-keyword-s-code-find-code-code-search-code"><a class="link" href="#find-internships-by-keyword-s-code-find-code-code-search-code">3.4. Find internships by keyword(s): <code>find</code> <code>search</code></a></h3>
+<h3 id="find-internships-by-keyword-s-code-find-code"><a class="link" href="#find-internships-by-keyword-s-code-find-code">3.4. Find internships by keyword(s): <code>find</code></a></h3>
 <div class="paragraph">
-<p>Finds/Searches internships which contains any of the keywords.<br>
-Format: <code>find KEYWORD [MORE_KEYWORDS]</code> <code>search KEYWORD [MORE_KEYWORDS]</code></p>
+<p>Finds internships which contains any of the keywords.<br>
+Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>The find/search is case insensitive. e.g <code>analyst</code> will match <code>Analyst</code></p>
+<p>The find is case insensitive. e.g <code>analyst</code> will match <code>Analyst</code></p>
 </li>
 <li>
 <p>Tags other than 'saved' tag attached when using find/search function will be removed when using 'list'.</p>
@@ -261,7 +262,7 @@ Returns only entries containing data and analytics. e.g 'data analytics internsh
 </div>
 </div>
 <div class="sect2">
-<h3 id="sorting-internship-by-keyword-s-code-sort-code-code-sortby-code"><a class="link" href="#sorting-internship-by-keyword-s-code-sort-code-code-sortby-code">3.6. Sorting Internship by keyword(s): <code>sort</code> <code>sortby</code></a></h3>
+<h3 id="sorting-internship-by-keyword-s-code-sort-code"><a class="link" href="#sorting-internship-by-keyword-s-code-sort-code">3.6. Sorting Internship by keyword(s): <code>sort</code></a></h3>
 <div class="paragraph">
 <p>Sorts the internship list according to the given keyword(s).<br>
 Format: <code>sort KEYWORD [MORE_KEYWORDS]</code><br>
@@ -439,7 +440,14 @@ Format: <code>list</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">3.12. Undoing previous command : <code>undo</code></a></h3>
+<h3 id="listing-entered-user-commands-code-history-code"><a class="link" href="#listing-entered-user-commands-code-history-code">3.12. Listing entered user commands : <code>history</code></a></h3>
+<div class="paragraph">
+<p>Lists all the commands that you have entered in reverse chronological order.<br>
+Format: <code>history</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">3.13. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
 <p>Restores the internship database to the state before the previous <em>undoable</em> command was executed.<br>
 Format: <code>undo</code></p>
@@ -484,7 +492,7 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 </div>
 </div>
 <div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">3.13. Redoing the previously undone command : <code>redo</code></a></h3>
+<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">3.14. Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
 <p>Reverses the most recent <code>undo</code> command.<br>
 Format: <code>redo</code></p>
@@ -516,14 +524,14 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.14. Exiting the program : <code>exit</code></a></h3>
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.15. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Exits the program.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.15. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.16. Saving the data</a></h3>
 <div class="paragraph">
 <p>Internships data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually</p>
@@ -973,7 +981,7 @@ e.g.<code>select 3</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-11 18:23:19 UTC
+Last updated 2018-04-11 18:44:06 UTC
 </div>
 </div>
 </body>
