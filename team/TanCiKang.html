@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<title>Ci Kang - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Ci Kang - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-jobbibot"><a class="link" href="#project-jobbibot">PROJECT: JobbiBot</a></h2>
+<div class="sectionbody">
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>JobbiBot is an interactive application that aims to guide university students in their search for internships. JobbiBot is a Command
+Line Interface application where most of the functions are accessed through typing the commands. Through JobbiBot,
+users would be able to narrow down the overwhelming amount of internship opportunities by different attributes such as salary and industry with
+the help of JobbiBot which will guide the user slowly through the process with prompts and useful tips.
+Afterwhich they can either save the list of internships while making the decision, select the internship and obtain comprehensive details about
+the internship or they may restart the process and filter the internships differently.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Major enhancement</strong>: modified the find function <strong>to enable user to do a distinct union search</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: Allows users to search for multiple keywords and all internships containing ANY of the keywords will be listed.
+the internship in the list are then tagged with tags containing keywords which it matches.</p>
+</li>
+<li>
+<p>Justification: This feature improves the product significantly because a user can narrow down their internships opportunities
+yet at the same time keep their options open by selecting multiple keywords to search for.</p>
+</li>
+<li>
+<p>Highlights: Enable the search of multiple keywords in all the attributes of the internships and can repeat the find command indefinitely until
+a suitable list of internships are obtained for further filtering.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>: Modified the preview list on the left to show important attributes and full details on the right panel if internship is selected.</p>
+</li>
+<li>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103JAN2018-F11-B3/main/blob/master/collated/functional/TanCiKang.md">Functional Code</a>]
+[<a href="https://github.com">Test code</a>]</p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Project management:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Managed release <code>v1.3</code> on GitHub</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enhancements to existing features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Implemented Role <a href="https://github.com/CS2103JAN2018-F11-B3/main/issues/54">#52</a>, Salary <a href="https://github.com/CS2103JAN2018-F11-B3/main/issues/64">#64</a>, Industry <a href="https://github.com/CS2103JAN2018-F11-B3/main/issues/66">#66</a> and Region <a href="https://github.com/CS2103JAN2018-F11-B3/main/issues/67">#67</a> attributes</p>
+</li>
+<li>
+<p>Morph Person Class to Internship Class <a href="https://github.com/CS2103JAN2018-F11-B3/main/issues/65">#65</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Did cosmetic tweaks to existing contents of the User Guide: <a href="https://github.com">#14</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Collate codes for team <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/102">#102</a></p>
+</li>
+<li>
+<p>Setting up of Travis Auto Publishing for the team</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="find-internships-by-keyword-s-code-find-code-since-v1-2"><a class="link" href="#find-internships-by-keyword-s-code-find-code-since-v1-2">Find internships by keyword(s): <code>find</code> [since v1.2]</a></h3>
+<div class="paragraph">
+<p>Finds internships which contains any of the keywords.<br>
+Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The find is case insensitive. e.g <code>analyst</code> will match <code>Analyst</code></p>
+</li>
+<li>
+<p>Tags other than 'saved' tag attached when using find/search function will be removed when using 'list'.</p>
+</li>
+<li>
+<p>The order of the keywords does not matter. e.g. <code>Sales Marketing</code> will match <code>Marketing Sales</code></p>
+</li>
+<li>
+<p>Internships matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Micro Dyson</code> will return <code>Dyson Technology</code>, <code>Dyson Engineering</code> <code>Microsoft</code></p>
+</li>
+<li>
+<p>Keyword/s matching the internship is added to the internship as a tag/s.</p>
+</li>
+<li>
+<p>Keywords tags are reset if user uses find again.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find Data Analyst</code><br>
+Returns any internship with <code>Data</code> or <code>Analyst</code> in its description.</p>
+</li>
+<li>
+<p><code>find Dow Micron Dyson</code><br>
+Returns any internship having names or description matching <code>Dow</code>, <code>Micron</code>, or <code>Dyson</code>.</p>
+</li>
+<li>
+<p><code>find Engineering</code><br>
+Returns any internship having <code>Engineering</code> in its description.</p>
+</li>
+<li>
+<p><code>find <a href="mailto:Betsy@gmail.com">Betsy@gmail.com</a></code><br>
+Returns any internship having contact email <code>Betsy@gmail.com</code>.</p>
+</li>
+<li>
+<p><code>find Serangoon</code><br>
+Returns any internship having address or description matching <code>Serangoon</code> in it.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="find-command-with-adding-tag-feature"><a class="link" href="#find-command-with-adding-tag-feature">Find Command with adding tag feature</a></h3>
+<div class="sect3">
+<h4 id="rationale"><a class="link" href="#rationale">Rationale</a></h4>
+<div class="paragraph">
+<p>As the current find command work like a union search, users are able to key in multiple keywords at one go and JobbiBot will show
+all the internships that matches at least one of the keywords. However, users will not be able to differentiate which
+internships matches which keywords they have keyed in. As such this new feature enables them to have a clearer picture of
+which internship suits them more and enable them to further filter from the list.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="current-implementation"><a class="link" href="#current-implementation">Current Implementation</a></h4>
+<div class="paragraph">
+<p>The add tag feature is implemented as part of the find command. However, as models will be change due to the addition of tags,
+some codes are implemented within ModelManager.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/FindCommandSequenceDiagram.png" alt="FindCommandSequenceDiagram" width="1200">
+</div>
+</div>
+<div class="paragraph">
+<p>As it can be seen from the diagram, <code>Logic</code> uses the <code>InternshipBookParser</code> class to parse the user command.
+After which, <code>FindCommandParser</code> is created and use to parse the keyword. The keyword is then set in <code>ModelManager</code> via the
+setKeywords() method. A <code>FindCommand</code> object is then created followed by the <code>internshipContainsKeywordsPredicate</code>.</p>
+</div>
+<div class="paragraph">
+<p>In the second phase, the command is being executed in <code>FindCommand</code>. The first updateSearchedInternshipList() update the
+searchedInternship with all the internships available and remove all tags from them apart from <code>saved</code> tags. Following which
+the second updateSearchedInternshipList() update the searchedInternshipList with the internships that matches the keywords
+use as the argument in <code>FindCommand</code>. Those keywords are then added to the respective internships that matches it through the
+addTagsToFilteredList(). <code>FindCommand</code> then execute getCommandResult() and return the result of the command execution encapsulated
+as a <code>CommandResult</code> object and returns it to the <code>LogicManager</code> and subsequently to the UI and displayed to the user.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p>Location of the functions</p>
+</div>
+<div class="paragraph">
+<p>Alternative 1:</p>
+</div>
+<div class="paragraph">
+<p>Alternative 2:</p>
+</div>
+<div class="paragraph">
+<p>Implementation of the codes</p>
+</div>
+<div class="paragraph">
+<p>Alternative 1:</p>
+</div>
+<div class="paragraph">
+<p>Alternative 2:</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><em>{Optionally, you may include other projects in your portfolio.}</em></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-04-12 16:59:32 UTC
+</div>
+</div>
+</body>
+</html>
