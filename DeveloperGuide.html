@@ -81,11 +81,7 @@
 </ul>
 </li>
 <li><a href="#user-stories">Appendix B: User Stories</a></li>
-<li><a href="#use-cases">Appendix C: Use Cases</a>
-<ul class="sectlevel2">
-<li><a href="#use-case-finding-internship">C.1. Use case: Finding Internship</a></li>
-</ul>
-</li>
+<li><a href="#use-cases">Appendix C: Use Cases</a></li>
 <li><a href="#non-functional-requirements">Appendix D: Non Functional Requirements</a></li>
 <li><a href="#glossary">Appendix E: Glossary</a></li>
 <li><a href="#productsurvey">Appendix F: ProductSurvey</a>
@@ -503,15 +499,6 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/DeletePersonSdForLogic.png" alt="DeletePersonSdForLogic" width="800">
-</div>
-<div class="title">Figure 8. Interactions Inside the Logic Component for the <code>delete 1</code> Command</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="Design-Model"><a class="link" href="#Design-Model">2.4. Model component</a></h3>
@@ -519,7 +506,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="content">
 <img src="images/ModelDesign1.png" alt="ModelDesign1" width="800">
 </div>
-<div class="title">Figure 9. Structure of the Model Component</div>
+<div class="title">Figure 8. Structure of the Model Component</div>
 </div>
 <div class="paragraph">
 <p><strong>API</strong> : <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model.java</code></a></p>
@@ -550,7 +537,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="content">
 <img src="images/StorageClassDiagram.png" alt="StorageClassDiagram" width="800">
 </div>
-<div class="title">Figure 10. Structure of the Storage Component</div>
+<div class="title">Figure 9. Structure of the Storage Component</div>
 </div>
 <div class="paragraph">
 <p><strong>API</strong> : <a href="https://github.com/CS2103JAN2018-F11-B3/tree/master/src/main/java/seedu/address/storage/Storage.java"><code>Storage.java</code></a></p>
@@ -1348,7 +1335,7 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 <div class="content">
 <img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 11. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 10. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 </div>
@@ -1560,21 +1547,15 @@ b. Require developers to download those libraries manually (this creates extra w
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Colin</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ranking/Filtering</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sorting/Filtering</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Major</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Implement a complete set of ranking/filtering/searching commands</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Designed and implemented a complete set of sorting/filtering/searching commands. Searching implemented by TanCiKang</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Colin</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Model Enhancement</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Minor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Modify list view to work with new commands. Allow Refiltering / Searching / Finding from existing list instead of new list</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Colin</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Save Command</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Minor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable users to view their Saved Collection</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modify list view to work with new commands. Allow filtering / sorting from existing list instead of new list</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Ci Kang</p></td>
@@ -1916,10 +1897,9 @@ b. Require developers to download those libraries manually (this creates extra w
 </li>
 </ul>
 </div>
-<div class="sect2">
-<h3 id="use-case-finding-internship"><a class="link" href="#use-case-finding-internship">C.1. Use case: Finding Internship</a></h3>
+<h3 id="use-case-finding-internship" class="discrete">Use case: Finding Internship</h3>
 <div class="paragraph">
-<p><strong>System</strong>: Chat Bot</p>
+<p><strong>System</strong>: JobbiBot</p>
 </div>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
@@ -1927,22 +1907,13 @@ b. Require developers to download those libraries manually (this creates extra w
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User keys in command to start finding internship</p>
+<p>User keys in a list of keywords to search  for internship byby</p>
 </li>
 <li>
-<p>Chat Bot gives user a list of prompts ( e.g. Salary, Industry )</p>
+<p>JobbiBot returns user the list of internships which contains the keywords</p>
 </li>
 <li>
-<p>User follows the prompts and key in the relevant details</p>
-</li>
-<li>
-<p>Chat Bot replies with a list of internship companies and provide filter prompts</p>
-</li>
-<li>
-<p>User views the list and further filter using the prompts given by the Chat Bot</p>
-</li>
-<li>
-<p>Repeat steps 3-5 until the user is satisfied</p>
+<p>User can choose to re-search again if not satisfied</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1955,13 +1926,13 @@ b. Require developers to download those libraries manually (this creates extra w
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3a. User key in invalid inputs or prompts.</p>
+<p>2a. JobbiBot returns no found internships</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3a1. Chat Bot detects error and shows user the error.</p>
+<p>2a1. JobbiBot will recommend user to re-search using other keywords</p>
 <div class="paragraph">
-<p>Use case resumes at step 2.</p>
+<p>Use case resumes at step 3.</p>
 </div>
 </li>
 </ul>
@@ -1969,29 +1940,9 @@ b. Require developers to download those libraries manually (this creates extra w
 </li>
 </ul>
 </div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3b. User chooses to terminate conversation with Chat Bot.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3b1. Chat Bot requests confirmation.</p>
-</li>
-<li>
-<p>3b2. User confirms termination.</p>
+<h3 id="use-case-filtering-internship" class="discrete">Use case: Filtering Internship</h3>
 <div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-explore-internship" class="discrete">Use case: Explore Internship</h3>
-<div class="paragraph">
-<p><strong>System</strong>: Chat Bot</p>
+<p><strong>System</strong>: JobbiBot</p>
 </div>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
@@ -1999,22 +1950,13 @@ b. Require developers to download those libraries manually (this creates extra w
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User keys in command to explore internship</p>
+<p>User keys in a list of keywords to filter the currently searched internship list (from the finding internship use case above)</p>
 </li>
 <li>
-<p>Chat Bot gives user a list of prompts</p>
+<p>JobbiBot returns user the list of internships which contains all the keywords entered from the searched list</p>
 </li>
 <li>
-<p>User fills in a prompt or a list of prompts</p>
-</li>
-<li>
-<p>Chat Bot replies with a list of internship companies and provide filter prompts</p>
-</li>
-<li>
-<p>User views the list and further filter using the prompts given by the Chat Bot</p>
-</li>
-<li>
-<p>Repeats steps 3-5 until user is satisfied</p>
+<p>User can choose to re-filter in another set of keywords to narrow the searched internship list (from the finding internship use case)</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2027,43 +1969,45 @@ b. Require developers to download those libraries manually (this creates extra w
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3a. User key in invalid inputs or prompts.</p>
+<p>2a. JobbiBot returns no found internships</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3a1. Chat Bot detects error and shows user the error.</p>
+<p>2a1. JobbiBot will recommend user to re-filter using other keywords</p>
+</li>
+<li>
+<p>2a2. User can also use undo function to return back to last searched or filtered internship list</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-sorting-internship" class="discrete">Use case: Sorting Internship</h3>
 <div class="paragraph">
-<p>Use case resumes at step 2.</p>
+<p><strong>System</strong>: JobbiBot</p>
 </div>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
 </div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>3b. User chooses to terminate conversation with Chat Bot.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3b1. Chat Bot requests confirmation.</p>
+<p>User keys in keywords to sort the currently searched or filtered internship list by</p>
 </li>
 <li>
-<p>3b2. User confirms termination.</p>
+<p>JobbiBot returns user the list of internships sorted according to the keyword matching the internship attributes (e.g name, industry, role).</p>
+</li>
+<li>
+<p>User can choose to sort up to three keyword attributes</p>
+</li>
+<li>
+<p>JobbiBot will sort the internship by the first keyword attribute, followed by the next two keyword attribute</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
 </li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><em>{More to be added}</em></p>
-</div>
+</ol>
 </div>
 </div>
 </div>
@@ -2245,7 +2189,7 @@ Expected: The most recent window size and region is retained.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-12 22:57:01 UTC
+Last updated 2018-04-13 02:18:57 UTC
 </div>
 </div>
 </body>
