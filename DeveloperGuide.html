@@ -47,13 +47,12 @@
 <li><a href="#filter-feature">3.1. Filter Feature</a></li>
 <li><a href="#undo-redo-feature">3.2. Undo/Redo feature</a></li>
 <li><a href="#save-unsave-feature">3.3. Save/Unsave feature</a></li>
-<li><a href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></li>
-<li><a href="#find-command-with-adding-tag-feature">3.5. Find Command with adding tag feature</a></li>
-<li><a href="#logging">3.6. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.7. Configuration</a></li>
-<li><a href="#editing-documentation">3.8. Editing Documentation</a></li>
-<li><a href="#publishing-documentation">3.9. Publishing Documentation</a></li>
-<li><a href="#converting-documentation-to-pdf-format">3.10. Converting Documentation to PDF format</a></li>
+<li><a href="#find-command-with-adding-tag-feature">3.4. Find Command with adding tag feature</a></li>
+<li><a href="#logging">3.5. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
+<li><a href="#editing-documentation">3.7. Editing Documentation</a></li>
+<li><a href="#publishing-documentation">3.8. Publishing Documentation</a></li>
+<li><a href="#converting-documentation-to-pdf-format">3.9. Converting Documentation to PDF format</a></li>
 </ul>
 </li>
 <li><a href="#Testing">4. Testing</a>
@@ -1171,15 +1170,9 @@ On the other hand, the <code>save</code> command only requires the user to type 
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></h3>
-<div class="paragraph">
-<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="find-command-with-adding-tag-feature"><a class="link" href="#find-command-with-adding-tag-feature">3.5. Find Command with adding tag feature</a></h3>
+<h3 id="find-command-with-adding-tag-feature"><a class="link" href="#find-command-with-adding-tag-feature">3.4. Find Command with adding tag feature</a></h3>
 <div class="sect3">
-<h4 id="rationale"><a class="link" href="#rationale">3.5.1. Rationale</a></h4>
+<h4 id="rationale"><a class="link" href="#rationale">3.4.1. Rationale</a></h4>
 <div class="paragraph">
 <p>As the current find command work like a union search, users are able to key in multiple keywords at one go and JobbiBot will show
 all the internships that matches at least one of the keywords. However, users will not be able to differentiate which
@@ -1188,7 +1181,7 @@ which internship suits them more and enable them to further filter from the list
 </div>
 </div>
 <div class="sect3">
-<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.5.2. Current Implementation</a></h4>
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.4.2. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The add tag feature is implemented as part of the find command. However, as models will be change due to the addition of tags,
 some codes are implemented within ModelManager.</p>
@@ -1213,7 +1206,7 @@ as a <code>CommandResult</code> object and returns it to the <code>LogicManager<
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.5.3. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.3. Design Considerations</a></h4>
 <div class="paragraph">
 <p>Location of the functions</p>
 </div>
@@ -1235,14 +1228,14 @@ as a <code>CommandResult</code> object and returns it to the <code>LogicManager<
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.7, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1273,7 +1266,7 @@ as a <code>CommandResult</code> object and returns it to the <code>LogicManager<
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.7. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).
 == Documentation</p>
@@ -1295,20 +1288,20 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 </div>
 </div>
 <div class="sect2">
-<h3 id="editing-documentation"><a class="link" href="#editing-documentation">3.8. Editing Documentation</a></h3>
+<h3 id="editing-documentation"><a class="link" href="#editing-documentation">3.7. Editing Documentation</a></h3>
 <div class="paragraph">
 <p>See <a href="UsingGradle.html#rendering-asciidoc-files">UsingGradle.adoc</a> to learn how to render <code>.adoc</code> files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your <code>.adoc</code> files in real-time.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="publishing-documentation"><a class="link" href="#publishing-documentation">3.9. Publishing Documentation</a></h3>
+<h3 id="publishing-documentation"><a class="link" href="#publishing-documentation">3.8. Publishing Documentation</a></h3>
 <div class="paragraph">
 <p>See <a href="UsingTravis.html#deploying-github-pages">UsingTravis.adoc</a> to learn how to deploy GitHub Pages using Travis.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="converting-documentation-to-pdf-format"><a class="link" href="#converting-documentation-to-pdf-format">3.10. Converting Documentation to PDF format</a></h3>
+<h3 id="converting-documentation-to-pdf-format"><a class="link" href="#converting-documentation-to-pdf-format">3.9. Converting Documentation to PDF format</a></h3>
 <div class="paragraph">
 <p>We use <a href="https://www.google.com/chrome/browser/desktop/">Google Chrome</a> for converting documentation to PDF format, as Chrome&#8217;s PDF engine preserves hyperlinks used in webpages.</p>
 </div>
@@ -2189,7 +2182,7 @@ Expected: The most recent window size and region is retained.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-13 02:18:57 UTC
+Last updated 2018-04-13 02:37:17 UTC
 </div>
 </div>
 </body>
