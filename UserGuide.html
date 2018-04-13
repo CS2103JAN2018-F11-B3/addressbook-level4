@@ -30,7 +30,7 @@
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
 <li><a href="#start-conversation-with-program-code-start-code-since-v1-3">3.2. Start conversation with program : <code>start</code> [since v1.3]</a></li>
-<li><a href="#restart-conversation-with-program-code-new-code-since-v1-3">3.3. Restart conversation with program : <code>new</code> [since v1.3]</a></li>
+<li><a href="#clears-previous-conversation-with-program-code-new-code-since-v1-3">3.3. Clears previous conversation with program : <code>new</code> [since v1.3]</a></li>
 <li><a href="#find-internships-by-keyword-s-code-find-code-since-v1-2">3.4. Find internships by keyword(s): <code>find</code> [since v1.2]</a></li>
 <li><a href="#filtering-internship-by-keyword-s-code-filter-code-since-v1-3">3.5. Filtering Internship by keyword(s): <code>filter</code> [since v1.3]</a></li>
 <li><a href="#sorting-internship-by-keyword-s-code-sort-code-since-v1-4">3.6. Sorting Internship by keyword(s): <code>sort</code> [since v1.4]</a></li>
@@ -44,13 +44,11 @@
 <li><a href="#redoing-the-previously-undone-command-code-redo-code">3.14. Redoing the previously undone command : <code>redo</code></a></li>
 <li><a href="#exiting-the-program-code-exit-code">3.15. Exiting the program : <code>exit</code></a></li>
 <li><a href="#saving-the-data">3.16. Saving the data</a></li>
-<li><a href="#adding-a-command-alias-code-alias-code-coming-in-v2-0">3.17. Adding a command alias: <code>alias</code> [coming in v2.0]</a></li>
 </ul>
 </li>
 <li><a href="#command-summary">4. Command Summary</a></li>
 <li><a href="#list-of-industries">5. List of Industries</a></li>
 <li><a href="#list-of-internship-roles">6. List of Internship Roles</a></li>
-<li><a href="#faq">7. FAQ</a></li>
 </ul>
 </div>
 </div>
@@ -104,7 +102,7 @@ This app will not work with earlier versions of Java 8.
 <p>Type the command <code>start</code> in the command box and press <kbd>Enter</kbd> if you would like to begin a conversation with JobbiBot.</p>
 </li>
 <li>
-<p>Alternatively, if you would like to search for an internship directly. Type your command in the command box and press <kbd>Enter</kbd> to execute it.<br></p>
+<p>Alternatively, if you would like to search for an internship directly without conversing with JobbiBot. Type your command in the command box and press <kbd>Enter</kbd> to execute it.<br></p>
 </li>
 <li>
 <p>Some example commands you can try:</p>
@@ -114,10 +112,13 @@ This app will not work with earlier versions of Java 8.
 <p><strong><code>help</code></strong> : open the help window</p>
 </li>
 <li>
-<p><strong><code>list</code></strong> : lists all contacts</p>
+<p><strong><code>list</code></strong> : lists all internship</p>
 </li>
 <li>
-<p><strong><code>save</code></strong><code>3</code> : save the 3rd contact shown in the current list to a personal Saved Collection</p>
+<p><strong><code>save</code></strong><code>3</code> : save the 3rd internship shown in the current list to a personal Saved Internship Collection</p>
+</li>
+<li>
+<p><strong><code>find saved</code></strong> : view the Saved Internship Collection</p>
 </li>
 <li>
 <p><strong><code>exit</code></strong> : exits the app</p>
@@ -138,7 +139,7 @@ This app will not work with earlier versions of Java 8.
 <div class="sect2">
 <h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></h3>
 <div class="paragraph">
-<p>Shows more details of each command and a glossary of industries, roles and skills that the user may refer to in his or her search.</p>
+<p>Shows more details of each command and a glossary of industries and roles that the student may refer to in his or her search.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>help</code></p>
@@ -152,10 +153,25 @@ Format: <code>start</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="restart-conversation-with-program-code-new-code-since-v1-3"><a class="link" href="#restart-conversation-with-program-code-new-code-since-v1-3">3.3. Restart conversation with program : <code>new</code> [since v1.3]</a></h3>
+<h3 id="clears-previous-conversation-with-program-code-new-code-since-v1-3"><a class="link" href="#clears-previous-conversation-with-program-code-new-code-since-v1-3">3.3. Clears previous conversation with program : <code>new</code> [since v1.3]</a></h3>
 <div class="paragraph">
-<p>Restarts a new message thread of JobbiBot and the previous thread is deleted.<br>
+<p>Clears previous message thread with JobbiBot. To restart the conversation, type <code>start</code> again.<br>
 Format: <code>new</code></p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>new</code><br>
+Clears previous conversation with JobbiBot</p>
+</li>
+<li>
+<p><code>start</code><br>
+Initiates a new message thread with JobbiBot</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
@@ -211,12 +227,8 @@ Returns any internship having names or description matching <code>Dow</code>, <c
 Returns any internship having <code>Engineering</code> in its description.</p>
 </li>
 <li>
-<p><code>find <a href="mailto:Betsy@gmail.com">Betsy@gmail.com</a></code><br>
-Returns any internship having contact email <code>Betsy@gmail.com</code>.</p>
-</li>
-<li>
 <p><code>find Serangoon</code><br>
-Returns any internship having address or description matching <code>Serangoon</code> in it.</p>
+Returns any internship that has a region matching <code>Serangoon</code> in it.</p>
 </li>
 </ul>
 </div>
@@ -224,7 +236,7 @@ Returns any internship having address or description matching <code>Serangoon</c
 <div class="sect2">
 <h3 id="filtering-internship-by-keyword-s-code-filter-code-since-v1-3"><a class="link" href="#filtering-internship-by-keyword-s-code-filter-code-since-v1-3">3.5. Filtering Internship by keyword(s): <code>filter</code> [since v1.3]</a></h3>
 <div class="paragraph">
-<p>Filter the internship list according to the given keywords.<br>
+<p>Filters the internship list according to the given keywords.<br>
 Format: <code>filter KEYWORD [MORE_KEYWORDS]</code></p>
 </div>
 <div class="sidebarblock">
@@ -268,7 +280,7 @@ Returns only entries containing data and analytics. e.g <code>data analytics int
 <div class="paragraph">
 <p>Sorts the internship list according to the given keyword(s).<br>
 Format: <code>sort KEYWORD [MORE_KEYWORDS]</code><br>
-Keywords are only limited to the following internship attribute types: <code>Address</code> <code>Email</code> <code>Industry</code> <code>Region</code> <code>Name</code> <code>Role</code> <code>Salary</code></p>
+Keywords are only limited to the following internship attribute types: <code>Industry</code> <code>Region</code> <code>Name</code> <code>Role</code> <code>Salary</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -416,7 +428,7 @@ Format: <code>select INDEX</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Selects the internship and loads the Google search page the internship at the specified <code>INDEX</code>.</p>
+<p>Selects the internship and loads the full internship web page for the internship at the specified <code>INDEX</code>.</p>
 </li>
 <li>
 <p>The index refers to the index number shown in the most recent listing.</p>
@@ -436,7 +448,7 @@ Format: <code>select INDEX</code></p>
 <li>
 <p><code>list</code><br>
 <code>select 2</code><br>
-Selects the 2nd internship in the address book.</p>
+Selects the 2nd internship in the internship book.</p>
 </li>
 <li>
 <p><code>find Singapore Tourism Board</code><br>
@@ -551,13 +563,6 @@ Format: <code>exit</code></p>
 There is no need to save manually</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="adding-a-command-alias-code-alias-code-coming-in-v2-0"><a class="link" href="#adding-a-command-alias-code-alias-code-coming-in-v2-0">3.17. Adding a command alias: <code>alias</code> [coming in v2.0]</a></h3>
-<div class="paragraph">
-<p>Customise aliases for any valid command, find or filter attribute
-Format: <code>alias [COMMAND] [ALIAS]</code></p>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -569,10 +574,10 @@ Format: <code>alias [COMMAND] [ALIAS]</code></p>
 <p><strong>Help</strong> : <code>help</code></p>
 </li>
 <li>
-<p><strong>Start JobbiBot</strong> : <code>start</code></p>
+<p><strong>Start JobbiBot conversation</strong> : <code>start</code></p>
 </li>
 <li>
-<p><strong>Refresh JobbiBot Conversation</strong>: <code>new</code></p>
+<p><strong>Clears previous JobbiBot conversation</strong>: <code>new</code></p>
 </li>
 <li>
 <p><strong>Find</strong> : <code>find KEYWORD [MORE_KEYWORDS]</code><br>
@@ -583,23 +588,23 @@ e.g. <code>find Analytics Engineering</code></p>
 e.g. <code>filter Marketing Singapore</code></p>
 </li>
 <li>
-<p><strong>Save</strong> : <code>save INDEX</code><br>
+<p><strong>Save an internship</strong>  : <code>save INDEX</code><br>
 e.g. <code>save 2</code></p>
 </li>
 <li>
-<p><strong>Unsave</strong> : <code>unsave INDEX</code><br>
+<p><strong>Unsave an internship</strong> : <code>unsave INDEX</code><br>
 e.g. <code>unsave 2</code></p>
 </li>
 <li>
-<p><strong>Show Saved Collection</strong> : <code>find saved</code> or <code>filter saved</code><br>
+<p><strong>Show Saved Internship Collection</strong> : <code>find saved</code> or <code>filter saved</code><br>
 e.g. <code>find saved</code> or <code>filter saved</code></p>
 </li>
 <li>
-<p><strong>Select</strong> : <code>select INDEX</code><br>
+<p><strong>Select an internship</strong> : <code>select INDEX</code><br>
 e.g.<code>select 3</code></p>
 </li>
 <li>
-<p><strong>List</strong> : <code>list</code></p>
+<p><strong>List all internships</strong> : <code>list</code></p>
 </li>
 <li>
 <p><strong>Undo</strong> : <code>undo</code></p>
@@ -618,12 +623,12 @@ e.g.<code>select 3</code></p>
 <h2 id="list-of-industries"><a class="link" href="#list-of-industries">5. List of Industries</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This serves as a non-exhaustive lists of skills that users can search for</p>
+<p>This serves as a non-exhaustive lists of industries that users can search for in JobbiBot.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Arts Design</p>
+<p>Arts</p>
 </li>
 <li>
 <p>Automotive</p>
@@ -653,13 +658,13 @@ e.g.<code>select 3</code></p>
 <p>Legal</p>
 </li>
 <li>
+<p>Manufacturing</p>
+</li>
+<li>
 <p>Media</p>
 </li>
 <li>
 <p>Retail</p>
-</li>
-<li>
-<p>Research</p>
 </li>
 <li>
 <p>Social Enterprise</p>
@@ -678,7 +683,7 @@ e.g.<code>select 3</code></p>
 <h2 id="list-of-internship-roles"><a class="link" href="#list-of-internship-roles">6. List of Internship Roles</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This table is a non exhaustive list of potential internship roles that users can search for. Internship roles are organised by industry but not all industries are listed in this table.</p>
+<p>This table is a non exhaustive list of potential internship roles that users can search for in JobbiBot. Internship roles are organised by industry but not all industries are listed in this table.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -693,7 +698,7 @@ e.g.<code>select 3</code></p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Arts / Design</p></td>
+<td class="tableblock halign-left valign-top" rowspan="5"><p class="tableblock">Arts</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Animator</p></td>
 </tr>
 <tr>
@@ -729,13 +734,13 @@ e.g.<code>select 3</code></p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" rowspan="4"><p class="tableblock">Consultancy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Business Consultant</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Human Resource Consultant</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sales Consultant</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Technology Consultant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sales Marketing Consultant</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Wealth Management Consultant</p></td>
@@ -743,19 +748,6 @@ e.g.<code>select 3</code></p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Education</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Teacher</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top" rowspan="4"><p class="tableblock">Engineering</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Aerospace Engineer</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Electrical Engineer</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Manufacturing Engineer</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Mechanical Engineer</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" rowspan="6"><p class="tableblock">Finance</p></td>
@@ -775,13 +767,6 @@ e.g.<code>select 3</code></p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Wealth Management Analyst</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Healthcare</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Patient Support</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Patient Advocate</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" rowspan="4"><p class="tableblock">Hospitality</p></td>
@@ -891,19 +876,10 @@ e.g.<code>select 3</code></p>
 </table>
 </div>
 </div>
-<div class="sect1">
-<h2 id="faq"><a class="link" href="#faq">7. FAQ</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>Q</strong>: How do I update the internship list to the most updated version?<br>
-<strong>A</strong>: Download the database from the www.dummywebsite.com and replace the InternshipBook.xml file in main\data.</p>
-</div>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-13 15:33:16 UTC
+Last updated 2018-04-13 18:35:12 UTC
 </div>
 </div>
 </body>

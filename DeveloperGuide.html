@@ -45,14 +45,15 @@
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#filter-feature">3.1. Filter Feature</a></li>
-<li><a href="#undo-redo-feature">3.2. Undo/Redo feature</a></li>
-<li><a href="#save-unsave-feature">3.3. Save/Unsave feature</a></li>
-<li><a href="#find-command-with-adding-tag-feature">3.4. Find Command with adding tag feature</a></li>
-<li><a href="#logging">3.5. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
-<li><a href="#editing-documentation">3.7. Editing Documentation</a></li>
-<li><a href="#publishing-documentation">3.8. Publishing Documentation</a></li>
-<li><a href="#converting-documentation-to-pdf-format">3.9. Converting Documentation to PDF format</a></li>
+<li><a href="#chatbot-feature">3.2. Chatbot Feature</a></li>
+<li><a href="#save-unsave-feature">3.3. Save/Unsave Feature</a></li>
+<li><a href="#find-command-with-adding-tag-feature">3.4. Find Command with Adding Tag Feature</a></li>
+<li><a href="#undo-redo-feature">3.5. Undo/Redo feature</a></li>
+<li><a href="#logging">3.6. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.7. Configuration</a></li>
+<li><a href="#editing-documentation">3.8. Editing Documentation</a></li>
+<li><a href="#publishing-documentation">3.9. Publishing Documentation</a></li>
+<li><a href="#converting-documentation-to-pdf-format">3.10. Converting Documentation to PDF format</a></li>
 </ul>
 </li>
 <li><a href="#Testing">4. Testing</a>
@@ -86,7 +87,11 @@
 <li><a href="#productsurvey">Appendix F: ProductSurvey</a>
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">F.1. Launch and Shutdown</a></li>
-<li><a href="#saving-data">F.2. Saving data</a></li>
+<li><a href="#starting-a-conversation-with-jobbibot">F.2. Starting a conversation with JobbiBot</a></li>
+<li><a href="#clearing-a-previous-conversation-with-jobbibot">F.3. Clearing a previous conversation with JobbiBot</a></li>
+<li><a href="#saving-an-internship-to-saved-collection">F.4. Saving an internship to Saved Collection</a></li>
+<li><a href="#removing-an-internship-to-saved-collection">F.5. Removing an internship to Saved Collection</a></li>
+<li><a href="#saving-data">F.6. Saving data</a></li>
 </ul>
 </li>
 </ul>
@@ -738,9 +743,301 @@ Thus we have an InternshipBook , a filteredList (called searchedInternships) whi
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.2. Undo/Redo feature</a></h3>
+<h3 id="chatbot-feature"><a class="link" href="#chatbot-feature">3.2. Chatbot Feature</a></h3>
+<div class="paragraph">
+<p>The Chatbot is the key UI feature of this application. Through the Chatbot, JobbiBot, students will receive guidance
+and step-by-step prompts on how to narrow down their internship search. They are able to communicate with JobbiBot using the CLI.
+This is an important feature for our target users because they may not always know how to begin their search or what to look for.</p>
+</div>
 <div class="sect3">
-<h4 id="current-implementation"><a class="link" href="#current-implementation">3.2.1. Current Implementation</a></h4>
+<h4 id="current-main-implementation"><a class="link" href="#current-main-implementation">3.2.1. Current (Main) Implementation</a></h4>
+<div class="paragraph">
+<p>Each message is contained within a ListCell, otherwise named as a <code>ChatBotCard</code> in JobbiBot. A <code>ChatBotCard</code> is made up of a JavaFX HBox class that contains a Label class.
+The Label is used to display the text either from Jobbi&#8217;s response to user input or vice versa.</p>
+</div>
+<div class="paragraph">
+<p>When a new event is raised, typically when a user keys in a command, there are three methods that handle Jobbi and user responses in order to render the conversation between Jobbi and the user on the ListView.</p>
+</div>
+<div class="paragraph">
+<p>The first method to handle each user input in the command box is <code>handleUserResponse</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public ObservableList&lt;String&gt; handleUserResponse(ObservableList&lt;String&gt; listToUpdateWithUserResponse) {
+        historySnapshot = logic.getHistorySnapshot();
+        // Checks if user has typed the `start` command and adds the current element in the history snapshot list to the ObservableList&lt;String&gt;
+        if (historySnapshot.hasElement("start")) {
+            listToUpdateWithUserResponse.add("USER:   " + historySnapshot.current());
+
+            // ... Checks if user has restarted conversation if Jobbi ...
+
+        // Returns the updated list which is used in `buildConversation` method to render the updated ListView
+        return listToUpdateWithUserResponse;
+    }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The second method to handle each Jobbi&#8217;s response is <code>handleJobbiResponse</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public ObservableList&lt;String&gt; handleJobbiResponse(ObservableList&lt;String&gt; listToUpdateWithJobbiResponse,
+                                                      String message) {
+        historySnapshot = logic.getHistorySnapshot();
+        // Checks if the user has typed in `start` command to initiate conversation and add the message returned from the EventBus
+        if (historySnapshot.hasElement("start")) {
+            listToUpdateWithJobbiResponse.add("JOBBI:  " + message);
+
+            // ... Checks if user has restarted conversation if Jobbi ...
+
+          // Returns the updated list which is used in `buildConversation` method to render the updated ListView
+        return listToUpdateWithJobbiResponse;
+    }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, the last method takes an ObservableList of strings which has been updated with the latest Jobbi and user response to an event
+and renders the ListView of the message thread.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public void buildConversation(ObservableList&lt;String&gt; listToBuild) {
+        // Calls handleUserResponse() method with a ObservableList&lt;String&gt; that stores all the previous String messages between Jobbi and User
+        ObservableList&lt;String&gt; updatedMessages = handleUserResponse(listToBuild);
+
+        // Maps each message in the updated ObservableList&lt;String&gt; to a ChatBotCard
+        ObservableList&lt;ChatBotCard&gt; mappedList = EasyBind.map(
+                updatedMessages, (msg) -&gt; new ChatBotCard(msg));
+
+        // ... Recreates the ListView with the new user input ...
+    }</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
+<div class="paragraph">
+<p>A JavaFX ListView class was specifically chosen because it allows for the vertical display of items, such a message thread.
+A ListView instance is buildable with many ListCell objects so a message thread between Jobbi and user can grow extensively.
+It also enables scrolling so that the user is able to scroll up and down to view his or her chat history.</p>
+</div>
+<div class="paragraph">
+<p>However, two main aspects of the ListView class was altered:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The ability to select a list cell was disabled since users would not need to select individual messages</p>
+</li>
+<li>
+<p>Auto scrolling to the latest message was added so that users will always see the latest message response first.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="save-unsave-feature"><a class="link" href="#save-unsave-feature">3.3. Save/Unsave Feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation"><a class="link" href="#current-implementation">3.3.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The save/unsave mechanism is facilitated by the addition of a <code>saved</code> tag or removal of the <code>saved</code> tag
+respectively. Inspired by the Instagram saved feature, it allows our users to personally curate specific
+internships that they would like to save for a quick reference in the future as opposed to re-searching for
+a particular internship again.</p>
+</div>
+<div class="paragraph">
+<p>However, the special part of this feature is that users do not add or remove the <code>saved</code> tags in the CLI.
+Instead, they simply type in the command <code>save</code> or <code>unsave</code> with an index number and the command internally
+add a new "saved" tag to the internship or remove the tag. This mechanism inherits from <code>UndoableCommand</code> and is
+executed by the <code>LogicManager</code>.</p>
+</div>
+<div class="paragraph">
+<p>To achieve the internal addition of a saved tag, we added a <code>addSavedTagToInternship</code> method
+within the SaveCommand object. This method is self-invocated by the object&#8217;s other methods, such as <code>preprocessUndoableCommand</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>private Internship addSavedTagToInternship(Internship internship) throws CommandException {
+        //Creates a UniqueTagList of the specific internship's tags only
+        final UniqueTagList internshipTags = new UniqueTagList(internshipToSave.getTags());
+
+
+        //Adds a 'saved' tag only to internships that do not already possess the 'saved' tag or else an exception is thrown
+        try {
+            personTags.add(new Tag(SAVED_TAG));
+        } catch (UniqueTagList.DuplicateTagException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_SAVED_INTERNSHIP);
+        }
+
+        // ... rebuilds the updated list of tags ...
+
+        // returns an internship with all the same information except for an additional "saved" tag
+        return new Internship(
+                internship.getName(), internship.getPhone(), internship.getEmail(), internship.getAddress(), correctTagReferences);
+    }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The execution of this method in the <code>SaveCommand</code> object affects
+the <code>Model</code> and <code>UI</code> by adding a visible <code>saved</code> tag to a specific internship. The result of the <code>SaveCommand</code>
+execution is encapsulated as a <code>CommandResult</code> object which is passed back to UI.</p>
+</div>
+<div class="paragraph">
+<p>Below is a Sequence Diagram that demonstrates the interaction within the <code>Logic</code> component for the
+<code>execute("saved 1")</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SaveCommandSequenceDiagram.png" alt="SaveCommandSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Similarly, to achieve the internal removal of a saved tag, we added a <code>removeSavedTagToInternship</code> method
+within the UnsaveCommand object. The implementation of this method and its concept is exactly the opposite of
+the SaveCommand.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    private Internship removeSavedTagToInternship(Internship internship) {
+        //Creates a UniqueTagList of the specific internship's tags only
+        final UniqueTagList internshipTags = new UniqueTagList(internshipToUnsave.getTags());
+
+
+        //Checks for an existing "saved" tag and removes it from the UniqueTagList
+        internshipTags.delete(new Tag(SAVED_TAG));
+
+
+        // ... rebuilds the new list of tags and returns same person object without "saved" tag  ...
+    }</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
+<div class="paragraph">
+<p>With the <code>saved</code> tag, users are able to identify the internships they have saved in their personal collection in the <code>InternshipCardPanel</code>.
+When users want to remove the internship from their collection, they can type the <code>unsave</code> command to remove the tag.
+To view the entire collection, they can type <code>find saved</code> or <code>filter saved</code> into the CLI that basically searches for all the
+internships with "saved" tags and displays the filtered list.</p>
+</div>
+<div class="paragraph">
+<p>We chose to use the additional and removal of tags for two main reasons:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It is visible to the user which internship has been saved or unsaved</p>
+</li>
+<li>
+<p>It is more straightforward in terms of implementation to do a search by a specific tag to display the Saved Collection</p>
+</li>
+<li>
+<p>Users are able to further narrow down on their search from the Saved Collection. For example, <code>find saved business</code> will return a filtered list of internships
+in the Saved Collection that are related to the business industry.</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="alternative-solution-1-readapt-the-existing-implementation-of-the-code-edit-code-command"><a class="link" href="#alternative-solution-1-readapt-the-existing-implementation-of-the-code-edit-code-command">Alternative Solution 1: Readapt the existing Implementation of the <code>edit</code> Command</a></h5>
+<div class="paragraph">
+<p>The <code>edit</code> command allowed users to edit the tags of a specific internship. We could have potentially used it to add the <code>saved</code> tag to specific internships</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Much simpler implementation since the <code>edit</code> command has been provided by the Address Book 4.</p>
+</li>
+<li>
+<p>Cons 1: Editing tags with the <code>edit</code> command erases previous tags from the internship but we want to add the <code>saved</code> tag to the existing tags.</p>
+</li>
+<li>
+<p>Cons 2: The command line input is relatively less user friendly. For example, user had to input <code>edit 1 t/saved</code> to add <code>saved</code> tag to the first internship of the filtered list.
+On the other hand, the <code>save</code> command only requires the user to type in <code>save 1</code> for the same outcome.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="alternative-solution-2-create-an-additional-model"><a class="link" href="#alternative-solution-2-create-an-additional-model">Alternative Solution 2: Create an additional model</a></h5>
+<div class="paragraph">
+<p>Another idea was to create separate Internship Book Model and its own storage for the Saved Collections</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Able to save in hard disk storage</p>
+</li>
+<li>
+<p>Cons: May have performance issues in terms of memory usage and may have to significantly change the architecture</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="find-command-with-adding-tag-feature"><a class="link" href="#find-command-with-adding-tag-feature">3.4. Find Command with Adding Tag Feature</a></h3>
+<div class="sect3">
+<h4 id="rationale"><a class="link" href="#rationale">3.4.1. Rationale</a></h4>
+<div class="paragraph">
+<p>As the current find command work like a union search, users are able to key in multiple keywords at one go and JobbiBot will show
+all the internships that matches at least one of the keywords. However, users will not be able to differentiate which
+internships matches which keywords they have keyed in. As such this new feature enables them to have a clearer picture of
+which internship suits them more and enable them to further filter from the list.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.4.2. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The add tag feature is implemented as part of the find command. However, as models will be change due to the addition of tags,
+some codes are implemented within ModelManager.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/FindCommandSequenceDiagram.png" alt="FindCommandSequenceDiagram" width="1200">
+</div>
+</div>
+<div class="paragraph">
+<p>As it can be seen from the diagram, <code>Logic</code> uses the <code>InternshipBookParser</code> class to parse the user command.
+After which, <code>FindCommandParser</code> is created and use to parse the keyword. The keyword is then set in <code>ModelManager</code> via the
+setKeywords() method. A <code>FindCommand</code> object is then created followed by the <code>internshipContainsKeywordsPredicate</code>.</p>
+</div>
+<div class="paragraph">
+<p>In the second phase, the command is being executed in <code>FindCommand</code>. The first updateSearchedInternshipList() update the
+searchedInternship with all the internships available and remove all tags from them apart from <code>saved</code> tags. Following which
+the second updateSearchedInternshipList() update the searchedInternshipList with the internships that matches the keywords
+use as the argument in <code>FindCommand</code>. Those keywords are then added to the respective internships that matches it through the
+addTagsToFilteredList(). <code>FindCommand</code> then execute getCommandResult() and return the result of the command execution encapsulated
+as a <code>CommandResult</code> object and returns it to the <code>LogicManager</code> and subsequently to the UI and displayed to the user.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.3. Design Considerations</a></h4>
+<div class="paragraph">
+<p>Location of the functions</p>
+</div>
+<div class="paragraph">
+<p>Alternative 1:</p>
+</div>
+<div class="paragraph">
+<p>Alternative 2:</p>
+</div>
+<div class="paragraph">
+<p>Implementation of the codes</p>
+</div>
+<div class="paragraph">
+<p>Alternative 1:</p>
+</div>
+<div class="paragraph">
+<p>Alternative 2:</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.5. Undo/Redo feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.5.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -893,7 +1190,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -1030,212 +1327,14 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="save-unsave-feature"><a class="link" href="#save-unsave-feature">3.3. Save/Unsave feature</a></h3>
-<div class="sect3">
-<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.3.1. Current Implementation</a></h4>
-<div class="paragraph">
-<p>The save/unsave mechanism is facilitated by the addition of a <code>saved</code> tag or removal of the <code>saved</code> tag
-respectively. Inspired by the Instagram saved feature, it allows our users to personally curate specific
-internships that they would like to save for a quick reference in the future as opposed to re-searching for
-a particular internship again.</p>
-</div>
-<div class="paragraph">
-<p>However, the special part of this feature is that users do not add or remove the <code>saved</code> tags in the CLI.
-Instead, they simply type in the command <code>save</code> or <code>unsave</code> with an index number and the command internally
-add a new "saved" tag to the internship or remove the tag. This mechanism inherits from <code>UndoableCommand</code> and is
-executed by the <code>LogicManager</code>.</p>
-</div>
-<div class="paragraph">
-<p>To achieve the internal addition of a saved tag, we added a <code>addSavedTagToInternship</code> method
-within the SaveCommand object. This method is self-invocated by the object&#8217;s other methods, such as <code>preprocessUndoableCommand</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>private Internship addSavedTagToInternship(Internship internship) throws CommandException {
-        //Creates a UniqueTagList of the specific internship's tags only
-        final UniqueTagList internshipTags = new UniqueTagList(internshipToSave.getTags());
-
-
-        //Adds a 'saved' tag only to internships that do not already possess the 'saved' tag or else an exception is thrown
-        try {
-            personTags.add(new Tag(SAVED_TAG));
-        } catch (UniqueTagList.DuplicateTagException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_SAVED_INTERNSHIP);
-        }
-
-        // ... rebuilds the updated list of tags ...
-
-        // returns an internship with all the same information except for an additional "saved" tag
-        return new Internship(
-                internship.getName(), internship.getPhone(), internship.getEmail(), internship.getAddress(), correctTagReferences);
-    }</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The execution of this method in the <code>SaveCommand</code> object affects
-the <code>Model</code> and <code>UI</code> by adding a visible <code>saved</code> tag to a specific internship. The result of the <code>SaveCommand</code>
-execution is encapsulated as a <code>CommandResult</code> object which is passed back to UI.</p>
-</div>
-<div class="paragraph">
-<p>Below is a Sequence Diagram that demonstrates the interaction within the <code>Logic</code> component for the
-<code>execute("saved 1")</code>.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/SaveCommandSequenceDiagram.png" alt="SaveCommandSequenceDiagram" width="800">
-</div>
-</div>
-<div class="paragraph">
-<p>Similarly, to achieve the internal removal of a saved tag, we added a <code>removeSavedTagToInternship</code> method
-within the UnsaveCommand object. The implementation of this method and its concept is exactly the opposite of
-the SaveCommand.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>    private Internship removeSavedTagToInternship(Internship internship) {
-        //Creates a UniqueTagList of the specific internship's tags only
-        final UniqueTagList internshipTags = new UniqueTagList(internshipToUnsave.getTags());
-
-
-        //Checks for an existing "saved" tag and removes it from the UniqueTagList
-        internshipTags.delete(new Tag(SAVED_TAG));
-
-
-        // ... rebuilds the new list of tags and returns same person object without "saved" tag  ...
-    }</pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
-<div class="paragraph">
-<p>With the <code>saved</code> tag, users are able to identify the internships they have saved in their personal collection in the <code>InternshipCardPanel</code>.
-When users want to remove the internship from their collection, they can type the <code>unsave</code> command to remove the tag.
-To view the entire collection, they can type <code>find saved</code> or <code>filter saved</code> into the CLI that basically searches for all the
-internships with "saved" tags and displays the filtered list.</p>
-</div>
-<div class="paragraph">
-<p>We chose to use the additional and removal of tags for two main reasons:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>It is visible to the user which internship has been saved or unsaved</p>
-</li>
-<li>
-<p>It is more straightforward in terms of implementation to do a search by a specific tag to display the Saved Collection</p>
-</li>
-<li>
-<p>Users are able to further narrow down on their search from the Saved Collection. For example, <code>find saved business</code> will return a filtered list of internships
-in the Saved Collection that are related to the business industry.</p>
-</li>
-</ul>
-</div>
-<div class="sect4">
-<h5 id="alternative-solution-1-readapt-the-existing-implementation-of-the-code-edit-code-command"><a class="link" href="#alternative-solution-1-readapt-the-existing-implementation-of-the-code-edit-code-command">Alternative Solution 1: Readapt the existing Implementation of the <code>edit</code> Command</a></h5>
-<div class="paragraph">
-<p>The <code>edit</code> command allowed users to edit the tags of a specific internship. We could have potentially used it to add the <code>saved</code> tag to specific internships</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Much simpler implementation since the <code>edit</code> command has been provided by the Address Book 4.</p>
-</li>
-<li>
-<p>Cons 1: Editing tags with the <code>edit</code> command erases previous tags from the internship but we want to add the <code>saved</code> tag to the existing tags.</p>
-</li>
-<li>
-<p>Cons 2: The command line input is relatively less user friendly. For example, user had to input <code>edit 1 t/saved</code> to add <code>saved</code> tag to the first internship of the filtered list.
-On the other hand, the <code>save</code> command only requires the user to type in <code>save 1</code> for the same outcome.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="alternative-solution-2-create-an-additional-model"><a class="link" href="#alternative-solution-2-create-an-additional-model">Alternative Solution 2: Create an additional model</a></h5>
-<div class="paragraph">
-<p>Another idea was to create separate Internship Book Model and its own storage for the Saved Collections</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Able to save in hard disk storage</p>
-</li>
-<li>
-<p>Cons: May have performance issues in terms of memory usage and may have to significantly change the architecture</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="find-command-with-adding-tag-feature"><a class="link" href="#find-command-with-adding-tag-feature">3.4. Find Command with adding tag feature</a></h3>
-<div class="sect3">
-<h4 id="rationale"><a class="link" href="#rationale">3.4.1. Rationale</a></h4>
-<div class="paragraph">
-<p>As the current find command work like a union search, users are able to key in multiple keywords at one go and JobbiBot will show
-all the internships that matches at least one of the keywords. However, users will not be able to differentiate which
-internships matches which keywords they have keyed in. As such this new feature enables them to have a clearer picture of
-which internship suits them more and enable them to further filter from the list.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.4.2. Current Implementation</a></h4>
-<div class="paragraph">
-<p>The add tag feature is implemented as part of the find command. However, as models will be change due to the addition of tags,
-some codes are implemented within ModelManager.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/FindCommandSequenceDiagram.png" alt="FindCommandSequenceDiagram" width="1200">
-</div>
-</div>
-<div class="paragraph">
-<p>As it can be seen from the diagram, <code>Logic</code> uses the <code>InternshipBookParser</code> class to parse the user command.
-After which, <code>FindCommandParser</code> is created and use to parse the keyword. The keyword is then set in <code>ModelManager</code> via the
-setKeywords() method. A <code>FindCommand</code> object is then created followed by the <code>internshipContainsKeywordsPredicate</code>.</p>
-</div>
-<div class="paragraph">
-<p>In the second phase, the command is being executed in <code>FindCommand</code>. The first updateSearchedInternshipList() update the
-searchedInternship with all the internships available and remove all tags from them apart from <code>saved</code> tags. Following which
-the second updateSearchedInternshipList() update the searchedInternshipList with the internships that matches the keywords
-use as the argument in <code>FindCommand</code>. Those keywords are then added to the respective internships that matches it through the
-addTagsToFilteredList(). <code>FindCommand</code> then execute getCommandResult() and return the result of the command execution encapsulated
-as a <code>CommandResult</code> object and returns it to the <code>LogicManager</code> and subsequently to the UI and displayed to the user.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.3. Design Considerations</a></h4>
-<div class="paragraph">
-<p>Location of the functions</p>
-</div>
-<div class="paragraph">
-<p>Alternative 1:</p>
-</div>
-<div class="paragraph">
-<p>Alternative 2:</p>
-</div>
-<div class="paragraph">
-<p>Implementation of the codes</p>
-</div>
-<div class="paragraph">
-<p>Alternative 1:</p>
-</div>
-<div class="paragraph">
-<p>Alternative 2:</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.7, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1266,7 +1365,7 @@ as a <code>CommandResult</code> object and returns it to the <code>LogicManager<
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.7. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).
 == Documentation</p>
@@ -1288,20 +1387,20 @@ We chose asciidoc over Markdown because asciidoc, although a bit more complex th
 </div>
 </div>
 <div class="sect2">
-<h3 id="editing-documentation"><a class="link" href="#editing-documentation">3.7. Editing Documentation</a></h3>
+<h3 id="editing-documentation"><a class="link" href="#editing-documentation">3.8. Editing Documentation</a></h3>
 <div class="paragraph">
 <p>See <a href="UsingGradle.html#rendering-asciidoc-files">UsingGradle.adoc</a> to learn how to render <code>.adoc</code> files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your <code>.adoc</code> files in real-time.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="publishing-documentation"><a class="link" href="#publishing-documentation">3.8. Publishing Documentation</a></h3>
+<h3 id="publishing-documentation"><a class="link" href="#publishing-documentation">3.9. Publishing Documentation</a></h3>
 <div class="paragraph">
 <p>See <a href="UsingTravis.html#deploying-github-pages">UsingTravis.adoc</a> to learn how to deploy GitHub Pages using Travis.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="converting-documentation-to-pdf-format"><a class="link" href="#converting-documentation-to-pdf-format">3.9. Converting Documentation to PDF format</a></h3>
+<h3 id="converting-documentation-to-pdf-format"><a class="link" href="#converting-documentation-to-pdf-format">3.10. Converting Documentation to PDF format</a></h3>
 <div class="paragraph">
 <p>We use <a href="https://www.google.com/chrome/browser/desktop/">Google Chrome</a> for converting documentation to PDF format, as Chrome&#8217;s PDF engine preserves hyperlinks used in webpages.</p>
 </div>
@@ -1585,16 +1684,16 @@ b. Require developers to download those libraries manually (this creates extra w
 <p>are university students looking for internships</p>
 </li>
 <li>
-<p>but not sure where to start or what to look for</p>
+<p>but not sure how to start or what to look for</p>
+</li>
+<li>
+<p>prefers to an interactive application to source for internships rather than a normal and static web application</p>
+</li>
+<li>
+<p>wants to narrow down the list of internships with guidance</p>
 </li>
 <li>
 <p>prefers typing rather than clicking on internship portals</p>
-</li>
-<li>
-<p>prefers to an interactive application to search for internships rather than a normal list</p>
-</li>
-<li>
-<p>wants to narrow down the list of internships in an intuitive manner</p>
 </li>
 <li>
 <p>can type fast</p>
@@ -2153,12 +2252,115 @@ Expected: The most recent window size and region is retained.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
+</div>
+<div class="sect2">
+<h3 id="starting-a-conversation-with-jobbibot"><a class="link" href="#starting-a-conversation-with-jobbibot">F.2. Starting a conversation with JobbiBot</a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>start</code>
+Expected: JobbiBot prints a response message in the message thread.</p>
+</li>
+<li>
+<p>Test case: <code>start x</code> (where x is an integer, alphabet or non alphanumerical character)
+Expected: Conversation not started. Error details shown in the message thread.</p>
+</li>
+<li>
+<p>Test case: Subsequent <code>start</code> commands after entering the initial <code>start</code> commands
+Expected: JobbiBot says that the conversation has already started and subsequent <code>start</code> commands has no effect on initiating the conversation again.</p>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">F.2. Saving data</a></h3>
+<h3 id="clearing-a-previous-conversation-with-jobbibot"><a class="link" href="#clearing-a-previous-conversation-with-jobbibot">F.3. Clearing a previous conversation with JobbiBot</a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>new</code>
+Expected: Clears entire previous message thread and user only sees the JobbiBot welcome message left.</p>
+</li>
+<li>
+<p>Test case: <code>new x</code> (where x is an integer, alphabet or non alphanumerical character)
+Expected: Previous conversation is not cleared. Error details shown in the message thread.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="saving-an-internship-to-saved-collection"><a class="link" href="#saving-an-internship-to-saved-collection">F.4. Saving an internship to Saved Collection</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Saving an internship while all internships are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all internships using the <code>list</code> command. Multiple internships in the list.</p>
+</li>
+<li>
+<p>Test case: <code>save 1</code><br>
+Expected: First internship is saved from the list as visible from the <code>saved</code> tag added to the internship. Details of the successful saved internship shown as a JobbiBot response in the message thread.</p>
+</li>
+<li>
+<p>Test case: <code>save 1</code> to save the same internship from the same list again
+Expected: Internship cannot be saved twice. Error details shown in the message thread.</p>
+</li>
+<li>
+<p>Test case: <code>save 0</code><br>
+Expected: No internship is saved. Error details shown in the message thread.</p>
+</li>
+<li>
+<p>Test case: <code>save -2</code><br>
+Expected: No internship is saved. Error details shown in the message thread.</p>
+</li>
+<li>
+<p>Other incorrect save commands to try: <code>save</code>, <code>save x</code> or <code>x save</code> (where x is larger than the list size or x is not an alphanumerical character
+or x is a mathematical expression that evaluates to an positive integer), <br>
+  Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing-an-internship-to-saved-collection"><a class="link" href="#removing-an-internship-to-saved-collection">F.5. Removing an internship to Saved Collection</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Removing an internship while all internships are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all internships from the Saved Internship Collection using the <code>find saved</code> or <code>filter saved</code> command. Multiple internships in the Saved Collection.</p>
+</li>
+<li>
+<p>Test case: <code>unsave 1</code><br>
+Expected: First internship is removed from the Saved Collection as visible from the <code>saved</code> tag being removed from the internship and the internship is removed from the Saved Collection. Details of the successful removal is shown as a JobbiBot response in the message thread.</p>
+</li>
+<li>
+<p>Test case: <code>unsave 0</code><br>
+Expected: No internship is removed from Saved Collection. Error details shown in the message thread.</p>
+</li>
+<li>
+<p>Test case: <code>save -2</code><br>
+Expected: No internship is removed from Saved Collection. Error details shown in the message thread.</p>
+</li>
+<li>
+<p>Other incorrect save commands to try: <code>unsave</code>, <code>unsave x</code> or <code>x unsave</code> (where x is larger than the list size or x is not an alphanumerical character
+or x is a mathematical expression that evaluates to an positive integer), <br>
+  Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="saving-data"><a class="link" href="#saving-data">F.6. Saving data</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2182,7 +2384,7 @@ Expected: The most recent window size and region is retained.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-13 15:33:16 UTC
+Last updated 2018-04-13 18:35:12 UTC
 </div>
 </div>
 </body>
