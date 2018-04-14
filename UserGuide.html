@@ -280,12 +280,19 @@ Returns only entries containing data and analytics. e.g <code>data analytics int
 <div class="paragraph">
 <p>Sorts the internship list according to the given keyword(s).<br>
 Format: <code>sort KEYWORD [MORE_KEYWORDS]</code><br>
-Keywords are only limited to the following internship attribute types: <code>Industry</code> <code>Region</code> <code>Name</code> <code>Role</code> <code>Salary</code></p>
+Keywords are only limited to the following internship attribute types: <code>Industry</code> <code>Region</code> <code>Name</code> <code>Role</code> <code>Salary</code><br>
+Keywords can include '-' (e.g <code>-Industry</code> <code>-Region</code> <code>-Name</code> <code>-Role</code> <code>-Salary</code>) to reverse the order of the sort for that attribute</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
+<li>
+<p>Salary is sorted from highest to lowest by default</p>
+</li>
+<li>
+<p>Other attributes are sorted from A-Z by default</p>
+</li>
 <li>
 <p>The sort is case insensitive. e.g <code>name</code> will match <code>Name</code></p>
 </li>
@@ -323,6 +330,14 @@ Is simply <code>sort salary</code></p>
 <li>
 <p><code>sort salary name industry role</code><br>
 Only the first three attributes will be sorted. i.e <code>sort salary name industry</code> but not role</p>
+</li>
+<li>
+<p><code>sort -role</code><br>
+Sorts the internship list according to role attribute in reverse order (from Z-A)</p>
+</li>
+<li>
+<p><code>sort name -industry</code><br>
+Sorts the internship list according to name (from A-Z), and then by industry (from Z-A)</p>
 </li>
 </ul>
 </div>
@@ -879,7 +894,7 @@ e.g.<code>select 3</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-14 16:26:05 UTC
+Last updated 2018-04-14 16:45:02 UTC
 </div>
 </div>
 </body>
