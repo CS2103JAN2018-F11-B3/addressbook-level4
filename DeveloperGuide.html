@@ -95,7 +95,6 @@
 <li><a href="#clearing-a-previous-conversation-with-jobbibot">F.3. Clearing a previous conversation with JobbiBot</a></li>
 <li><a href="#saving-an-internship-to-saved-collection">F.4. Saving an internship to Saved Collection</a></li>
 <li><a href="#removing-an-internship-to-saved-collection">F.5. Removing an internship to Saved Collection</a></li>
-<li><a href="#saving-data">F.6. Saving data</a></li>
 </ul>
 </li>
 </ul>
@@ -756,11 +755,11 @@ This is an important feature for our target users because they may not always kn
 <div class="sect3">
 <h4 id="current-main-implementation"><a class="link" href="#current-main-implementation">3.2.1. Current (Main) Implementation</a></h4>
 <div class="paragraph">
-<p>Each message is contained within a ListCell, otherwise named as a <code>ChatBotCard</code> in JobbiBot. A <code>ChatBotCard</code> is made up of a JavaFX HBox class that contains a Label class.
-The Label is used to display the text either from Jobbi&#8217;s response to user input or vice versa.</p>
+<p>Each message is displayed within a ListCell, otherwise named as a <code>ChatBotCard</code> in JobbiBot. A <code>ChatBotCard</code> is made up of a JavaFX HBox class that consists of a Label class.
+The Label is used to either display a Jobbi message or an user command input. This mechanism inherits from UiPart and is executed by the UiManager.</p>
 </div>
 <div class="paragraph">
-<p>When a new event is raised, typically when a user keys in a command, there are three methods that handle Jobbi and user responses in order to render the conversation between Jobbi and the user on the ListView.</p>
+<p>When a new event is raised, typically when a user keys in a command, there are three main methods that handle Jobbi and user responses in order to render the conversation between Jobbi and the user on the ListView.</p>
 </div>
 <div class="paragraph">
 <p>The first method to handle each user input in the command box is <code>handleUserResponse</code>.</p>
@@ -768,14 +767,15 @@ The Label is used to display the text either from Jobbi&#8217;s response to user
 <div class="listingblock">
 <div class="content">
 <pre>    public ObservableList&lt;String&gt; handleUserResponse(ObservableList&lt;String&gt; listToUpdateWithUserResponse) {
-        historySnapshot = logic.getHistorySnapshot();
+        ...
+
         // Checks if user has typed the `start` command and adds the current element in the history snapshot list to the ObservableList&lt;String&gt;
         if (historySnapshot.hasElement("start")) {
             listToUpdateWithUserResponse.add("USER:   " + historySnapshot.current());
 
-            // ... Checks if user has restarted conversation if Jobbi ...
+        // ... Checks if user has restarted conversation if Jobbi ...
 
-        // Returns the updated list which is used in `buildConversation` method to render the updated ListView
+        // Returns the updated list which is used in the `buildConversation` method to render the updated ListView
         return listToUpdateWithUserResponse;
     }</pre>
 </div>
@@ -787,27 +787,25 @@ The Label is used to display the text either from Jobbi&#8217;s response to user
 <div class="content">
 <pre>    public ObservableList&lt;String&gt; handleJobbiResponse(ObservableList&lt;String&gt; listToUpdateWithJobbiResponse,
                                                       String message) {
-        historySnapshot = logic.getHistorySnapshot();
+        ...
         // Checks if the user has typed in `start` command to initiate conversation and add the message returned from the EventBus
         if (historySnapshot.hasElement("start")) {
             listToUpdateWithJobbiResponse.add("JOBBI:  " + message);
 
-            // ... Checks if user has restarted conversation if Jobbi ...
+        // ... Checks if user has restarted conversation if Jobbi ...
 
-          // Returns the updated list which is used in `buildConversation` method to render the updated ListView
+          // Returns the updated list which is used in the `buildConversation` method to render the updated ListView
         return listToUpdateWithJobbiResponse;
     }</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, the last method takes an ObservableList of strings which has been updated with the latest Jobbi and user response to an event
-and renders the ListView of the message thread.</p>
+<p>Finally, the last method takes an ObservableList of strings which has been updated with the both latest Jobbi and user response to an event
+and renders a new ListView of the message thread.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>    public void buildConversation(ObservableList&lt;String&gt; listToBuild) {
-        // Calls handleUserResponse() method with a ObservableList&lt;String&gt; that stores all the previous String messages between Jobbi and User
-        ObservableList&lt;String&gt; updatedMessages = handleUserResponse(listToBuild);
 
         // Maps each message in the updated ObservableList&lt;String&gt; to a ChatBotCard
         ObservableList&lt;ChatBotCard&gt; mappedList = EasyBind.map(
@@ -826,15 +824,15 @@ A ListView instance is buildable with many ListCell objects so a message thread 
 It also enables scrolling so that the user is able to scroll up and down to view his or her chat history.</p>
 </div>
 <div class="paragraph">
-<p>However, two main aspects of the ListView class was altered:</p>
+<p>However, two main aspects of the ListView class was altered so that it resembles a message thread:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The ability to select a list cell was disabled since users would not need to select individual messages</p>
+<p>The ability to select a list cell was disabled since users should not be able to to select individual messages.</p>
 </li>
 <li>
-<p>Auto scrolling to the latest message was added so that users will always see the latest message response first.</p>
+<p>Auto-scrolling to the latest message was added so that users will always see the latest message on the ListView first.</p>
 </li>
 </ul>
 </div>
@@ -852,20 +850,20 @@ a particular internship again.</p>
 </div>
 <div class="paragraph">
 <p>However, the special part of this feature is that users do not add or remove the <code>saved</code> tags in the CLI.
-Instead, they simply type in the command <code>save</code> or <code>unsave</code> with an index number and the command internally
-add a new "saved" tag to the internship or remove the tag. This mechanism inherits from <code>UndoableCommand</code> and is
+Instead, they simply type in the command <code>save</code> or <code>unsave</code> followed by an index number and the command internally
+adds a new "saved" tag to the internship or remove the tag. This mechanism inherits from <code>UndoableCommand</code> and is
 executed by the <code>LogicManager</code>.</p>
 </div>
 <div class="paragraph">
-<p>To achieve the internal addition of a saved tag, we added a <code>addSavedTagToInternship</code> method
+<p>To achieve the internal addition of a saved tag, we added an <code>addSavedTagToInternship</code> method
 within the SaveCommand object. This method is self-invocated by the object&#8217;s other methods, such as <code>preprocessUndoableCommand</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>private Internship addSavedTagToInternship(Internship internship) throws CommandException {
+
         //Creates a UniqueTagList of the specific internship's tags only
         final UniqueTagList internshipTags = new UniqueTagList(internshipToSave.getTags());
-
 
         //Adds a 'saved' tag only to internships that do not already possess the 'saved' tag or else an exception is thrown
         try {
@@ -899,18 +897,17 @@ execution is encapsulated as a <code>CommandResult</code> object which is passed
 <div class="paragraph">
 <p>Similarly, to achieve the internal removal of a saved tag, we added a <code>removeSavedTagToInternship</code> method
 within the UnsaveCommand object. The implementation of this method and its concept is exactly the opposite of
-the SaveCommand.</p>
+the SaveCommand since the <code>saved</code> tag is being removed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>    private Internship removeSavedTagToInternship(Internship internship) {
+
         //Creates a UniqueTagList of the specific internship's tags only
         final UniqueTagList internshipTags = new UniqueTagList(internshipToUnsave.getTags());
 
-
         //Checks for an existing "saved" tag and removes it from the UniqueTagList
         internshipTags.delete(new Tag(SAVED_TAG));
-
 
         // ... rebuilds the new list of tags and returns same person object without "saved" tag  ...
     }</pre>
@@ -926,15 +923,15 @@ To view the entire collection, they can type <code>find saved</code> or <code>fi
 internships with "saved" tags and displays the filtered list.</p>
 </div>
 <div class="paragraph">
-<p>We chose to use the additional and removal of tags for two main reasons:</p>
+<p>We chose to use the addition and removal of tags for two main reasons:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>It is visible to the user which internship has been saved or unsaved</p>
+<p>It is visible to the user which internship has been saved or unsaved.</p>
 </li>
 <li>
-<p>It is more straightforward in terms of implementation to do a search by a specific tag to display the Saved Collection</p>
+<p>It is more straightforward in terms of implementation to do a search by a specific tag to display the Saved Collection.</p>
 </li>
 <li>
 <p>Users are able to further narrow down on their search from the Saved Collection. For example, <code>find saved business</code> will return a filtered list of internships
@@ -945,7 +942,7 @@ in the Saved Collection that are related to the business industry.</p>
 <div class="sect4">
 <h5 id="alternative-solution-1-readapt-the-existing-implementation-of-the-code-edit-code-command"><a class="link" href="#alternative-solution-1-readapt-the-existing-implementation-of-the-code-edit-code-command">Alternative Solution 1: Readapt the existing Implementation of the <code>edit</code> Command</a></h5>
 <div class="paragraph">
-<p>The <code>edit</code> command allowed users to edit the tags of a specific internship. We could have potentially used it to add the <code>saved</code> tag to specific internships</p>
+<p>The <code>edit</code> command allowed users to edit the tags of a specific existing internship. We could have potentially used it to add the <code>saved</code> tag to specific internships</p>
 </div>
 <div class="ulist">
 <ul>
@@ -953,10 +950,10 @@ in the Saved Collection that are related to the business industry.</p>
 <p>Pros: Much simpler implementation since the <code>edit</code> command has been provided by the Address Book 4.</p>
 </li>
 <li>
-<p>Cons 1: Editing tags with the <code>edit</code> command erases previous tags from the internship but we want to add the <code>saved</code> tag to the existing tags.</p>
+<p>Cons 1: Editing tags with the <code>edit</code> command erase previous tags from the internship but we want to add the <code>saved</code> tag to the existing tags.</p>
 </li>
 <li>
-<p>Cons 2: The command line input is relatively less user friendly. For example, user had to input <code>edit 1 t/saved</code> to add <code>saved</code> tag to the first internship of the filtered list.
+<p>Cons 2: The command line input is relatively less user-friendly. For example, the user had to input <code>edit 1 t/saved</code> to add <code>saved</code> tag to the first internship of the filtered list.
 On the other hand, the <code>save</code> command only requires the user to type in <code>save 1</code> for the same outcome.</p>
 </li>
 </ul>
@@ -1890,19 +1887,19 @@ b. Require developers to download those libraries manually (this creates extra w
 <td class="tableblock halign-left valign-top"><p class="tableblock">further narrow down on my interested internships conveniently</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">`* * `</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">organised student</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">split up my saved internships into personalised collections</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">categorise and organise my interested internship in various folders</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">`* * `</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">new student</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">input my relevant skill sets/interests</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">explore internships that are suitable and interesting for me</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">`* * `</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">curious student</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">given data analysis about successful internships and job search within a faculty or in a given year</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">overview of the job prospects in that year and understand the market competitiveness</p></td>
@@ -1942,7 +1939,7 @@ b. Require developers to download those libraries manually (this creates extra w
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User requests to start conversation with Jobbi</p>
+<p>User requests to start conversation with JobbiBot</p>
 </li>
 <li>
 <p>JobbiBot replies with the next prompt to indicate conversation has started</p>
@@ -2032,23 +2029,23 @@ b. Require developers to download those libraries manually (this creates extra w
 </li>
 <li>
 <p>Use case resumes at step 2.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 <h3 id="use-case-unsave-internship" class="discrete">Use case: Unsave internship</h3>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User requests to list internships</p>
+<p>User requests to list the Saved Collection</p>
 </li>
 <li>
-<p>JobbiBot shows a list of all internships</p>
+<p>JobbiBot shows a list of the Saved Collection</p>
 </li>
 <li>
 <p>User requests to remove a specific internship from the Saved Collection</p>
@@ -2067,7 +2064,7 @@ b. Require developers to download those libraries manually (this creates extra w
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>2a. The list is empty.</p>
+<p>2a. The Saved Collection is empty.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
@@ -2105,9 +2102,6 @@ b. Require developers to download those libraries manually (this creates extra w
 </ul>
 </div>
 <h3 id="use-case-finding-internship" class="discrete">Use case: Finding Internship</h3>
-<div class="paragraph">
-<p><strong>System</strong>: JobbiBot</p>
-</div>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -2149,9 +2143,6 @@ b. Require developers to download those libraries manually (this creates extra w
 </div>
 <h3 id="use-case-filtering-internship" class="discrete">Use case: Filtering Internship</h3>
 <div class="paragraph">
-<p><strong>System</strong>: JobbiBot</p>
-</div>
-<div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
 <div class="olist arabic">
@@ -2191,9 +2182,6 @@ b. Require developers to download those libraries manually (this creates extra w
 </ul>
 </div>
 <h3 id="use-case-sorting-internship" class="discrete">Use case: Sorting Internship</h3>
-<div class="paragraph">
-<p><strong>System</strong>: JobbiBot</p>
-</div>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
@@ -2373,15 +2361,15 @@ Expected: The most recent window size and region is retained.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Test case: <code>start</code>
-Expected: JobbiBot prints a response message in the message thread.</p>
+<p>Test case: <code>start</code><br>
+Expected: JobbiBot prints a response message in the message thread that prompts the user to find preferred industries and roles.</p>
 </li>
 <li>
-<p>Test case: <code>start x</code> (where x is an integer, alphabet or non alphanumerical character)
+<p>Test case: <code>start x</code> (where x is an integer, alphabet or non alphanumerical character)<br>
 Expected: Conversation not started. Error details shown in the message thread.</p>
 </li>
 <li>
-<p>Test case: Subsequent <code>start</code> commands after entering the initial <code>start</code> commands
+<p>Test case: Subsequent <code>start</code> commands after entering the initial <code>start</code> commands<br>
 Expected: JobbiBot says that the conversation has already started and subsequent <code>start</code> commands has no effect on initiating the conversation again.</p>
 </li>
 </ol>
@@ -2395,12 +2383,16 @@ Expected: JobbiBot says that the conversation has already started and subsequent
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Test case: <code>new x</code> (where x is an integer, alphabet or non alphanumerical character)
+<p>Test case: <code>new x</code> (where x is an integer, alphabet or non alphanumerical character)<br>
 Expected: Previous conversation is not cleared. Error details shown in the message thread.</p>
 </li>
 <li>
-<p>Test case: <code>new</code>
+<p>Test case: <code>new</code><br>
 Expected: Clears entire previous message thread and user only sees the JobbiBot welcome message left.</p>
+</li>
+<li>
+<p>Test case: <code>list</code><br>
+Expected: Error detail is shown in the message thread. JobbiBot prompts the user to type the <code>start</code> command to restart the conversation.</p>
 </li>
 </ol>
 </div>
@@ -2418,10 +2410,10 @@ Expected: Clears entire previous message thread and user only sees the JobbiBot 
 </li>
 <li>
 <p>Test case: <code>save 1</code><br>
-Expected: First internship is saved from the list as visible from the <code>saved</code> tag added to the internship. Details of the successful saved internship shown as a JobbiBot response in the message thread.</p>
+Expected: First internship is saved from the list as visible from the <code>saved</code> tag added to the internship. Details of the successful saved internship are shown as a JobbiBot response in the message thread.</p>
 </li>
 <li>
-<p>Test case: <code>save 1</code> to save the same internship from the same list again
+<p>Test case: <code>save 1</code> to save the same internship from the same list again<br>
 Expected: Internship cannot be saved twice. Error details shown in the message thread.</p>
 </li>
 <li>
@@ -2435,7 +2427,7 @@ Expected: No internship is saved. Error details shown in the message thread.</p>
 <li>
 <p>Other incorrect save commands to try: <code>save</code>, <code>save x</code> or <code>x save</code> (where x is larger than the list size or x is not an alphanumerical character
 or x is a mathematical expression that evaluates to an positive integer), <br>
-  Expected: Similar to previous.</p>
+  Expected: No internship is saved. Error details shown in the message thread.</p>
 </li>
 </ol>
 </div>
@@ -2456,7 +2448,7 @@ or x is a mathematical expression that evaluates to an positive integer), <br>
 </li>
 <li>
 <p>Test case: <code>unsave 1</code><br>
-Expected: First internship is removed from the Saved Collection as visible from the <code>saved</code> tag being removed from the internship and the internship is removed from the Saved Collection. Details of the successful removal is shown as a JobbiBot response in the message thread.</p>
+Expected: First internship is removed from the Saved Collection as visible from the <code>saved</code> tag being removed from the internship and the internship is removed from the Saved Collection. Details of the successful removal are shown as a JobbiBot response in the message thread.</p>
 </li>
 <li>
 <p>Test case: <code>unsave 0</code><br>
@@ -2469,32 +2461,12 @@ Expected: No internship is removed from Saved Collection. Error details shown in
 <li>
 <p>Other incorrect save commands to try: <code>unsave</code>, <code>unsave x</code> or <code>x unsave</code> (where x is larger than the list size or x is not an alphanumerical character
 or x is a mathematical expression that evaluates to an positive integer), <br>
-  Expected: Similar to previous.</p>
+  Expected: No internship is removed from Saved Collection. Error details shown in the message thread.</p>
 </li>
 </ol>
 </div>
 </li>
 </ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">F.6. Saving data</a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Dealing with missing/corrupted data files</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p><em>{explain how to simulate a missing/corrupted file and the expected behavior}</em></p>
-</li>
-</ol>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
 </div>
 </div>
 </div>
@@ -2502,7 +2474,7 @@ or x is a mathematical expression that evaluates to an positive integer), <br>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 12:58:19 UTC
+Last updated 2018-04-15 13:58:39 UTC
 </div>
 </div>
 </body>
