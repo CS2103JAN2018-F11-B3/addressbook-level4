@@ -59,7 +59,8 @@ the internship or they may restart the process and filter the internships differ
 <p><strong>Minor enhancement</strong>: Added another data structure to model manager to allow for filtering and sorting</p>
 </li>
 <li>
-<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103JAN2018-F11-B3/main/blob/master/collated/functional/niloc94.md">Functional code</a>]</p>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103JAN2018-F11-B3/main/blob/master/collated/functional/niloc94.md">Functional code</a>]
+[<a href="https://github.com/CS2103JAN2018-F11-B3/main/blob/master/collated/test/niloc94.md">Test Code</a>]</p>
 </li>
 <li>
 <p><strong>Other contributions</strong>:</p>
@@ -73,7 +74,7 @@ the internship or they may restart the process and filter the internships differ
 <p>Suggested and designed the implementation of various features for the team (Example using addressbook tag feature to implement save and unsave, and find tag features)</p>
 </li>
 <li>
-<p>Updated test cases (under TypicalInternships class) to fit the JobbiBot types <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/169">#169</a></p>
+<p>Managed releases <code>v1.5rc</code> on GitHub</p>
 </li>
 </ul>
 </div>
@@ -85,6 +86,9 @@ the internship or they may restart the process and filter the internships differ
 <li>
 <p>Fix bug for InternshipBook Parser <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/161">#161</a></p>
 </li>
+<li>
+<p>Updated test cases (under TypicalInternships class) to fit the JobbiBot types <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/169">#169</a></p>
+</li>
 </ul>
 </div>
 </li>
@@ -93,7 +97,10 @@ the internship or they may restart the process and filter the internships differ
 <div class="ulist">
 <ul>
 <li>
-<p>Documented the Major and Minor Components for the team</p>
+<p>Documented the Major and Minor Components for the team <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/50">#50</a></p>
+</li>
+<li>
+<p>Documented User Stories <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/4">#4</a></p>
 </li>
 </ul>
 </div>
@@ -103,7 +110,10 @@ the internship or they may restart the process and filter the internships differ
 <div class="ulist">
 <ul>
 <li>
-<p>Reported bugs and suggestions for other teams in the class (examples: <a href="https://github.com/CS2103JAN2018-T16-B2/main/issues/139" class="bare">https://github.com/CS2103JAN2018-T16-B2/main/issues/139</a> , <a href="https://github.com/CS2103JAN2018-T16-B2/main/issues/141" class="bare">https://github.com/CS2103JAN2018-T16-B2/main/issues/141</a> , <a href="https://github.com/CS2103JAN2018-T16-B2/main/issues/152" class="bare">https://github.com/CS2103JAN2018-T16-B2/main/issues/152</a> )</p>
+<p>Reported bugs and suggestions for other teams in the class (examples: <a href="https://github.com/CS2103JAN2018-T16-B2/main/issues/139">#139</a> , <a href="https://github.com/CS2103JAN2018-T16-B2/main/issues/141">#141</a> , <a href="https://github.com/CS2103JAN2018-T16-B2/main/issues/152">#152</a> )</p>
+</li>
+<li>
+<p>Help teammates refactor codes <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/194">#194</a></p>
 </li>
 </ul>
 </div>
@@ -428,12 +438,114 @@ Thus we have an InternshipBook , a filteredList (called searchedInternships) whi
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="some-instructions-for-manual-testing"><a class="link" href="#some-instructions-for-manual-testing">Some Instructions for Manual Testing</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="filtering-the-jobbibot-internship-list"><a class="link" href="#filtering-the-jobbibot-internship-list">Filtering the JobbiBot Internship List</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Should only apply filter to the current searched(find command) list. Use <code>list command</code> before the start of each test case</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>filter business</code><br>
+Expected: JobbiBot returns all internship containing 'business' in the current internship list. There should be no tags unlike the case of find command</p>
+</li>
+<li>
+<p>Test case: <code>filter business development</code><br>
+Expected: JobbiBot returns all internship containing the keywords 'business' and 'development' in the current internship list. There should be no tags unlike the case of find command</p>
+</li>
+<li>
+<p>Test case: <code>find google</code> then <code>filter development</code><br>
+Expected: JobbiBot returns no internship found as there is no internships that contains 'google' and 'development'.</p>
+</li>
+<li>
+<p>Test case: <code>find google business</code> then <code>filter development</code><br>
+Expected: JobbiBot returns only the internship containing both 'business' and 'development' as there are internship that contains both 'google' and 'development'. There should be a <code>business</code> tag on the internship shown.</p>
+</li>
+<li>
+<p>Test case: <code>find google</code> then <code>list</code> then <code>filter development</code><br>
+Expected: Jobbibot return all internships containing 'development' as list command resets the searched list that the filter command works on. No searched tags on the internship.</p>
+</li>
+<li>
+<p>Test case: <code>filter business</code> then <code>filter development</code><br>
+Expected: JobbiBot returns all internship that contains development. Filtering only works on last searched or default list (cannot filter from a filtered list). No searched tags on the internships.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sorting-the-jobbibot-internship-list"><a class="link" href="#sorting-the-jobbibot-internship-list">Sorting the JobbiBot Internship List</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Should sort according to keyword(s) entered<br>
+Valid keyword attributes are: <code>name</code> <code>role</code> <code>region</code> <code>salary</code> <code>industry</code> , and  <code>-name</code> <code>-role</code> <code>-region</code> <code>-salary</code> <code>-industry</code><br>
+Attributes are sorted from A-Z by default (case insensitive). Salary is sorted from highest to lowest by default.<br>
+Keyword attribute with '-' are sorted in reverse order.<br></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>sort [keyword]</code><br>
+Expected: JobbiBot should return a list of internship sorted according to that keyword, sorted from A-Z (case insensitive)</p>
+</li>
+<li>
+<p>Test case: <code>sort salary</code><br>
+Expected: JobbiBot should return a list of internship sorted according by salary from highest to lowest</p>
+</li>
+<li>
+<p>Test case: <code>sort -salary</code><br>
+Expected: JobbiBot should return a list of internship sorted according by salary from lowest to highest</p>
+</li>
+<li>
+<p>Test case: <code>sort [-keyword]</code><br>
+Expected: JobbiBot should return a list of internship sorted according to that keyword, sorted from Z-A (case insensitive)</p>
+</li>
+<li>
+<p>Test case: <code>sort [keyword1] [keyword2] [keyword3]</code><br>
+Expected: JobbiBot should return a list of internship sorted according to that keyword1 first, and if there is a tie, keyword2, and if there is a tie again, keyword3</p>
+</li>
+<li>
+<p>Test case: <code>sort [keyword1] [keyword2] [keyword3] [moreKeyword]</code><br>
+Expected: Jobbibot should only sort according to the first three keywords. Subsequent arguments are ignored.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Should should only show internships from the current searched/filtered list. Use <code>list command</code> before the start of each test case</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>sort role</code><br>
+Expected: JobbiBot should show a list of ALL internships, sorted by role from A-Z (case insensitive).</p>
+</li>
+<li>
+<p>Test case: <code>find business</code> then <code>sort role</code><br>
+Expected: JobbiBot should show a list of internships that contains business, sorted by role from A-Z (case insensitive).</p>
+</li>
+<li>
+<p>Test case: <code>find business</code> then <code>filter seragoon</code> then <code>sort role</code><br>
+Expected: JobbiBot should show a list of internships that contains both business and serangoon, sorted by role from A-Z (case insensitive).</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 15:55:10 UTC
+Last updated 2018-04-15 16:05:45 UTC
 </div>
 </div>
 </body>
