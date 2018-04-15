@@ -28,9 +28,7 @@
 <p>JobbiBot is an interactive application that aims to guide university students in their search for internships. JobbiBot is a Command
 Line Interface application where most of the functions are accessed through typing the commands. Through JobbiBot,
 users would be able to narrow down the overwhelming amount of internship opportunities by different attributes such as salary and industry with
-the help of JobbiBot which will guide the user slowly through the process with prompts and useful tips.
-Afterwhich they can either save the list of internships while making the decision, select the internship and obtain comprehensive details about
-the internship or they may restart the process and filter the internships differently.</p>
+the help of JobbiBot which will guide the user slowly through the process with prompts and useful tips.</p>
 </div>
 </div>
 </div>
@@ -40,16 +38,24 @@ the internship or they may restart the process and filter the internships differ
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Major enhancement</strong>: modified the find function <strong>to enable user to do a distinct union search</strong></p>
+<p><strong>Major enhancement</strong>: Modified the find function <strong>to enable user to do a distinct union search</strong></p>
 <div class="ulist">
 <ul>
 <li>
-<p>What it does: Allows users to search for multiple keywords and all internships containing ANY of the keywords will be listed.
+<p>What it does:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Allows users to search for multiple keywords and all internships containing ANY of the keywords will be listed.
 the internship in the list are then tagged with tags containing keywords which it matches.</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
 <p>Justification: This feature improves the product significantly because a user can narrow down their internships opportunities
-yet at the same time keep their options open by selecting multiple keywords to search for.</p>
+yet at the same time keep their options open by selecting multiple keywords to search for. The union search will return ALL internships
+that matches any of the keywords. They can then filter from the list to get their desired internship.</p>
 </li>
 <li>
 <p>Highlights: Enable the search of multiple keywords in all the attributes of the internships and can repeat the find command indefinitely until
@@ -76,6 +82,9 @@ a suitable list of internships are obtained for further filtering.</p>
 <li>
 <p>Managed release <code>v1.3</code> on GitHub</p>
 </li>
+<li>
+<p>Setting up of initial milestones, issues and tasks for the team</p>
+</li>
 </ul>
 </div>
 </li>
@@ -97,7 +106,13 @@ a suitable list of internships are obtained for further filtering.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Did cosmetic tweaks to existing contents of the User Guide: <a href="https://github.com">#14</a></p>
+<p>Updated the model component in developers guide to match the current model</p>
+</li>
+<li>
+<p>Remove unused commands and features provided by AddressBook4 from the User guide <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/85/files">#85</a></p>
+</li>
+<li>
+<p>Added and updated NFR and UseCase to the Developers Guide <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/2">#2</a> <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/3">#3</a> <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/52">#52</a></p>
 </li>
 </ul>
 </div>
@@ -111,6 +126,9 @@ a suitable list of internships are obtained for further filtering.</p>
 </li>
 <li>
 <p>Setting up of Travis Auto Publishing for the team</p>
+</li>
+<li>
+<p>Populating of database <a href="https://github.com/CS2103JAN2018-F11-B3/main/pull/193">#193</a></p>
 </li>
 </ul>
 </div>
@@ -248,35 +266,461 @@ as a <code>CommandResult</code> object and returns it to the <code>LogicManager<
 <div class="sect3">
 <h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
 <div class="paragraph">
-<p>Location of the functions</p>
+<p>Initial: Adding the addition and removal of tags from internship method under <code>FindCommand</code> since it is ultimately used when executing FindCommand.</p>
 </div>
 <div class="paragraph">
-<p>Alternative 1:</p>
+<p>Refinement: Since the addition and removal of tags to internship involves modifying of internship, these methods are added to the
+internship class as shown below. An additional check for <code>saved</code> tag was added as well as from the users perspective, they would
+want to search for other internship while keeping those that are searched before with the <code>saved</code> tag.</p>
 </div>
-<div class="paragraph">
-<p>Alternative 2:</p>
+<div class="listingblock">
+<div class="content">
+<pre>    public Internship removeTagsFromInternship() {
+        final UniqueTagList internshipTags = new UniqueTagList(getTags());
+
+        for (Tag tagToBeRemoved : tags) {
+            if (!tagToBeRemoved.toString().equals(SAVED_TAG_NAME)) {
+                try {
+                    internshipTags.delete(tagToBeRemoved);
+                } catch (TagNotFoundException e) {
+                    assert false;
+                    throw new AssertionError("Impossible! Should not have TagNotFoundException");
+                }
+            }
+        }
+
+        ...
+        ...
+
+        return new Internship(
+                getName(), getSalary(), getEmail(), getAddress(),
+                getIndustry(), getRegion(), getRole(), correctTagReferences);
+    }
+
+    public Internship addTagsToInternship(String keyword) {
+        final UniqueTagList internshipTags = new UniqueTagList(getTags());
+
+        try {
+            internshipTags.add(new Tag(keyword));
+        } catch (UniqueTagList.DuplicateTagException e) {
+            throw new AssertionError("Operation would result in duplicate tags");
+        }
+        ...
+        ...
+
+        return new Internship(
+                getName(), getSalary(), getEmail(), getAddress(),
+                getIndustry(), getRegion(), getRole(), correctTagReferences);
+    }</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Implementation of the codes</p>
 </div>
 <div class="paragraph">
-<p>Alternative 1:</p>
+<p>Initial: To implement the addTagsToFilteredList method, a double for loop was used to loop through both keywords and internships
+in order to find the match and proceed with the addition of tags to the internship.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public static void addTagsToFilteredList (List&lt;String&gt; filterKeywords,
+                                              ObservableList&lt;Internship&gt; filteredInternships, Model model)
+            throws CommandException {
+
+        for (String keywords : filterKeywords) {
+            for (Internship filteredInternship : filteredInternships) {
+                if (StringUtil.containsWordIgnoreCase(filteredInternship.toString(), keywords)) {
+                    try {
+                        model.updateInternship(filteredInternship,
+                                addTagsToInternshipWithMatch(keywords, filteredInternship));
+                    } catch (DuplicateInternshipException e) {
+                        throw new CommandException(MESSAGE_DUPLICATE_INTERNSHIP);
+                    } catch (InternshipNotFoundException e) {
+                        throw new AssertionError("The target internship cannot be missing");
+                    }
+                }
+            }
+        }
+    }</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Alternative 2:</p>
+<p>Code Refinement: However, there were SRP violation there as the method was used to find internship that is matching the keyword,
+add the keyword tag and also update the internship. Furthermore, the code was deeply nested as well. As such, concept of abstraction
+was used to separate the functions into individual methods as shown below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public CommandResult execute() {
+        model.removeTagsFromAllInternshipList();
+        model.updateSearchedInternshipList(predicate);
+        model.addTagsToFilteredList();
+        return getCommandResult();
+    }</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="additional-enhancement"><a class="link" href="#additional-enhancement">Additional Enhancement</a></h4>
+<div class="paragraph">
+<p>From the users perspective, they might want to find again if the result was not up to their satisfaction.
+As such, the implementation was designed in such a way that subsequent find will reset the tags from the internship.</p>
+</div>
+<div class="paragraph">
+<p>Since List command is used to show the entire list in the display, a feature is added to it such that all the tags are removed from the internships
+to allow the user to see the entire internship list.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public void removeTagsFromFilteredList() {
+        for (Internship internship : getFilteredInternshipList()) {
+            try {
+                updateInternship(internship, internship.removeTagsFromInternship());
+            } catch (DuplicateInternshipException e) {
+                throw new AssertionError(MESSAGE_DUPLICATE_SAVED_INTERNSHIP);
+            } catch (InternshipNotFoundException e) {
+                throw new AssertionError("The target internship cannot be missing");
+            }
+        }
+    }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rather than throwing exception, assertion is used instead because users do not key in the value but instead, downloads
+the internship book and insert it into the program. As such, there should not be any duplicate internship. Any duplicate internships
+will result in the program malfunctioning and no internship being listed on the left panel.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-start-conversation-with-jobbi"><a class="link" href="#use-case-start-conversation-with-jobbi">Use case: Start conversation with Jobbi</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to start conversation with Jobbi</p>
+</li>
+<li>
+<p>JobbiBot replies with the next prompt to indicate conversation has started</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. User requests to start conversation again after the conversation has begun.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. JobbiBot shows an error message.</p>
+</li>
+<li>
+<p>Use case resumes at step 2.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-save-internship" class="discrete">Use case: Save internship</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list internships</p>
+</li>
+<li>
+<p>JobbiBot shows a list of all the internships</p>
+</li>
+<li>
+<p>User requests to save a specific internship in the list</p>
+</li>
+<li>
+<p>JobbiBot saves the internship</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list is empty.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>Use case ends.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. JobbiBot shows an error message.</p>
+</li>
+<li>
+<p>Use case resumes at step 2.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>4a. Users saves an internship that has been saved</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>4a1. JobbiBot shows an error message</p>
+</li>
+<li>
+<p>Use case resumes at step 2.</p>
+<h3 id="use-case-unsave-internship" class="discrete">Use case: Unsave internship</h3>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list internships</p>
+</li>
+<li>
+<p>JobbiBot shows a list of all internships</p>
+</li>
+<li>
+<p>User requests to remove a specific internship from the Saved Collection</p>
+</li>
+<li>
+<p>JobbiBot removes the internship from the Saved Collection</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list is empty.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>Use case ends.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. JobbiBot shows an error message.</p>
+</li>
+<li>
+<p>Use case resumes at step 2.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>4a. Users removes an internship that has been removed</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>4a1. JobbiBot shows an error message</p>
+</li>
+<li>
+<p>Use case resumes at step 2.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-finding-internship" class="discrete">Use case: Finding Internship</h3>
+<div class="paragraph">
+<p><strong>System</strong>: JobbiBot</p>
+</div>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User keys in a list of keywords to search  for internship byby</p>
+</li>
+<li>
+<p>JobbiBot returns user the list of internships which contains the keywords</p>
+</li>
+<li>
+<p>User can choose to re-search again if not satisfied</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. JobbiBot returns no found internships</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. JobbiBot will recommend user to re-search using other keywords</p>
+<div class="paragraph">
+<p>Use case resumes at step 3.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-filtering-internship" class="discrete">Use case: Filtering Internship</h3>
+<div class="paragraph">
+<p><strong>System</strong>: JobbiBot</p>
+</div>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User keys in a list of keywords to filter the currently searched internship list (from the finding internship use case above)</p>
+</li>
+<li>
+<p>JobbiBot returns user the list of internships which contains all the keywords entered from the searched list</p>
+</li>
+<li>
+<p>User can choose to re-filter in another set of keywords to narrow the searched internship list (from the finding internship use case)</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. JobbiBot returns no found internships</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a1. JobbiBot will recommend user to re-filter using other keywords</p>
+</li>
+<li>
+<p>2a2. User can also use undo function to return back to last searched or filtered internship list</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-sorting-internship" class="discrete">Use case: Sorting Internship</h3>
+<div class="paragraph">
+<p><strong>System</strong>: JobbiBot</p>
+</div>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User keys in keywords to sort the currently searched or filtered internship list by</p>
+</li>
+<li>
+<p>JobbiBot returns user the list of internships sorted according to the keyword matching the internship attributes (e.g name, industry, role).</p>
+</li>
+<li>
+<p>User can choose to sort up to three keyword attributes</p>
+</li>
+<li>
+<p>JobbiBot will sort the internship by the first keyword attribute, followed by the next two keyword attribute</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="non-functional-requirements"><a class="link" href="#non-functional-requirements">Appendix A: Non Functional Requirements</a></h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>1.8.0_60</code> or higher installed.</p>
+</li>
+<li>
+<p>Should be able to hold up to 1000 internships without a noticeable sluggishness in performance for typical usage.</p>
+</li>
+<li>
+<p>A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.</p>
+</li>
+<li>
+<p>Should respond to commands within 5 seconds.</p>
+</li>
+<li>
+<p>Should be usable by a novice who is using the system for the first time.</p>
+</li>
+<li>
+<p>A user looking for internship should not need to key in more than 19 commands.</p>
+</li>
+<li>
+<p>An expert or regular user should be able to have the alternative to use command line instead of the chat bot.</p>
+</li>
+<li>
+<p>Should have a clean and easy to use interface.</p>
+</li>
+<li>
+<p>Should be designed for a British-English speaking user.</p>
+</li>
+<li>
+<p>Should be current and up to date (i.e. companies recruitment status).</p>
+</li>
+</ol>
 </div>
 <hr>
-<div class="paragraph">
-<p><em>{Optionally, you may include other projects in your portfolio.}</em></p>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 08:18:11 UTC
+Last updated 2018-04-15 10:58:33 UTC
 </div>
 </div>
 </body>
