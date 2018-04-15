@@ -1001,13 +1001,13 @@ some codes are implemented within ModelManager.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/FindCommandSequenceDiagram.png" alt="FindCommandSequenceDiagram" width="1200">
+<img src="images/FindCommandSequenceDiagram.png" alt="FindCommandSequenceDiagram" width="800">
 </div>
 </div>
 <div class="paragraph">
 <p>As it can be seen from the diagram, <code>Logic</code> uses the <code>InternshipBookParser</code> class to parse the user command.
 After which, <code>FindCommandParser</code> is created and use to parse the keyword. The keyword is then set in <code>ModelManager</code> via the
-setKeywords() method. A <code>FindCommand</code> object is then created followed by the <code>internshipContainsKeywordsPredicate</code>.</p>
+setKeywords() method.</p>
 </div>
 <div class="paragraph">
 <p>In the second phase, the command is being executed in <code>FindCommand</code>. The first updateSearchedInternshipList() update the
@@ -1043,16 +1043,16 @@ want to search for other internship while keeping those that are searched before
                 }
             }
         }
-
         ...
         ...
-
-        return new Internship(
-                getName(), getSalary(), getEmail(), getAddress(),
+        return new Internship(getName(), getSalary(), getEmail(), getAddress(),
                 getIndustry(), getRegion(), getRole(), correctTagReferences);
-    }
-
-    public Internship addTagsToInternship(String keyword) {
+    }</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public Internship addTagsToInternship(String keyword) {
         final UniqueTagList internshipTags = new UniqueTagList(getTags());
 
         try {
@@ -1062,9 +1062,7 @@ want to search for other internship while keeping those that are searched before
         }
         ...
         ...
-
-        return new Internship(
-                getName(), getSalary(), getEmail(), getAddress(),
+        return new Internship(     getName(), getSalary(), getEmail(), getAddress(),
                 getIndustry(), getRegion(), getRole(), correctTagReferences);
     }</pre>
 </div>
@@ -2113,7 +2111,7 @@ b. Require developers to download those libraries manually (this creates extra w
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User keys in a list of keywords to search  for internship byby</p>
+<p>User keys in a list of keywords to search  for internship by</p>
 </li>
 <li>
 <p>JobbiBot returns user the list of internships which contains the keywords</p>
@@ -2603,7 +2601,7 @@ Expected: Right panel display full details of internship from internsg.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 15:17:49 UTC
+Last updated 2018-04-15 15:30:13 UTC
 </div>
 </div>
 </body>

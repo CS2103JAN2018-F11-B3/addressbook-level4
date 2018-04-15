@@ -27,7 +27,7 @@
 <div class="paragraph">
 <p>JobbiBot is an interactive application that aims to guide university students in their search for internships. JobbiBot is a Command
 Line Interface application where most of the functions are accessed through typing the commands. Through JobbiBot,
-users would be able to narrow down the overwhelming amount of internship opportunities by different attributes such as salary and industry with
+users would be able to narrow down the overwhelming amount of internship opportunities by different attributes such as industry with
 the help of JobbiBot which will guide the user slowly through the process with prompts and useful tips.</p>
 </div>
 </div>
@@ -42,20 +42,13 @@ the help of JobbiBot which will guide the user slowly through the process with p
 <div class="ulist">
 <ul>
 <li>
-<p>What it does:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Allows users to search for multiple keywords and all internships containing ANY of the keywords will be listed.
+<p>What it does: Allows users to search for multiple keywords and all internships containing any of the keywords will be listed.
 the internship in the list are then tagged with tags containing keywords which it matches.</p>
-</li>
-</ul>
-</div>
 </li>
 <li>
 <p>Justification: This feature improves the product significantly because a user can narrow down their internships opportunities
 yet at the same time keep their options open by selecting multiple keywords to search for. The union search will return ALL internships
-that matches any of the keywords. They can then filter from the list to get their desired internship.</p>
+that matches any of the keywords.</p>
 </li>
 <li>
 <p>Highlights: Enable the search of multiple keywords in all the attributes of the internships and can repeat the find command indefinitely until
@@ -251,13 +244,13 @@ some codes are implemented within ModelManager.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/FindCommandSequenceDiagram.png" alt="FindCommandSequenceDiagram" width="1200">
+<img src="../images/FindCommandSequenceDiagram.png" alt="FindCommandSequenceDiagram" width="800">
 </div>
 </div>
 <div class="paragraph">
 <p>As it can be seen from the diagram, <code>Logic</code> uses the <code>InternshipBookParser</code> class to parse the user command.
 After which, <code>FindCommandParser</code> is created and use to parse the keyword. The keyword is then set in <code>ModelManager</code> via the
-setKeywords() method. A <code>FindCommand</code> object is then created followed by the <code>internshipContainsKeywordsPredicate</code>.</p>
+setKeywords() method.</p>
 </div>
 <div class="paragraph">
 <p>In the second phase, the command is being executed in <code>FindCommand</code>. The first updateSearchedInternshipList() update the
@@ -293,16 +286,16 @@ want to search for other internship while keeping those that are searched before
                 }
             }
         }
-
         ...
         ...
-
-        return new Internship(
-                getName(), getSalary(), getEmail(), getAddress(),
+        return new Internship(getName(), getSalary(), getEmail(), getAddress(),
                 getIndustry(), getRegion(), getRole(), correctTagReferences);
-    }
-
-    public Internship addTagsToInternship(String keyword) {
+    }</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public Internship addTagsToInternship(String keyword) {
         final UniqueTagList internshipTags = new UniqueTagList(getTags());
 
         try {
@@ -312,9 +305,7 @@ want to search for other internship while keeping those that are searched before
         }
         ...
         ...
-
-        return new Internship(
-                getName(), getSalary(), getEmail(), getAddress(),
+        return new Internship(     getName(), getSalary(), getEmail(), getAddress(),
                 getIndustry(), getRegion(), getRole(), correctTagReferences);
     }</pre>
 </div>
@@ -398,183 +389,14 @@ will result in the program malfunctioning and no internship being listed on the 
 </div>
 </div>
 <div class="sect2">
-<h3 id="use-case-start-conversation-with-jobbi"><a class="link" href="#use-case-start-conversation-with-jobbi">Use case: Start conversation with Jobbi</a></h3>
+<h3 id="use-case-finding-internship"><a class="link" href="#use-case-finding-internship">Use case: Finding Internship</a></h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User requests to start conversation with JobbiBot</p>
-</li>
-<li>
-<p>JobbiBot replies with the next prompt to indicate conversation has started</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. User requests to start conversation again after the conversation has begun.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a1. JobbiBot shows an error message.</p>
-</li>
-<li>
-<p>Use case resumes at step 2.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-save-internship" class="discrete">Use case: Save internship</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User requests to list internships</p>
-</li>
-<li>
-<p>JobbiBot shows a list of all the internships</p>
-</li>
-<li>
-<p>User requests to save a specific internship in the list</p>
-</li>
-<li>
-<p>JobbiBot saves the internship</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. The list is empty.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>Use case ends.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>3a. The given index is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3a1. JobbiBot shows an error message.</p>
-</li>
-<li>
-<p>Use case resumes at step 2.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>4a. Users saves an internship that has been saved</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>4a1. JobbiBot shows an error message</p>
-</li>
-<li>
-<p>Use case resumes at step 2.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-unsave-internship" class="discrete">Use case: Unsave internship</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User requests to list the Saved Collection</p>
-</li>
-<li>
-<p>JobbiBot shows a list of the Saved Collection</p>
-</li>
-<li>
-<p>User requests to remove a specific internship from the Saved Collection</p>
-</li>
-<li>
-<p>JobbiBot removes the internship from the Saved Collection</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. The Saved Collection is empty.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>Use case ends.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>3a. The given index is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3a1. JobbiBot shows an error message.</p>
-</li>
-<li>
-<p>Use case resumes at step 2.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>4a. Users removes an internship that has been removed</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>4a1. JobbiBot shows an error message</p>
-</li>
-<li>
-<p>Use case resumes at step 2.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-finding-internship" class="discrete">Use case: Finding Internship</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User keys in a list of keywords to search  for internship byby</p>
+<p>User keys in a list of keywords to search  for internship by</p>
 </li>
 <li>
 <p>JobbiBot returns user the list of internships which contains the keywords</p>
@@ -646,29 +468,6 @@ will result in the program malfunctioning and no internship being listed on the 
 </div>
 </li>
 </ul>
-</div>
-<h3 id="use-case-sorting-internship" class="discrete">Use case: Sorting Internship</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User keys in keywords to sort the currently searched or filtered internship list by</p>
-</li>
-<li>
-<p>JobbiBot returns user the list of internships sorted according to the keyword matching the internship attributes (e.g name, industry, role).</p>
-</li>
-<li>
-<p>User can choose to sort up to three keyword attributes</p>
-</li>
-<li>
-<p>JobbiBot will sort the internship by the first keyword attribute, followed by the next two keyword attribute</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
 </div>
 </div>
 </div>
@@ -824,7 +623,7 @@ Expected: Right panel display full details of internship from internsg.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 15:17:49 UTC
+Last updated 2018-04-15 15:30:13 UTC
 </div>
 </div>
 </body>
