@@ -710,13 +710,121 @@ will result in the program malfunctioning and no internship being listed on the 
 </li>
 </ol>
 </div>
+<div class="sect2">
+<h3 id="some-instructions-for-manual-testing"><a class="link" href="#some-instructions-for-manual-testing">Some Instructions for Manual Testing</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="finding-an-internship"><a class="link" href="#finding-an-internship">Finding an internship</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Find internships using keyword/s</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Nil</p>
+</li>
+<li>
+<p>Test case: <code>find KEYWORD</code><br>
+Expected: Internships matching the keyword are all listed on the left panel. Keywords matching the internship are added as tags to the internships.</p>
+</li>
+<li>
+<p>Test case: <code>find KEYWORD1 KEYWORD2</code><br>
+Expected: Searched internship list on the left is replaced with the new list matching KEYWORD1 and/or KEYWORD2.</p>
+</li>
+<li>
+<p>Test case: `find `<br>
+Expected: Invalid command format. Error details shown in the message thread.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="finding-saved-internships"><a class="link" href="#finding-saved-internships">Finding saved internships</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Find saved internships</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Have saved at least one internship with the save command.</p>
+</li>
+<li>
+<p>Test case: <code>find saved</code><br>
+Expected: Saved Internships matching are all listed on the left panel.</p>
+</li>
+<li>
+<p>Test case: <code>find KEYWORD1 saved</code><br>
+Expected: Internships matching keyword1 and/or saved are showed, internships matching keyword1 have keyword tags added.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="list-internships"><a class="link" href="#list-internships">List internships</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>List internships</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Have saved at least one internship, have executed find command such that the list on the left panel is not the full list.</p>
+</li>
+<li>
+<p>Test case: <code>list</code><br>
+Expected: Left panel display full internships, keyword tags attached during find command are removed.</p>
+</li>
+<li>
+<p>Test case: <code>list KEYWORD</code><br>
+Expected: Invalid command format. Error details shown in the message thread.</p>
+</li>
+<li>
+<p>Other incorrect list commands to try: <code>list 0</code>, <code>list 1</code> or <code>list abc</code><br>
+Expected: Similar to previous.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="select-internship"><a class="link" href="#select-internship">Select internship</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Select internship</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Have saved at least one internship available in the left panel.</p>
+</li>
+<li>
+<p>Test case: <code>select 1</code><br>
+Expected: Right panel display full details of internship from internsg.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
 <hr>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 14:20:09 UTC
+Last updated 2018-04-15 14:51:58 UTC
 </div>
 </div>
 </body>
