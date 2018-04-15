@@ -131,7 +131,7 @@ the internship or they may restart the process and filter the internships differ
 <div class="sect2">
 <h3 id="filtering-internship-by-keyword-s-code-filter-code-since-v1-3"><a class="link" href="#filtering-internship-by-keyword-s-code-filter-code-since-v1-3">Filtering Internship by keyword(s): <code>filter</code> [since v1.3]</a></h3>
 <div class="paragraph">
-<p>Filters the internship list according to the given keywords.<br>
+<p>Filters the displayed internship list according to the given keywords. <br>
 Format: <code>filter KEYWORD [MORE_KEYWORDS]</code></p>
 </div>
 <div class="sidebarblock">
@@ -166,6 +166,11 @@ Returns any entries containing data. e.g Data Analytics, Data Science</p>
 <li>
 <p><code>filter data analytics</code><br>
 Returns only entries containing data and analytics. e.g <code>data analytics internship</code>, <code>data analytics singapore</code></p>
+</li>
+<li>
+<p><code>filter 1000</code><br>
+Returns any internship that has a salary of 1000 ONLY<br>
+Tip: use <code>sort salary</code> to see internship containing salaries above a certain value</p>
 </li>
 </ul>
 </div>
@@ -425,7 +430,7 @@ Thus we have an InternshipBook , a filteredList (called searchedInternships) whi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 14:51:58 UTC
+Last updated 2018-04-15 15:07:44 UTC
 </div>
 </div>
 </body>
