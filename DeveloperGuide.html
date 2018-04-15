@@ -99,7 +99,8 @@
 <li><a href="#finding-saved-internships">F.7. Finding saved internships</a></li>
 <li><a href="#list-internships">F.8. List internships</a></li>
 <li><a href="#select-internship">F.9. Select internship</a></li>
-<li><a href="#saving-data">F.10. Saving data</a></li>
+<li><a href="#filtering-the-jobbibot-internship-list">F.10. Filtering the JobbiBot Internship List</a></li>
+<li><a href="#sorting-the-jobbibot-internship-list">F.11. Sorting the JobbiBot Internship List</a></li>
 </ul>
 </li>
 </ul>
@@ -595,9 +596,6 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="paragraph">
 <p>The filter command takes in one or more keywords and returns all internships that contains <strong>ALL</strong> of the keyword(s) from the last searched internship list or the full internship list if the users has not used the search command feature.</p>
 </div>
-<div class="paragraph">
-<p>See diagram below: &lt;Insert Diagram Here&gt;</p>
-</div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
@@ -629,9 +627,6 @@ Whereas the desired output should be internships that either contain marketing s
 </div>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>See diagram below: &lt;Insert Diagram 2 Here&gt;</p>
 </div>
 </div>
 <div class="sect4">
@@ -665,9 +660,6 @@ E.g <code>search marketing analytics</code> will display marketing tag for inter
 </div>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>See diagram below: &lt;Insert Diagram 3 Here&gt;</p>
 </div>
 </div>
 <div class="sect4">
@@ -743,9 +735,6 @@ Thus we have an InternshipBook , a filteredList (called searchedInternships) whi
 <p>Cons: Was harder to implement as it required knowledge of how the model interacts and worked as well as how the filteredList Java FXCollection worked.</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>See diagram below &lt;Insert Model Manager Diagram&gt;</p>
 </div>
 </div>
 </div>
@@ -2577,23 +2566,101 @@ Expected: Right panel display full details of internship from internsg.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">F.10. Saving data</a></h3>
+<h3 id="filtering-the-jobbibot-internship-list"><a class="link" href="#filtering-the-jobbibot-internship-list">F.10. Filtering the JobbiBot Internship List</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Dealing with missing/corrupted data files</p>
+<p>Should only apply filter to the current searched(find command) list. Use <code>list command</code> before the start of each test case</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><em>{explain how to simulate a missing/corrupted file and the expected behavior}</em></p>
+<p>Test case: <code>filter business</code><br>
+Expected: JobbiBot returns all internship containing 'business' in the current internship list. There should be no tags unlike the case of find command</p>
+</li>
+<li>
+<p>Test case: <code>filter business development</code><br>
+Expected: JobbiBot returns all internship containing the keywords 'business' and 'development' in the current internship list. There should be no tags unlike the case of find command</p>
+</li>
+<li>
+<p>Test case: <code>find google</code> then <code>filter development</code><br>
+Expected: JobbiBot returns no internship found as there is no internships that contains 'google' and 'development'.</p>
+</li>
+<li>
+<p>Test case: <code>find google business ` then `filter development</code><br>
+Expected: JobbiBot returns only the internship containing both 'business' and 'development' as there are internship that contains both 'google' and 'development'. There should be a <code>business</code> tag on the internship shown.</p>
+</li>
+<li>
+<p>Test case: <code>find google</code> then <code>list</code> then <code>filter development</code><br>
+Expected: Jobbibot return all internships containing 'development' as list command resets the searched list that the filter command works on. No searched tags on the internship.</p>
+</li>
+<li>
+<p>Test case: <code>filter business</code> then <code>filter development</code><br>
+Expected: JobbiBot returns all internship that contains development. Filtering only works on last searched or default list (cannot filter from a filtered list). No searched tags on the internships.</p>
 </li>
 </ol>
 </div>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
+</div>
+<div class="sect2">
+<h3 id="sorting-the-jobbibot-internship-list"><a class="link" href="#sorting-the-jobbibot-internship-list">F.11. Sorting the JobbiBot Internship List</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Should sort according to keyword(s) entered<br>
+Valid keyword attributes are: <code>name</code> <code>role</code> <code>region</code> <code>salary</code> <code>industry</code> , and  <code>-name</code> <code>-role</code> <code>-region</code> <code>-salary</code> <code>-industry</code><br>
+Attributes are sorted from A-Z by default (case insensitive). Salary is sorted from highest to lowest by default.<br>
+Keyword attribute with '-' are sorted in reverse order.<br></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>sort [keyword]</code><br>
+Expected: JobbiBot should return a list of internship sorted according to that keyword, sorted from A-Z (case insensitive)</p>
+</li>
+<li>
+<p>Test case: <code>sort salary</code><br>
+Expected: JobbiBot should return a list of internship sorted according by salary from highest to lowest</p>
+</li>
+<li>
+<p>Test case: <code>sort -salary</code><br>
+Expected: JobbiBot should return a list of internship sorted according by salary from lowest to highest</p>
+</li>
+<li>
+<p>Test case: <code>sort [-keyword]</code><br>
+Expected: JobbiBot should return a list of internship sorted according to that keyword, sorted from Z-A (case insensitive)</p>
+</li>
+<li>
+<p>Test case: <code>sort [keyword1] [keyword2] [keyword3]</code><br>
+Expected: JobbiBot should return a list of internship sorted according to that keyword1 first, and if there is a tie, keyword2, and if there is a tie again, keyword3</p>
+</li>
+<li>
+<p>Test case: <code>sort [keyword1] [keyword2] [keyword3] [moreKeyword]</code><br>
+Expected: Jobbibot should only sort according to the first three keywords. Subsequent arguments are ignored.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Should should only show internships from the current searched/filtered list. Use <code>list command</code> before the start of each test case</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>sort role</code><br>
+Expected: JobbiBot should show a list of ALL internships, sorted by role from A-Z (case insensitive).</p>
+</li>
+<li>
+<p>Test case: <code>find business</code> then <code>sort role</code><br>
+Expected: JobbiBot should show a list of internships that contains business, sorted by role from A-Z (case insensitive).</p>
+</li>
+<li>
+<p>Test case: <code>find business</code> then <code>filter seragoon</code> then <code>sort role</code><br>
+Expected: JobbiBot should show a list of internships that contains both business and serangoon, sorted by role from A-Z (case insensitive).</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -2601,7 +2668,7 @@ Expected: Right panel display full details of internship from internsg.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 15:30:13 UTC
+Last updated 2018-04-15 15:34:08 UTC
 </div>
 </div>
 </body>

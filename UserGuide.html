@@ -253,6 +253,15 @@ Format: <code>filter KEYWORD [MORE_KEYWORDS]</code></p>
 <div class="ulist">
 <ul>
 <li>
+<p>Only internships in the last searched (find command) list will be filtered</p>
+</li>
+<li>
+<p>If there is no last searched (find command), filter command will filter from the entire list</p>
+</li>
+<li>
+<p>If the list command is used, the searched list (find command) is reset, and any filter command used before find command will filter the entire list</p>
+</li>
+<li>
 <p>The keywords is case insensitive. e.g <code>marketing</code> will match <code>Marketing</code></p>
 </li>
 <li>
@@ -260,6 +269,9 @@ Format: <code>filter KEYWORD [MORE_KEYWORDS]</code></p>
 </li>
 <li>
 <p>Only full words will be matched e.g. <code>Market</code> will not match <code>Marketing</code></p>
+</li>
+<li>
+<p>Note that there is no tags added unlike the case of find command, as the filter command matches only internships containing all the keywords argument and hence there is no need to distinguish between the different keywords.</p>
 </li>
 <li>
 <p>Only internships which contain all the keyword will be returned. e.g <code>filter Marketing Analytics</code> will return only internships containing Marketing AND Analytics but not Marketing Research or Data Analytics</p>
@@ -306,6 +318,9 @@ Keywords can include '-' (e.g <code>-Industry</code> <code>-Region</code> <code>
 </li>
 <li>
 <p>Other attributes are sorted from A-Z by default</p>
+</li>
+<li>
+<p>'-' character before the attribute (e.g -industry) causes that attribute to be sorted in revese order</p>
 </li>
 <li>
 <p>The sort is case insensitive. e.g <code>name</code> will match <code>Name</code></p>
@@ -922,7 +937,7 @@ e.g.<code>select 3</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 15:30:13 UTC
+Last updated 2018-04-15 15:34:08 UTC
 </div>
 </div>
 </body>
